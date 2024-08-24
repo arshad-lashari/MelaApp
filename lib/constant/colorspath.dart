@@ -7,4 +7,5 @@ class AppColors {
   static const textfieldcolor=Color(0xFF4F5B79);
   static const darkblue=Color(0xFF4F5B79);
   
+  
 }
