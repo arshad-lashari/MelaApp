@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
+import 'package:mela/constant/imagespath.dart';
+import 'package:mela/screens/productdetails.dart';
 
 class CustomButtonDesign extends StatefulWidget {
   final String buttonText;
@@ -92,7 +95,7 @@ class _TextFieldDesignState extends State<TextFieldDesign> {
             borderSide: const BorderSide(width: 0, color: Colors.transparent),
           ),
           hintText: widget.hintText,
-          hintStyle: TextStyle(
+          hintStyle: const TextStyle(
             fontSize: 16,
             color: AppColors.textfieldcolor
           ),
@@ -100,5 +103,63 @@ class _TextFieldDesignState extends State<TextFieldDesign> {
         ),
       ),
     );
+  }
+}
+class CategoriesCustom extends StatefulWidget {
+  const CategoriesCustom({super.key});
+
+  @override
+  State<CategoriesCustom> createState() => _CategoriesCustomState();
+}
+
+class _CategoriesCustomState extends State<CategoriesCustom>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this);
+  }
+AppImagesPath appImagesPath=AppImagesPath();
+AppText appText=AppText();
+AppColors appColors=AppColors();
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+    height: MediaQuery.of(context).size.height - 270, // Adjust height as needed
+    child: GridView.builder(
+      itemCount: appImagesPath.categoryimages.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 4,
+        childAspectRatio: 1,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 30,
+      ),
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const ProductDetailsScreen(),));
+          },
+          child: Column(
+            children: [
+              Image.asset(appImagesPath.categoryimages[index]), // Fixed this line
+              const SizedBox(height: 18,),
+              Text(appText.categoriestext[index],style: const TextStyle(
+                fontFamily: 'Ubuntu',fontSize: 10,fontWeight: FontWeight.w400
+              ),), // Assuming categories text is also a list
+            ],
+          ),
+        );
+      },
+    ),
+  );
+  
   }
 }

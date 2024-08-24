@@ -2,6 +2,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mela/screens/homescreen.dart';
+import 'package:mela/screens/productdetails.dart';
 
 void main() => runApp(
       DevicePreview(
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomeScreen(),
+      home: ProductDetailsScreen(),
     );
   }
 }
