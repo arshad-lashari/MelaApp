@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: Colors.white),
                         ),
                         const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
+                          padding: EdgeInsets.symmetric(vertical: 3),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,13 +144,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               Text(
                                 'For purchases over 50\$',
                                 style: TextStyle(
-                                    fontFamily: 'Ubuntu', fontSize: 14),
+                                    fontFamily: 'Ubuntu', fontSize: 12),
                               )
                             ],
                           ),
                         ),
                         const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
+                          padding: EdgeInsets.symmetric(vertical: 3),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,13 +168,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               Text(
                                 'Including all regions',
                                 style: TextStyle(
-                                    fontFamily: 'Ubuntu', fontSize: 14),
+                                    fontFamily: 'Ubuntu', fontSize: 12),
                               )
                             ],
                           ),
                         ),
                         const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
+                          padding: EdgeInsets.symmetric(vertical: 3),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,13 +192,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               Text(
                                 'Deadline until October 13',
                                 style: TextStyle(
-                                    fontFamily: 'Ubuntu', fontSize: 14),
+                                    fontFamily: 'Ubuntu', fontSize: 12),
                               )
                             ],
                           ),
                         ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(7),
                         child: GestureDetector(
                           onTap: (){},
                           child: Container(
@@ -220,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: const Align(
                                     alignment: Alignment.center,
                                     child: Text('Bay',style: TextStyle(
-                                      color: Colors.white
+                                      color: Colors.white,fontSize: 10
                                     ),),
                                   ),
                                 ),
@@ -234,16 +234,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Positioned(
-                      left: 200,
-                      top: 25,
+                      left: 203,
+                      top: 45,
                       child: SizedBox(
-                          height: 160,
-                          width: 160,
-                          child: Image.asset(AppImagesPath.delvryman)))
+                          height: 140,
+                          width: 140,
+                          child: Image.asset(AppImagesPath.delvryman))),
+                          
                 ],
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 40,horizontal: 20),
+            child: Image.asset(
+              height: 40,
+              width: 40,
+              
+              AppImagesPath.profile),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 100,horizontal: 20),
+            child: Text('What business are \n you searching for ?',style: TextStyle(
+              fontFamily: 'Ubuntu',
+              fontSize: 20,
+              fontWeight: FontWeight.w500,color: Colors.white
+            ),),
+          )
         ],
       ),
     );

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
+import 'package:mela/screens/customdesign.dart';
+import 'package:mela/screens/homescreen.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key});
@@ -12,6 +15,7 @@ class ProductDetailsScreen extends StatefulWidget {
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   AppColors appColors = AppColors();
   AppImagesPath appImagesPath = AppImagesPath();
+  AppText appText=AppText();
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +33,21 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           children: [
             Row(
               children: [
-                Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.white,
-                  ),
-                  child: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.black,
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white,
+                    ),
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -103,112 +112,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
             ),
             const SizedBox(height: 10),
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisExtent: 210, // Increased height for better layout
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ),
-                itemCount: appImagesPath.categoriesdetailsimages.length, // Adjust based on your data
-                itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 118,
-                          decoration:  BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10),
-                            ),
-                            image: DecorationImage(
-                              fit: BoxFit.fill,
-                            image: AssetImage(appImagesPath.categoriesdetailsimages[index])
-                            ),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 6,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Align(
-                                alignment: Alignment.bottomLeft,
-                                child: Text(
-                                  'Fit Cleaners',
-                                  style: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.darkblue,
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.bottomLeft,
-                                child: Text(
-                                  'Cleaners',
-                                  style: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.darkblue,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 1,),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    size: 20,
-                                    color: Color(0xFFFFA873),
-                                  ),
-                                  SizedBox(
-                                    width: 2,
-                                  ),
-                                  Text(
-                                    '5.0',
-                                    style: TextStyle(
-                                      fontFamily: 'Ubuntu',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.darkblue,
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Text(
-                                    '\$200',
-                                    style: TextStyle(
-                                      fontFamily: 'Ubuntu',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.darkblue,
-                                    ),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  );
-                },
-              ),
-            )
+const CustomProductDetails()
           ],
         ),
       ),

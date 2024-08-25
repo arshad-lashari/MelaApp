@@ -3,6 +3,7 @@ import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
 import 'package:mela/screens/productdetails.dart';
+import 'package:mela/screens/productservice.dart';
 
 class CustomButtonDesign extends StatefulWidget {
   final String buttonText;
@@ -161,5 +162,134 @@ AppColors appColors=AppColors();
     ),
   );
   
+  }
+}
+class CustomProductDetails extends StatefulWidget {
+  const CustomProductDetails({super.key});
+
+  @override
+  State<CustomProductDetails> createState() => _CustomProductDetailsState();
+}
+
+class _CustomProductDetailsState extends State<CustomProductDetails> {
+  AppImagesPath appImagesPath=AppImagesPath();
+  AppText appText=AppText();
+  @override
+  Widget build(BuildContext context) {
+    return             Expanded(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisExtent: 220, // Increased height for better layout
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                itemCount: appImagesPath.categoriesdetailsimages.length, // Adjust based on your data
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProductServiceDetails(),));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            height: 118,
+                            decoration:  BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                              ),
+                              image: DecorationImage(
+                                fit: BoxFit.fill,
+                              image: AssetImage(appImagesPath.categoriesdetailsimages[index])
+                              ),
+                            ),
+                          ),
+                       Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 6,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 5,),
+                                Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Text(
+                                    appText.productdetailtext[index],
+                    
+                                    style: const TextStyle(
+                                      fontFamily: 'Ubuntu',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.darkblue,
+                                    ),
+                                  ),
+                                ),
+                                  const SizedBox(height: 3,),
+                                const Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Text(
+                                    'Cleaner',
+                                    style: TextStyle(
+                                      fontFamily: 'Ubuntu',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.darkblue,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 4,),
+                                const Row(
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      size: 20,
+                                      color: Color(0xFFFFA873),
+                                    ),
+                                    SizedBox(
+                                      width: 2,
+                                    ),
+                                    Text(
+                                      '5.0',
+                                      style: TextStyle(
+                                        fontFamily: 'Ubuntu',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.darkblue,
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      '\$200',
+                                      style: TextStyle(
+                                        fontFamily: 'Ubuntu',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.darkblue,
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            )
+       ;
   }
 }
