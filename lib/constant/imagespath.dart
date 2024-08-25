@@ -12,7 +12,7 @@ class AppImagesPath {
       'assets/images/Create an account.png';
   static const String byclickingimage = 'assets/images/byclicking.png';
   static const String homeimage = 'assets/images/homeimage.png';
-  static const String delvryman='assets/images/develryman.png';
+  static const String delvryman = 'assets/images/develryman.png';
 
   //Categories images home screen
   static const String cleaner = 'assets/images/001-mop.png';
@@ -33,5 +33,60 @@ class AppImagesPath {
     mirror,
     plumber,
     repair
+  ];
+  //images about categorydetails
+  static const String cleaner1 = 'assets/images/r1.png';
+  static const String cleaner2 = 'assets/images/r2.png';
+  static const String cleaner3 = 'assets/images/r1.png';
+  static const String cleaner4 = 'assets/images/r2.png';
+  static const String cleaner5 = 'assets/images/r1.png';
+  static const String cleaner6 = 'assets/images/r2.png';
+  static const String cleaner7 = 'assets/images/r1.png';
+  static const String cleaner8 = 'assets/images/r2.png';
+  static const String cleaner9 = 'assets/images/r1.png';
+  static const String cleaner10 = 'assets/images/r2.png';
+  static const String cleaner11 = 'assets/images/r1.png';
+  static const String cleaner14 = 'assets/images/r2.png';
+  static const String cleaner15 = 'assets/images/r1.png';
+  static const String cleaner16 = 'assets/images/r2.png';
+  static const String cleaner17 = 'assets/images/r1.png';
+  static const String cleaner18 = 'assets/images/r2.png';
+  static const String cleaner19 = 'assets/images/r1.png';
+  static const String cleaner20 = 'assets/images/r2.png';
+  static const String cleaner21 = 'assets/images/r1.png';
+  static const String cleaner22 = 'assets/images/r2.png';
+  static const String cleaner23 = 'assets/images/r1.png';
+  static const String cleaner24 = 'assets/images/r2.png';
+  static const String cleaner25 = 'assets/images/r1.png';
+  static const String cleaner12 = 'assets/images/r2.png';
+  static const String cleaner13 = 'assets/images/r1.png';
+
+  List<String> categoriesdetailsimages = [
+    cleaner1,
+    cleaner2,
+    cleaner3,
+    cleaner4,
+    cleaner5,
+    cleaner6,
+    cleaner7,
+    cleaner8,
+    cleaner9,
+    cleaner10,
+    cleaner11,
+    cleaner12,
+    cleaner14,
+    cleaner15,
+    cleaner16,
+    cleaner17,
+    cleaner12,
+    cleaner18,
+    cleaner19,
+    cleaner20,
+    cleaner21,
+    cleaner22,
+    cleaner23,
+    cleaner24,
+    cleaner25,
+    cleaner13,
   ];
 }
