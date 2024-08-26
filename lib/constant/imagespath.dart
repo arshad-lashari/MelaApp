@@ -3,6 +3,7 @@ class AppImagesPath {
   static const String ownerimage = 'assets/images/owner.png';
   static const String textimage = 'assets/images/text.png';
   static const String linesimage = 'assets/images/Frame 6.png';
+  static const String dollar='assets/images/dollar.png';
   static const String logintextimage =
       'assets/images/Login with Phone Number.png';
   static const String manimage = 'assets/images/manvector.png';
@@ -33,7 +34,31 @@ class AppImagesPath {
     mecanic,
     mirror,
     plumber,
-    repair
+    repair,
+      cleaner,
+    movers,
+    computer,
+    furniture,
+    mecanic,
+    mirror,
+    plumber,
+    repair,
+        cleaner,
+    movers,
+    computer,
+    furniture,
+    mecanic,
+    mirror,
+    plumber,
+    repair,
+      cleaner,
+    movers,
+    computer,
+    furniture,
+    mecanic,
+    mirror,
+    plumber,
+    repair,
   ];
   //images about categorydetails
   static const String cleaner1 = 'assets/images/r1.png';

@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Positioned(
             top: 213,
-            left: 30,
+            left: 17,
             child: Container(
               height: 48,
               width: 327,
@@ -95,10 +95,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const Positioned(
-              top: 460, // Adjust this value as needed for proper positioning
+              top: 470, // Adjust this value as needed for proper positioning
               left: 20,
               right: 20,
               child: CategoriesCustom()),
+           
           Positioned(
             top: 285, // Adjust this value as needed for proper positioning
             left: 20,
