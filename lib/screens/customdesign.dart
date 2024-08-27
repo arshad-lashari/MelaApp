@@ -322,88 +322,6 @@ class _CustomProductDetailsState extends State<CustomProductDetails> {
 }
 
 
-
-class CustomDateTimeDesign extends StatefulWidget {
-  final List<String> days;
-  final List<String> dates;
-
-  const CustomDateTimeDesign({
-    super.key,
-    required this.days,
-    required this.dates,
-  });
-
-  @override
-  State<CustomDateTimeDesign> createState() => _CustomDateTimeDesignState();
-}
-
-class _CustomDateTimeDesignState extends State<CustomDateTimeDesign> {
-  int selectedIndex = -1;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 54, // Adjust the height as needed
-      child: ListView.builder(
-        physics: const AlwaysScrollableScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        itemCount: widget.days.length,
-        itemBuilder: (context, index) {
-          final isSelected = selectedIndex == index;
-          return Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedIndex = isSelected ? -1 : index;
-                });
-              },
-              child: Container(
-                height: 54,
-                width: 41,
-                decoration: BoxDecoration(
-                  color: isSelected ? Colors.lightBlue : Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        widget.days[index],
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: isSelected ? Colors.white : AppColors.darkblue,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 6),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        widget.dates[index],
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: isSelected ? Colors.white : AppColors.darkblue,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-
-
 class CustomTimeFormatDesign extends StatefulWidget {
   final List<String> time;
   final List<String> timeformat;
@@ -428,7 +346,8 @@ class _CustomTimeFormatDesignState extends State<CustomTimeFormatDesign> {
       child: ListView.builder(
         physics: const AlwaysScrollableScrollPhysics(),
         scrollDirection: Axis.horizontal,
-        itemCount: widget.time.length, // Use widget.time.length instead of widget.days.length
+        itemCount: widget.time
+            .length, // Use widget.time.length instead of widget.days.length
         itemBuilder: (context, index) {
           final isSelected = selectedIndex == index;
           return Padding(
@@ -443,7 +362,7 @@ class _CustomTimeFormatDesignState extends State<CustomTimeFormatDesign> {
                 height: 54,
                 width: 41,
                 decoration: BoxDecoration(
-                  color: isSelected ? Colors.lightBlue : Colors.white,
+                  color: isSelected ? Color(0xFFb9AD6FB) : Colors.white,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
@@ -452,10 +371,14 @@ class _CustomTimeFormatDesignState extends State<CustomTimeFormatDesign> {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        widget.time[index], // Change widget.days[index] to widget.time[index]
+                        widget.time[
+                            index], // Change widget.days[index] to widget.time[index]
                         style: TextStyle(
                           fontSize: 10,
-                          color: isSelected ? Colors.white : Colors.black, // Change AppColors.darkblue to Colors.black if AppColors is not defined
+                          color: isSelected
+                              ? Colors.white
+                              : Colors
+                                  .black, // Change AppColors.darkblue to Colors.black if AppColors is not defined
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -464,10 +387,14 @@ class _CustomTimeFormatDesignState extends State<CustomTimeFormatDesign> {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        widget.timeformat[index], // Change widget.dates[index] to widget.timeformat[index]
+                        widget.timeformat[
+                            index], // Change widget.dates[index] to widget.timeformat[index]
                         style: TextStyle(
                           fontSize: 10,
-                          color: isSelected ? Colors.white : Colors.black, // Change AppColors.darkblue to Colors.black if AppColors is not defined
+                          color: isSelected
+                              ? Colors.white
+                              : Colors
+                                  .black, // Change AppColors.darkblue to Colors.black if AppColors is not defined
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -485,58 +412,5 @@ class _CustomTimeFormatDesignState extends State<CustomTimeFormatDesign> {
 
 
 
-class CustomCalendar extends StatefulWidget {
-  const CustomCalendar({super.key});
+//CustomDesingAndClass For
 
-  @override
-  State<CustomCalendar> createState() => _CustomCalendarState();
-}
-
-class _CustomCalendarState extends State<CustomCalendar> {
-  DateTime today = DateTime.now();
-  List<String> days = [];
-  List<String> dates = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _generateDaysAndDates();
-  }
-
-  void _generateDaysAndDates() {
-    int daysInMonth = _daysInMonth(today.year, today.month);
-    days = List.generate(daysInMonth, (index) => _getDayOfWeek(DateTime(today.year, today.month, index + 1)));
-    dates = List.generate(daysInMonth, (index) => (index + 1).toString());
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.lightblue,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-        child: CustomDateTimeDesign(
-          days: days,
-          dates: dates,
-        ),
-      ),
-    );
-  }
-
-  int _daysInMonth(int year, int month) {
-    return DateTime(year, month + 1, 0).day;
-  }
-
-  String _getDayOfWeek(DateTime date) {
-    switch (date.weekday) {
-      case 1: return 'Mon';
-      case 2: return 'Tue';
-      case 3: return 'Wed';
-      case 4: return 'Thu';
-      case 5: return 'Fri';
-      case 6: return 'Sat';
-      case 7: return 'Sun';
-      default: return '';
-    }
-  }
-}
