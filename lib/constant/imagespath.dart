@@ -4,7 +4,9 @@ class AppImagesPath {
   static const String textimage = 'assets/images/text.png';
   static const String linesimage = 'assets/images/Frame 6.png';
   static const String dollar='assets/images/dollar.png';
-
+  static const String workcomplete='assets/images/workcomplete.png';
+  static const String paymentsuccesfull='assets/images/paymentsuccesful.png';
+  static const String groundimage='assets/images/ground.png';
 //message screen pics
 static const String view='assets/images/dpview.png';
 static const String womenprofile='assets/images/womenprofile.png';

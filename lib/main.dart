@@ -3,8 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mela/screens/homescreen.dart';
 import 'package:mela/screens/messagescreen.dart';
+import 'package:mela/screens/paymentsuccesfull.dart';
 import 'package:mela/screens/productdetails.dart';
 import 'package:mela/screens/productservice.dart';
+import 'package:mela/screens/rateandreview.dart';
+import 'package:mela/screens/workcomplete.dart';
 
 void main() => runApp(
       DevicePreview(
@@ -25,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Messagescreen(),
+      home: const RateAndReviewClass(),
     );
   }
 }
