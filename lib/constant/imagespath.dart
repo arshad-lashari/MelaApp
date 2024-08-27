@@ -5,11 +5,18 @@ class AppImagesPath {
   static const String linesimage = 'assets/images/Frame 6.png';
   static const String dollar='assets/images/dollar.png';
 
-//essage screen pics
+//message screen pics
 static const String view='assets/images/dpview.png';
 static const String womenprofile='assets/images/womenprofile.png';
 static const String profilepic='assets/images/profilePicturesss.png';
 static const String menprofile='assets/images/menprofile.png';
+//list of message images
+List<String> messageimages=[
+  view,
+  womenprofile,
+  profilepic,
+  menprofile,
+];
   static const String logintextimage =
       'assets/images/Login with Phone Number.png';
   static const String manimage = 'assets/images/manvector.png';

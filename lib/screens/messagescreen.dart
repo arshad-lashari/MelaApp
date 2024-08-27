@@ -54,7 +54,7 @@ class _MessagescreenState extends State<Messagescreen> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: 10,
+                itemCount: appImagesPath.messageimages.length,
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
@@ -67,22 +67,22 @@ class _MessagescreenState extends State<Messagescreen> {
                               width: 38,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
-                                  image: const DecorationImage(
+                                  image:  DecorationImage(
                                       fit: BoxFit.fill,
                                       image:
-                                          AssetImage(AppImagesPath.menprofile))),
+                                          AssetImage(appImagesPath.messageimages[index]))),
                             ),
                             const SizedBox(
                               width: 10,
                             ),
-                            const Padding(
+                             Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Andy WaruWu'),
-                                  Text('Support'),
+                                  Text(appText.messagenames[index]),
+                                  Text(appText.messagepronames[index]),
                                 ],
                               ),
                             ),
