@@ -126,28 +126,46 @@ class AppText {
   ];
   List<String> timefromat = [
     'AM',
-     'AM',
-     'AM',
-     'AM',
-   'AM',
     'AM',
     'AM',
     'AM',
-  'AM',
     'AM',
-     'AM',
+    'AM',
+    'AM',
+    'AM',
+    'AM',
+    'AM',
+    'AM',
     'AM',
     'PM',
-     'PM',
     'PM',
-      'PM',
-  'PM',
-  'PM',
-  'PM',
-  'PM',
-   'PM',
-  'PM',
-  'PM',
-  'PM',
+    'PM',
+    'PM',
+    'PM',
+    'PM',
+    'PM',
+    'PM',
+    'PM',
+    'PM',
+    'PM',
+    'PM',
   ];
+
+  //text for message screen
+
+
+
+  List<String> messagenames = [
+    'Andey Warwuw',
+    'Tery Peterson',
+    'Camuel Crision',
+    'Corner Stone Av'
+  ];
+  List<String> messagepronames = [
+    'Support',
+    'Cleaner',
+    'Cleaner',
+    'Cleaner',
+  ];
+  List<String> lastseen = ['2.35 PM', '8.40', '3.12', '12.10'];
 }

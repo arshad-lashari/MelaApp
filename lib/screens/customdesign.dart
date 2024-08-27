@@ -76,7 +76,9 @@ class _TextFieldDesignState extends State<TextFieldDesign> {
       width: 319,
       height: 63,
       child: TextField(
+        
         decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(3),
           filled: true,
           fillColor: AppColors.lightblack,
           border: OutlineInputBorder(
