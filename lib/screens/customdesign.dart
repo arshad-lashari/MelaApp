@@ -76,9 +76,9 @@ class _TextFieldDesignState extends State<TextFieldDesign> {
       width: 319,
       height: 63,
       child: TextField(
-        
+        cursorColor: Colors.black38,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(3),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 13, vertical: 3),
           filled: true,
           fillColor: AppColors.lightblack,
           border: OutlineInputBorder(
@@ -143,7 +143,7 @@ class _CategoriesCustomState extends State<CategoriesCustom>
       height:
           MediaQuery.of(context).size.height - 270, // Adjust height as needed
       child: GridView.builder(
-        physics: AlwaysScrollableScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
         itemCount: appImagesPath.categoryimages.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -212,7 +212,7 @@ class _CustomProductDetailsState extends State<CustomProductDetails> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ProductServiceDetails(),
+                    builder: (context) => const ProductServiceDetails(),
                   ));
             },
             child: Container(
@@ -323,7 +323,6 @@ class _CustomProductDetailsState extends State<CustomProductDetails> {
   }
 }
 
-
 class CustomTimeFormatDesign extends StatefulWidget {
   final List<String> time;
   final List<String> timeformat;
@@ -364,7 +363,7 @@ class _CustomTimeFormatDesignState extends State<CustomTimeFormatDesign> {
                 height: 54,
                 width: 41,
                 decoration: BoxDecoration(
-                  color: isSelected ? Color(0xFFb9AD6FB) : Colors.white,
+                  color: isSelected ? const Color(0xFFb9AD6FB) : Colors.white,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
@@ -385,7 +384,7 @@ class _CustomTimeFormatDesignState extends State<CustomTimeFormatDesign> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 6),
+                    const SizedBox(height: 6),
                     Align(
                       alignment: Alignment.center,
                       child: Text(

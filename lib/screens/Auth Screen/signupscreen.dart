@@ -1,240 +1,211 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
 import 'package:mela/screens/customdesign.dart';
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class CustomBottomSheet extends StatelessWidget {
+  final bool chekvalue;
+  final Function(bool?) onCheckboxChanged;
+  final Function onClose;
+  final Function onCreateProfile;
+  final Function onLoginNow;
 
-  @override
-  State<SignupScreen> createState() => _SignupScreenState();
-}
+  const CustomBottomSheet({
+    Key? key,
+    required this.chekvalue,
+    required this.onCheckboxChanged,
+    required this.onClose,
+    required this.onCreateProfile,
+    required this.onLoginNow,
+  }) : super(key: key);
 
-class _SignupScreenState extends State<SignupScreen> {
-    bool chekvalue = false;
-  bool showBottomSheet = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          if (showBottomSheet)
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    showBottomSheet = false; // Hide BottomSheet on tap
-                  });
-                },
-                child: Container(
-                  height: 645,
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(34),
-                        topRight: Radius.circular(34)),
-                    color: Colors.white,
-                  ),
-                  child: Stack(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 20),
-                              child:
-                                  Image.asset(AppImagesPath.createaccountimage),
+    return GestureDetector(
+      onTap: () {
+        onClose();
+      },
+      child: SafeArea(
+        child: Container(
+          height: 645,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(34), topRight: Radius.circular(34)),
+            color: Colors.white,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SingleChildScrollView(
+              child: Padding(
+                // Adjust the padding when keyboard appears
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Column(
+                  children: [
+                    const Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                      child: Image(
+                        image: AssetImage(AppImagesPath.createaccountimage),
+                      ),
+                    ),
+                    const Image(
+                      image: AssetImage(AppImagesPath.wlcomsignupimage),
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      height: 55,
+                      child: TextFieldDesign(
+                        hintText: 'David Kowlaski',
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.all(9.0),
+                          child: CircleAvatar(
+                            backgroundColor: AppColors.bluescolor,
+                            child: Image.asset(
+                              height: 25,
+                              width: 25,
+                              AppImagesPath.manimage,
                             ),
-                            Image.asset(AppImagesPath.wlcomsignupimage),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            SizedBox(
-                              height: 55,
-                              child: TextFieldDesign(
-                                hintText: 'David Kowlaski',
-                                prefixIcon: Padding(
-                                  padding: const EdgeInsets.all(9.0),
-                                  child: CircleAvatar(
-                                    backgroundColor: AppColors.bluescolor,
-                                    child: Image.asset(
-                                        height: 25,
-                                        width: 25,
-                                        AppImagesPath.manimage),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const SizedBox(
-                              height: 55,
-                              child: TextFieldDesign(
-                                hintText: 'DavidKowi@gmail.com',
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.all(9.0),
-                                  child: CircleAvatar(
-                                    backgroundColor: AppColors.bluescolor,
-                                    child: Icon(
-                                      Icons.email,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            SizedBox(
-                              height: 55,
-                              child: TextFieldDesign(
-                                hintText: '904993933939',
-                                prefixIcon: Padding(
-                                  padding: const EdgeInsets.all(9.0),
-                                  child: CircleAvatar(
-                                    backgroundColor: AppColors.bluescolor,
-                                    child: Image.asset(
-                                        height: 25,
-                                        width: 25,
-                                        AppImagesPath.manimage),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const SizedBox(
-                              height: 50,
-                              child: TextFieldDesign(
-                                hintText: 'Adress',
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.all(9.0),
-                                  child: CircleAvatar(
-                                      backgroundColor: AppColors.bluescolor,
-                                      child: Icon(
-                                        Icons.location_on,
-                                        color: Colors.white,
-                                      )),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const SizedBox(
-                              height: 55,
-                              child: TextFieldDesign(
-                                hintText: 'City',
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.all(9.0),
-                                  child: CircleAvatar(
-                                      backgroundColor: AppColors.bluescolor,
-                                      child: Icon(
-                                        Icons.location_on,
-                                        color: Colors.white,
-                                      )),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const SizedBox(
-                              height: 50,
-                              child: TextFieldDesign(
-                                hintText: 'Zip_Code',
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.all(9.0),
-                                  child: CircleAvatar(
-                                      backgroundColor: AppColors.bluescolor,
-                                      child: Icon(
-                                        Icons.location_on,
-                                        color: Colors.white,
-                                      )),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 62,
-                            ),
-                            SizedBox(
-                              height: 55,
-                              child: CustomButtonDesign(
-                                  buttonText: 'Create Profile',
-                                  onPressed: () {}),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 9),
-                              child: Row(
-                                children: [
-                                  const Text(
-                                    "Already Have Account?",
-                                    style: TextStyle(
-                                        color: AppColors.darkblue,
-                                        fontSize: 14),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        showBottomSheet =
-                                            false; // Show BottomSheet
-                                      });
-                                    },
-                                    child: const Text(
-                                      'Login Now',
-                                      style: TextStyle(
-                                          color: AppColors.bluescolor,
-                                          fontSize: 14),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                      Positioned(
-                          bottom: 120,
-                          left: 0,
-                          child: SizedBox(
-                            height: 52,
-                            width: 52,
-                            child: Checkbox(
-                              activeColor: Colors.blueAccent,
-                              checkColor: Colors.white, // Add this line
-                              focusColor: Colors.black, // Add this line
-                              hoverColor: Colors.black12, // Add this line
-                              side: const BorderSide(
-                                  width: 1,
-                                  color: Colors.black), // Add this line
-                              value: chekvalue,
-                              onChanged: (value) {
-                                setState(() {
-                                  chekvalue = value!;
-                                });
-                              },
+                    ),
+                    const SizedBox(height: 10),
+                    const SizedBox(
+                      height: 55,
+                      child: TextFieldDesign(
+                        hintText: 'DavidKowi@gmail.com',
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(9.0),
+                          child: CircleAvatar(
+                            backgroundColor: AppColors.bluescolor,
+                            child: Icon(
+                              Icons.email,
+                              color: Colors.white,
                             ),
-                          )),
-                      Positioned(
-                        bottom: 126,
-                        left: 45,
-                        child: Image.asset(AppImagesPath.byclickingimage),
-                      )
-                    ],
-                  ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      height: 75,
+                      width: 319,
+                      child: IntlPhoneField(
+                        cursorColor: Colors.black54,
+                        decoration: InputDecoration(
+                          
+                            fillColor: AppColors.lightblack,
+                            filled: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: 3),
+                            border: OutlineInputBorder(
+                              
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(10)),
+                            hintText: '12345678',
+                            // ignore: prefer_const_constructors
+                            hintStyle: TextStyle(
+                              color: Colors.black12,
+                            )),
+                        initialCountryCode: 'US', // Set initial country code
+                        onChanged: (phone) {
+                          print(phone.completeNumber);
+                        },
+                        showDropdownIcon: false,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const SizedBox(
+                      height: 50,
+                      child: TextFieldDesign(
+                        hintText: 'Address',
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(9.0),
+                          child: CircleAvatar(
+                            backgroundColor: AppColors.bluescolor,
+                            child: Icon(
+                              Icons.location_on,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const SizedBox(
+                      height: 55,
+                      child: TextFieldDesign(
+                        hintText: 'City',
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(9.0),
+                          child: CircleAvatar(
+                            backgroundColor: AppColors.bluescolor,
+                            child: Icon(
+                              Icons.location_on,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const SizedBox(
+                      height: 50,
+                      child: TextFieldDesign(
+                        hintText: 'Zip_Code',
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(9.0),
+                          child: CircleAvatar(
+                            backgroundColor: AppColors.bluescolor,
+                            child: Icon(
+                              Icons.location_on,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      height: 55,
+                      child: CustomButtonDesign(
+                        buttonText: 'Create Profile',
+                        onPressed: () {
+                          onCreateProfile();
+                        },
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Already Have Account?",
+                          style: TextStyle(
+                              color: AppColors.darkblue, fontSize: 14),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            onLoginNow();
+                          },
+                          child: const Text(
+                            'Login Now',
+                            style: TextStyle(
+                                color: AppColors.bluescolor, fontSize: 14),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
-        ],
+          ),
+        ),
       ),
     );
   }

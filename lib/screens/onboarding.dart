@@ -17,42 +17,42 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Get the screen height and width
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-        child: Column(
-          children: [
-            SizedBox(
-              height: screenHeight * 0.20,
-            ),
-            Image.asset(
-              AppImagesPath.ownerimage,
-              height: screenHeight * 0.28, // Responsive height
-              width: screenWidth * 0.65, // Responsive width
-            ),
-            SizedBox(
-              height: screenHeight * 0.04,
-            ),
-            Image.asset(AppImagesPath.textimage),
-            SizedBox(
-              height: screenHeight * 0.24,
-            ),
-            CustomButtonDesign(
-              buttonText: 'Get Started',
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const LoginScreen()), // Replace with your actual screen
-                );
-              },
-            ),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        body: Padding(
+          padding:
+              const EdgeInsets.symmetric(horizontal: 20.0), // Fixed padding
+          child: Column(
+            children: [
+              const Spacer(),
+              Image.asset(
+                AppImagesPath.ownerimage,
+                height: 235.0,
+                width: 235.0,
+              ),
+              const SizedBox(
+                height: 30.0,
+              ),
+              Image.asset(AppImagesPath.textimage),
+              const Spacer(),
+              Align(
+                alignment: Alignment.center,
+                child: CustomButtonDesign(
+                  buttonText: 'Get Started',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
         ),
       ),
     );

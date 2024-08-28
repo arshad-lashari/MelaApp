@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
+import 'package:mela/screens/Auth%20Screen/signupscreen.dart';
+import 'package:mela/screens/bottomnav.dart';
 import 'package:mela/screens/customdesign.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -14,14 +16,37 @@ class _LoginScreenState extends State<LoginScreen> {
   AppColors appColors = AppColors();
   AppImagesPath appImagesPath = AppImagesPath();
   bool chekvalue = false;
-  bool showBottomSheet = false; // State variable to toggle BottomSheet
+
+  void _showBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      builder: (BuildContext context) {
+        return CustomBottomSheet(
+          chekvalue: chekvalue,
+          onCheckboxChanged: (value) {
+            setState(() {
+              chekvalue = value!;
+            });
+          },
+          onClose: () {
+            Navigator.pop(context); 
+          },
+          onCreateProfile: () {
+            Navigator.pop(context); // Handle create profile action
+     
+          },
+          onLoginNow: () {
+            Navigator.pop(context); // Close BottomSheet and show login
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Get screen dimensions for responsiveness
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -30,329 +55,117 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: [
                 Container(
-                  height: screenHeight * 0.48, // Responsive height
-                  width: double.infinity,
                   color: AppColors.lightblue,
-                  child: Stack(
+                  child: const Stack(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(
-                            top: screenHeight * 0.04), // Responsive padding
-                        child: Image.asset(AppImagesPath.linesimage),
+                        padding: EdgeInsets.only(top: 40),
+                        child: Image(
+                          fit: BoxFit.cover,
+                          height: 350,
+                          width: double.infinity,
+                          image: AssetImage(AppImagesPath.linesimage),
+                        ),
                       ),
                       Positioned(
-                        bottom: screenHeight * 0.09, // Responsive positioning
-                        right: screenWidth * 0.3, // Responsive positioning
+                        bottom: 65,
+                        left: 120,
                         child: Text(
                           'Mela',
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
-                            fontSize:
-                                screenWidth * 0.12, // Responsive font size
+                            fontSize: 50,
                             color: AppColors.bluescolor,
                             fontFamily: 'Luckiest Guy',
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: screenWidth * 0.04), // Responsive padding
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.1,
-                            vertical:
-                                screenHeight * 0.02), // Responsive padding
-                        child: Image.asset(AppImagesPath.logintextimage),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: screenHeight * 0.01, // Responsive spacing
-                ),
-                const TextFieldDesign(
-                  prefixIcon: Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: CircleAvatar(
-                        radius: 30,
-                        backgroundColor: AppColors.bluescolor,
-                        child: Icon(
-                          Icons.email,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      )),
-                  hintText: 'davidalski@mail.com',
-                ),
-                SizedBox(
-                  height: screenHeight * 0.02, // Responsive spacing
-                ),
-                const TextFieldDesign(
-                  prefixIcon: Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: CircleAvatar(
-                        radius: 30,
-                        backgroundColor: AppColors.bluescolor,
-                        child: Image(
-                            height: 15,
-                            width: 15,
-                            image: AssetImage(AppImagesPath.keyimage)),
-                      )),
-                  hintText: '***********',
-                ),
-                SizedBox(
-                  height: screenHeight * 0.02, // Responsive spacing
-                ),
-                CustomButtonDesign(buttonText: 'Login', onPressed: () {}),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: screenWidth * 0.07), // Responsive padding
-                  child: Row(
-                    children: [
-                      const Text(
-                        "Don't Have Account?",
-                        style:
-                            TextStyle(color: AppColors.darkblue, fontSize: 14),
+                Column(
+                  children: [
+                    const Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                      child: Image(
+                        image: AssetImage(AppImagesPath.logintextimage),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            showBottomSheet = true; // Show BottomSheet
-                          });
-                        },
-                        child: const Text(
-                          'Register Now',
-                          style: TextStyle(
-                              color: AppColors.bluescolor, fontSize: 14),
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          if (showBottomSheet)
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    showBottomSheet = false; // Hide BottomSheet on tap
-                  });
-                },
-                child: Container(
-                  height: 645,
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(34),
-                        topRight: Radius.circular(34)),
-                    color: Colors.white,
-                  ),
-                  child: Stack(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const TextFieldDesign(
+                      prefixIcon: Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: CircleAvatar(
+                            radius: 30,
+                            backgroundColor: AppColors.bluescolor,
+                            child: Icon(
+                              Icons.email,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          )),
+                      hintText: 'davidalski@mail.com',
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const TextFieldDesign(
+                      prefixIcon: Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: CircleAvatar(
+                            radius: 30,
+                            backgroundColor: AppColors.bluescolor,
+                            child: Image(
+                                height: 15,
+                                width: 15,
+                                image: AssetImage(AppImagesPath.keyimage)),
+                          )),
+                      hintText: '***********',
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                        alignment: Alignment.center,
+                        child: CustomButtonDesign(
+                            buttonText: 'Login', onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavBar(),));
+                            })),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 20),
-                              child:
-                                  Image.asset(AppImagesPath.createaccountimage),
+                            const Text(
+                              "Don't Have Account?",
+                              style: TextStyle(
+                                  color: AppColors.darkblue, fontSize: 14),
                             ),
-                            Image.asset(AppImagesPath.wlcomsignupimage),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            SizedBox(
-                              height: 55,
-                              child: TextFieldDesign(
-                                hintText: 'David Kowlaski',
-                                prefixIcon: Padding(
-                                  padding: const EdgeInsets.all(9.0),
-                                  child: CircleAvatar(
-                                    backgroundColor: AppColors.bluescolor,
-                                    child: Image.asset(
-                                        height: 25,
-                                        width: 25,
-                                        AppImagesPath.manimage),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const SizedBox(
-                              height: 55,
-                              child: TextFieldDesign(
-                                hintText: 'DavidKowi@gmail.com',
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.all(9.0),
-                                  child: CircleAvatar(
-                                    backgroundColor: AppColors.bluescolor,
-                                    child: Icon(
-                                      Icons.email,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            SizedBox(
-                              height: 55,
-                              child: TextFieldDesign(
-                                hintText: '904993933939',
-                                prefixIcon: Padding(
-                                  padding: const EdgeInsets.all(9.0),
-                                  child: CircleAvatar(
-                                    backgroundColor: AppColors.bluescolor,
-                                    child: Image.asset(
-                                        height: 25,
-                                        width: 25,
-                                        AppImagesPath.manimage),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const SizedBox(
-                              height: 50,
-                              child: TextFieldDesign(
-                                hintText: 'Adress',
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.all(9.0),
-                                  child: CircleAvatar(
-                                      backgroundColor: AppColors.bluescolor,
-                                      child: Icon(
-                                        Icons.location_on,
-                                        color: Colors.white,
-                                      )),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const SizedBox(
-                              height: 55,
-                              child: TextFieldDesign(
-                                hintText: 'City',
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.all(9.0),
-                                  child: CircleAvatar(
-                                      backgroundColor: AppColors.bluescolor,
-                                      child: Icon(
-                                        Icons.location_on,
-                                        color: Colors.white,
-                                      )),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const SizedBox(
-                              height: 50,
-                              child: TextFieldDesign(
-                                hintText: 'Zip_Code',
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.all(9.0),
-                                  child: CircleAvatar(
-                                      backgroundColor: AppColors.bluescolor,
-                                      child: Icon(
-                                        Icons.location_on,
-                                        color: Colors.white,
-                                      )),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 62,
-                            ),
-                            SizedBox(
-                              height: 55,
-                              child: CustomButtonDesign(
-                                  buttonText: 'Create Profile',
-                                  onPressed: () {}),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 9),
-                              child: Row(
-                                children: [
-                                  const Text(
-                                    "Already Have Account?",
-                                    style: TextStyle(
-                                        color: AppColors.darkblue,
-                                        fontSize: 14),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        showBottomSheet =
-                                            false; // Show BottomSheet
-                                      });
-                                    },
-                                    child: const Text(
-                                      'Login Now',
-                                      style: TextStyle(
-                                          color: AppColors.bluescolor,
-                                          fontSize: 14),
-                                    ),
-                                  )
-                                ],
+                            TextButton(
+                              onPressed: _showBottomSheet,
+                              child: const Text(
+                                'Register Now',
+                                style: TextStyle(
+                                    color: AppColors.bluescolor, fontSize: 14),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      Positioned(
-                          bottom: 120,
-                          left: 0,
-                          child: SizedBox(
-                            height: 52,
-                            width: 52,
-                            child: Checkbox(
-                              activeColor: Colors.blueAccent,
-                              checkColor: Colors.white, // Add this line
-                              focusColor: Colors.black, // Add this line
-                              hoverColor: Colors.black12, // Add this line
-                              side: const BorderSide(
-                                  width: 1,
-                                  color: Colors.black), // Add this line
-                              value: chekvalue,
-                              onChanged: (value) {
-                                setState(() {
-                                  chekvalue = value!;
-                                });
-                              },
-                            ),
-                          )),
-                      Positioned(
-                        bottom: 125,
-                        left: 45,
-                        child: Image.asset(AppImagesPath.byclickingimage),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                  ],
+                )
+              ],
             ),
+          ),
         ],
       ),
     );
