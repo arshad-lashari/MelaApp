@@ -2,11 +2,11 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:mela/constant/colorspath.dart';
-import 'package:mela/constant/imagespath.dart';
-import 'package:mela/screens/bottomnav.dart';
-import 'package:mela/screens/customdesign.dart';
-import 'package:mela/screens/homescreen.dart';
+import 'package:mela/CustomSide/constant/colorspath.dart';
+import 'package:mela/CustomSide/constant/imagespath.dart';
+import 'package:mela/CustomSide/screens/bottomnav.dart';
+import 'package:mela/CustomSide/screens/customdesign.dart';
+import 'package:mela/CustomSide/screens/homescreen.dart';
 
 class CustomBottomSheet extends StatelessWidget {
   final bool chekvalue;

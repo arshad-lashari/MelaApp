@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mela/constant/colorspath.dart';
-import 'package:mela/screens/customdesign.dart';
+import 'package:mela/CustomSide/constant/colorspath.dart';
+import 'package:mela/CustomSide/screens/customdesign.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});

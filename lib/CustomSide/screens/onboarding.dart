@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:mela/constant/imagespath.dart';
-import 'package:mela/screens/Auth%20Screen/loginscreen.dart';
-import 'package:mela/screens/customdesign.dart'; // Adjust import path if necessary
+import 'package:mela/CustomSide/constant/imagespath.dart';
+import 'package:mela/CustomSide/screens/Auth%20Screen/loginscreen.dart';
+import 'package:mela/CustomSide/screens/customdesign.dart'; // Adjust import path if necessary
 
 class OnBordingScreen extends StatefulWidget {
   const OnBordingScreen({super.key});
@@ -18,14 +18,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
   void initState() {
     super.initState();
     // Timer to navigate to another screen after 10 seconds
-    Timer(const Duration(seconds: 10), () {
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
-        );
-      }
-    });
+   
   }
 
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mela/constant/colorspath.dart';
-import 'package:mela/constant/imagespath.dart';
-import 'package:mela/screens/customdesign.dart';
+import 'package:mela/CustomSide/constant/colorspath.dart';
+import 'package:mela/CustomSide/constant/imagespath.dart';
+import 'package:mela/CustomSide/screens/customdesign.dart';
 
 class RateAndReviewClass extends StatefulWidget {
   const RateAndReviewClass({super.key});
@@ -28,9 +28,9 @@ class _RateAndReviewClassState extends State<RateAndReviewClass> {
             child: IconButton(
               icon: const Icon(
                 Icons.arrow_back,
-              ), // Adjusted the color to be visible
+              ),
               onPressed: () {
-                Navigator.pop(context); // Added functionality to go back
+                Navigator.pop(context);
               },
             ),
           ),
@@ -133,7 +133,8 @@ class _RateAndReviewClassState extends State<RateAndReviewClass> {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 25,horizontal: 13),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 25, horizontal: 13),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -146,7 +147,9 @@ class _RateAndReviewClassState extends State<RateAndReviewClass> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(16)),
                         ),
-                        SizedBox(width: 20,),
+                        SizedBox(
+                          width: 20,
+                        ),
                         Container(
                           height: 120,
                           width: 158,
@@ -175,9 +178,6 @@ class _RateAndReviewClassState extends State<RateAndReviewClass> {
                     ),
                   ),
                 ),
-         
-         
-         
                 Spacer(),
                 Align(
                     alignment: Alignment.center,

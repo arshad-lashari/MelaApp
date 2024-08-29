@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mela/constant/apptext.dart';
-import 'package:mela/constant/colorspath.dart';
-import 'package:mela/constant/imagespath.dart';
-import 'package:mela/screens/customdesign.dart';
-import 'package:mela/screens/customscreens/celandercustom.dart';
-import 'package:mela/screens/workcomplete.dart';
+import 'package:mela/CustomSide/constant/apptext.dart';
+import 'package:mela/CustomSide/constant/colorspath.dart';
+import 'package:mela/CustomSide/constant/imagespath.dart';
+import 'package:mela/CustomSide/screens/customdesign.dart';
+import 'package:mela/CustomSide/screens/customscreens/celandercustom.dart';
+import 'package:mela/CustomSide/screens/workcomplete.dart';
 
 class ProductServiceDetails extends StatefulWidget {
   const ProductServiceDetails({super.key});

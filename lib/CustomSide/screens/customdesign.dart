@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mela/constant/apptext.dart';
-import 'package:mela/constant/colorspath.dart';
-import 'package:mela/constant/imagespath.dart';
-import 'package:mela/screens/productdetails.dart';
-import 'package:mela/screens/productservice.dart';
+import 'package:mela/CustomSide/constant/apptext.dart';
+import 'package:mela/CustomSide/constant/colorspath.dart';
+import 'package:mela/CustomSide/constant/imagespath.dart';
+import 'package:mela/CustomSide/screens/productdetails.dart';
+import 'package:mela/CustomSide/screens/productservice.dart';
 
 class CustomButtonDesign extends StatefulWidget {
   final String buttonText;

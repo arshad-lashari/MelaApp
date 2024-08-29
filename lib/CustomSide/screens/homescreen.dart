@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mela/constant/apptext.dart';
-import 'package:mela/constant/colorspath.dart';
-import 'package:mela/constant/imagespath.dart';
-import 'package:mela/screens/customdesign.dart';
-import 'package:mela/screens/productdetails.dart';
+import 'package:mela/CustomSide/constant/apptext.dart';
+import 'package:mela/CustomSide/constant/colorspath.dart';
+import 'package:mela/CustomSide/constant/imagespath.dart';
+import 'package:mela/CustomSide/screens/customdesign.dart';
+import 'package:mela/CustomSide/screens/productdetails.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
