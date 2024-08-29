@@ -109,14 +109,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             fontSize: 16,
                             fontWeight: FontWeight.w500),
                       ),
-                    SizedBox(height: 5,),
+                    const SizedBox(height: 5,),
                       const SizedBox(
-                          width: 327,
+                          width: double.infinity,
                           height: 48,
                           child: TextFieldDesign(
                             hintText: 'Name',
                           )),
-                                 SizedBox(height: 10,),
+                                 const SizedBox(height: 10,),
                       const Text(
                         'Name',
                         style: TextStyle(
@@ -124,14 +124,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             fontSize: 16,
                             fontWeight: FontWeight.w500),
                       ),
-                    SizedBox(height: 5,),
+                    const SizedBox(height: 5,),
                       const SizedBox(
-                          width: 327,
+                        width: double.infinity,
                           height: 48,
                           child: TextFieldDesign(
                             hintText: 'Name',
                           )),
-                        SizedBox(height: 10,),
+                        const SizedBox(height: 10,),
                       const Text(
                         'Name',
                         style: TextStyle(
@@ -139,14 +139,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             fontSize: 16,
                             fontWeight: FontWeight.w500),
                       ),
-                     SizedBox(height: 5,),
+                     const SizedBox(height: 5,),
                       const SizedBox(
-                          width: 327,
+                          width: double.infinity,
                           height: 48,
                           child: TextFieldDesign(
                             hintText: 'Name',
                           )),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
                       const Text(
                         'Name',
                         style: TextStyle(
@@ -154,14 +154,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             fontSize: 16,
                             fontWeight: FontWeight.w500),
                       ),
-                      SizedBox(height: 5,),
+                      const SizedBox(height: 5,),
                       const SizedBox(
-                          width: 327,
+                         width: double.infinity,
                           height: 48,
                           child: TextFieldDesign(
                             hintText: 'Name',
                           )),
-                     SizedBox(height: 20,),
+                     const SizedBox(height: 20,),
                       Align(
                         alignment: Alignment.center,
                         child: CustomButtonDesign(buttonText: 'Save', onPressed: () {})),

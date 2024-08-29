@@ -8,6 +8,7 @@ class AppImagesPath {
   static const String paymentsuccesfull='assets/images/paymentsuccesful.png';
   static const String groundimage='assets/images/ground.png';
   static const String jugard='assets/images/jgard.jpg';
+  static const String splashscimage='assets/images/Splash Screen (1).png';
 //message screen pics
 static const String view='assets/images/dpview.png';
 static const String womenprofile='assets/images/womenprofile.png';

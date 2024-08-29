@@ -31,11 +31,10 @@ class _LoginScreenState extends State<LoginScreen> {
             });
           },
           onClose: () {
-            Navigator.pop(context); 
+            Navigator.pop(context);
           },
           onCreateProfile: () {
             Navigator.pop(context); // Handle create profile action
-     
           },
           onLoginNow: () {
             Navigator.pop(context); // Close BottomSheet and show login
@@ -49,53 +48,60 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  color: AppColors.lightblue,
-                  child: const Stack(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 40),
-                        child: Image(
-                          fit: BoxFit.cover,
-                          height: 350,
-                          width: double.infinity,
-                          image: AssetImage(AppImagesPath.linesimage),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.sizeOf(context).height * 0.38,
+              width: double.infinity,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: AppColors.lightblue,
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: AssetImage(
+                          AppImagesPath.linesimage,
                         ),
                       ),
-                      Positioned(
-                        bottom: 65,
-                        left: 120,
-                        child: Text(
-                          'Mela',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 50,
-                            color: AppColors.bluescolor,
-                            fontFamily: 'Luckiest Guy',
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-                Column(
-                  children: [
-                    const Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                      child: Image(
-                        image: AssetImage(AppImagesPath.logintextimage),
+                  const Align(
+                    alignment: Alignment(0.1, 0.6),
+                    child: Text(
+                      "Mela",
+                      style: TextStyle(
+                        fontSize: 50,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.bluescolor,
+                        fontFamily: "Luckiest Guy",
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                    child: Image(
+                      image: AssetImage(
+                        AppImagesPath.logintextimage,
+                      ),
                     ),
-                    const TextFieldDesign(
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  // ignore: prefer_const_constructors
+                  SizedBox(
+                    width: double.infinity,
+                    child: const TextFieldDesign(
                       prefixIcon: Padding(
                           padding: EdgeInsets.all(10.0),
                           child: CircleAvatar(
@@ -109,10 +115,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           )),
                       hintText: 'davidalski@mail.com',
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const TextFieldDesign(
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const SizedBox(
+                    width: double.infinity,
+                    child: TextFieldDesign(
                       prefixIcon: Padding(
                           padding: EdgeInsets.all(10.0),
                           child: CircleAvatar(
@@ -125,48 +134,56 @@ class _LoginScreenState extends State<LoginScreen> {
                           )),
                       hintText: '***********',
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Align(
-                        alignment: Alignment.center,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Align(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: double.infinity,
                         child: CustomButtonDesign(
-                            buttonText: 'Login', onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavBar(),));
-                            })),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "Don't Have Account?",
+                            buttonText: 'Login',
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const BottomNavBar(),
+                                  ));
+                            }),
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Don't Have Account?",
+                            style: TextStyle(
+                                color: AppColors.darkblue, fontSize: 14),
+                          ),
+                          TextButton(
+                            onPressed: _showBottomSheet,
+                            child: const Text(
+                              'Register Now',
                               style: TextStyle(
-                                  color: AppColors.darkblue, fontSize: 14),
+                                  color: AppColors.bluescolor, fontSize: 14),
                             ),
-                            TextButton(
-                              onPressed: _showBottomSheet,
-                              child: const Text(
-                                'Register Now',
-                                style: TextStyle(
-                                    color: AppColors.bluescolor, fontSize: 14),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ],
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

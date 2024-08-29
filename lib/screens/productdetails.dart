@@ -15,18 +15,14 @@ class ProductDetailsScreen extends StatefulWidget {
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   AppColors appColors = AppColors();
   AppImagesPath appImagesPath = AppImagesPath();
-  AppText appText=AppText();
+  AppText appText = AppText();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightblue,
-      body: 
-    
-      Padding(
-        padding: const EdgeInsets.only(left: 20,right: 20,top: 60),
-       
-      
+      body: Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 60),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,8 +30,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             Row(
               children: [
                 GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          // ignore: prefer_const_constructors
+                          builder: (context) => HomeScreen(),
+                        ));
                   },
                   child: Container(
                     height: 40,
@@ -50,17 +51,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  width: 70,
-                ),
                 const Expanded(
-                  child: Text(
-                    'Cleaners',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Ubuntu',
-                      color: Colors.black, // Fixed by using Colors.black
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Cleaners',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Ubuntu',
+                        color: Colors.black, // Fixed by using Colors.black
+                      ),
                     ),
                   ),
                 )
@@ -112,7 +113,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
             ),
             const SizedBox(height: 10),
-const CustomProductDetails()
+            const CustomProductDetails()
           ],
         ),
       ),

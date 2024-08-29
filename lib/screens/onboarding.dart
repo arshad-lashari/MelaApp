@@ -1,8 +1,8 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
 import 'package:mela/screens/Auth%20Screen/loginscreen.dart';
-import 'package:mela/screens/customdesign.dart';
+import 'package:mela/screens/customdesign.dart'; // Adjust import path if necessary
 
 class OnBordingScreen extends StatefulWidget {
   const OnBordingScreen({super.key});
@@ -12,8 +12,21 @@ class OnBordingScreen extends StatefulWidget {
 }
 
 class _OnBordingScreenState extends State<OnBordingScreen> {
-  AppColors appColors = AppColors();
   AppImagesPath appImagesPath = AppImagesPath();
+
+  @override
+  void initState() {
+    super.initState();
+    // Timer to navigate to another screen after 10 seconds
+    Timer(const Duration(seconds: 10), () {
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +43,9 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                 height: 235.0,
                 width: 235.0,
               ),
-              const SizedBox(
-                height: 30.0,
-              ),
-              Image.asset(AppImagesPath.textimage),
+              const SizedBox(height: 30.0),
+              Image.asset(
+                  AppImagesPath.textimage), // Replace with your asset path
               const Spacer(),
               Align(
                 alignment: Alignment.center,
@@ -43,14 +55,13 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const LoginScreen()),
+                        builder: (context) => const LoginScreen(),
+                      ),
                     );
                   },
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 25),
             ],
           ),
         ),

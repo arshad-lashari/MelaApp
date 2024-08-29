@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
+import 'package:mela/screens/rateandreview.dart';
 
 class WorkCompleScreen extends StatefulWidget {
   const WorkCompleScreen({super.key});
@@ -19,7 +20,6 @@ class _WorkCompleScreenState extends State<WorkCompleScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Spacer(),
-        
             Align(
               alignment: Alignment.center,
               child: SizedBox(
@@ -51,31 +51,41 @@ class _WorkCompleScreenState extends State<WorkCompleScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(155, 50),
-                    backgroundColor: Colors.red,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)
-                    )
-                  ),
-                  onPressed: () {}, child: const Text('Reject',style: TextStyle(
-                    color: Colors.white,fontFamily: 'Ubuntu',
-                    fontSize: 14,fontWeight: FontWeight.w500
-                  ),)),
-            
-                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(155, 50),
-                    backgroundColor: Colors.red,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)
-                    )
-                  ),
-                  onPressed: () {}, child: const Text('Reject',style: TextStyle(
-                    color: Colors.white,fontFamily: 'Ubuntu',
-                    fontSize: 14,fontWeight: FontWeight.w500
-                  ),)),
-            
+                    style: ElevatedButton.styleFrom(
+                        fixedSize: const Size(155, 50),
+                        backgroundColor: Colors.red,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    onPressed: () {},
+                    child: const Text(
+                      'Reject',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Ubuntu',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500),
+                    )),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        fixedSize: const Size(155, 50),
+                        backgroundColor: Color(0xFF7ECA8A),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RateAndReviewClass(),
+                          ));
+                    },
+                    child: const Text(
+                      'Accept',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Ubuntu',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500),
+                    )),
               ],
             ),
             const SizedBox(height: 10),

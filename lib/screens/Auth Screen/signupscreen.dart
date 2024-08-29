@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
+import 'package:mela/screens/bottomnav.dart';
 import 'package:mela/screens/customdesign.dart';
+import 'package:mela/screens/homescreen.dart';
 
 class CustomBottomSheet extends StatelessWidget {
   final bool chekvalue;
@@ -98,12 +100,10 @@ class CustomBottomSheet extends StatelessWidget {
                       child: IntlPhoneField(
                         cursorColor: Colors.black54,
                         decoration: InputDecoration(
-                          
                             fillColor: AppColors.lightblack,
                             filled: true,
                             contentPadding: EdgeInsets.symmetric(vertical: 3),
                             border: OutlineInputBorder(
-                              
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(10)),
                             hintText: '12345678',
@@ -175,7 +175,11 @@ class CustomBottomSheet extends StatelessWidget {
                       child: CustomButtonDesign(
                         buttonText: 'Create Profile',
                         onPressed: () {
-                          onCreateProfile();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BottomNavBar(),
+                              ));
                         },
                       ),
                     ),
