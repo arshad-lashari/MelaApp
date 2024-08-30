@@ -38,6 +38,33 @@ class _ProductServiceHomeImageDetailsCustomState
                 image: AssetImage(AppImagesPath.homeimage),
               ),
             ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                          color: AppColors.lightblue,
+                          borderRadius: BorderRadius.circular(10)),
+                      // ignore: prefer_const_constructors
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(15),

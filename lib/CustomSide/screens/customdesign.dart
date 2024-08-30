@@ -8,11 +8,13 @@ import 'package:mela/CustomSide/screens/productservice.dart';
 class CustomButtonDesign extends StatefulWidget {
   final String buttonText;
   final VoidCallback onPressed;
+  final Color? buttonColor; // Optional parameter for button color
 
   const CustomButtonDesign({
     super.key,
     required this.buttonText,
     required this.onPressed,
+    this.buttonColor, // Optional: defaults to null
   });
 
   @override
@@ -39,7 +41,8 @@ class _CustomButtonDesignState extends State<CustomButtonDesign>
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.bluescolor,
+            backgroundColor: widget.buttonColor ??
+                AppColors.bluescolor, // Use provided color or default
             fixedSize: const Size(327, 50),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10))),
@@ -78,7 +81,8 @@ class _TextFieldDesignState extends State<TextFieldDesign> {
       child: TextField(
         cursorColor: Colors.black38,
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 13, vertical: 3),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 13, vertical: 3),
           filled: true,
           fillColor: AppColors.lightblack,
           border: OutlineInputBorder(
