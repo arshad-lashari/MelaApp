@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:mela/CustomSide/constant/imagespath.dart';
+import 'package:mela/constant/imagespath.dart';
 import 'package:mela/CustomSide/screens/Auth%20Screen/loginscreen.dart';
 import 'package:mela/CustomSide/screens/customdesign.dart'; // Adjust import path if necessary
 

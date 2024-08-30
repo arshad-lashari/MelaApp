@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mela/CustomSide/constant/colorspath.dart';
-import 'package:mela/CustomSide/constant/imagespath.dart';
+import 'package:mela/constant/colorspath.dart';
+import 'package:mela/constant/imagespath.dart';
 import 'package:mela/CustomSide/screens/Auth%20Screen/signupscreen.dart';
 import 'package:mela/CustomSide/screens/bottomnav.dart';
 import 'package:mela/CustomSide/screens/customdesign.dart';

@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mela/BusinessSide/B_Screens/businesshomescreen.dart';
@@ -7,12 +6,10 @@ import 'package:mela/BusinessSide/B_Screens/businessprofilescreen.dart';
 import 'package:mela/BusinessSide/B_Screens/myservicesscreen.dart';
 import 'package:mela/BusinessSide/B_Screens/upcomingjobs.dart';
 
-
 class BusinessAppNavBar extends StatefulWidget {
   const BusinessAppNavBar({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _BusinessAppNavBarState createState() => _BusinessAppNavBarState();
 }
 
@@ -31,41 +28,46 @@ class _BusinessAppNavBarState extends State<BusinessAppNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: _pages[_currentIndex],
-   bottomNavigationBar: BottomNavigationBar(
-  backgroundColor: Colors.white,
-  type: BottomNavigationBarType.fixed, // For more than 3 items
-  currentIndex: _currentIndex,
-  selectedItemColor: Colors.white, // Color for the selected item
-  unselectedItemColor: Colors.grey, // Color for the unselected items
-  showSelectedLabels: false, // Hide the selected label
-  showUnselectedLabels: false, // Hide the unselected labels
-  onTap: (index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  },
-  items: [
-    BottomNavigationBarItem(
-      icon: _buildIconWithBackground(0, Icons.home_outlined,),
-      label: '', // Empty label
-    ),
-    BottomNavigationBarItem(
-      icon: _buildIconWithBackground(1, CupertinoIcons.chat_bubble_text),
-      label: '', // Empty label
-    ),
-    BottomNavigationBarItem(
-      icon: _buildIconWithBackground(2, CupertinoIcons.macwindow),
-      label: '', // Empty label
-    ),
-    BottomNavigationBarItem(
-      icon: _buildIconWithBackground(3,CupertinoIcons.person),
-      label: '', // Empty label
-    ),
-  ],
-),
-
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        type: BottomNavigationBarType.fixed, // For more than 3 items
+        currentIndex: _currentIndex,
+        selectedItemColor: Colors.white, // Color for the selected item
+        unselectedItemColor: Colors.grey, // Color for the unselected items
+        showSelectedLabels: false, // Hide the selected label
+        showUnselectedLabels: false, // Hide the unselected labels
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: _buildIconWithBackground(
+              0,
+              Icons.home_outlined,
+            ),
+            label: '', // Empty label
+          ),
+          BottomNavigationBarItem(
+            icon: _buildIconWithBackground(1, CupertinoIcons.chat_bubble_text),
+            label: '', // Empty label
+          ),
+          BottomNavigationBarItem(
+            icon: _buildIconWithBackground(2, CupertinoIcons.macwindow),
+            label: '', // Empty label
+          ),
+          BottomNavigationBarItem(
+            icon: _buildIconWithBackground(3, CupertinoIcons.square_list),
+            label: '', // Empty label
+          ),
+          BottomNavigationBarItem(
+            icon: _buildIconWithBackground(4, CupertinoIcons.person),
+            label: '', // Empty label
+          ),
+        ],
+      ),
     );
   }
 
@@ -74,17 +76,20 @@ class _BusinessAppNavBarState extends State<BusinessAppNavBar> {
     return Container(
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        color: _currentIndex == index ? const Color(0xFF9AD6FB) : Colors.transparent, // Apply the #9AD6FB color to the selected container
+        color: _currentIndex == index
+            ? const Color(0xFF9AD6FB)
+            : Colors
+                .transparent, // Apply the #9AD6FB color to the selected container
       ),
       child: Icon(
         icon,
-        color: _currentIndex == index ? Colors.white : Colors.grey, // Change icon color based on selection
+        color: _currentIndex == index
+            ? Colors.white
+            : Colors.grey, // Change icon color based on selection
       ),
     );
   }
 }
-
-
 
 // Cart Screen
 class CartPage extends StatelessWidget {

@@ -153,8 +153,6 @@ class AppText {
 
   //text for message screen
 
-
-
   List<String> messagenames = [
     'Andey Warwuw',
     'Tery Peterson',
@@ -168,4 +166,80 @@ class AppText {
     'Cleaner',
   ];
   List<String> lastseen = ['2.35 PM', '8.40', '3.12', '12.10'];
+
+
+  static const String name = 'Terry Peterson';
+  static const String name1 = 'Terry Peterson';
+  static const String name2 = 'Terry Peterson';
+  static const String name3 = 'Terry Peterson';
+  static const String name4 = 'Terry Peterson';
+  static const String name5 = 'Terry Peterson';
+  static const String name6 = 'Terry Peterson';
+  static const String name7 = 'Terry Peterson';
+  static const String name8 = 'Terry Peterson';
+  static const String name9 = 'Terry Peterson';
+
+  List<String> usernamesss = [
+    name,
+    name1,
+    name2,
+    name3,
+    name4,
+    name5,
+    name6,
+    name7,
+    name8,
+    name9,
+  ];
+
+
+  //Business text home page date text
+  static const String date = '15 January 2002';
+  static const String date1 = '15 January 2002';
+  static const String date2 = '15 January 2002';
+  static const String date3 = '15 January 2002';
+  static const String date4 = '15 January 2002';
+  static const String date5 = '15 January 2002';
+  static const String date6 = '15 January 2002';
+  static const String date7 = '15 January 2002';
+  static const String date8 = '15 January 2002';
+  static const String date9 = '15 January 2002';
+
+  List<String> dates = [
+    date,
+    date1,
+    date2,
+    date3,
+    date4,
+    date5,
+    date6,
+    date7,
+    date8,
+    date9
+  ];
+
+//time text on home page for order detail
+  static const String times = '11:32 Am';
+  static const String times1 = '11:32 Am';
+  static const String times2 = '11:32 Am';
+  static const String times3 = '11:32 Am';
+  static const String times4 = '11:32 Am';
+  static const String times5 = '11:32 Am';
+  static const String times6 = '11:32 Am';
+  static const String times7 = '11:32 Am';
+  static const String times8 = '11:32 Am';
+  static const String times9 = '11:32 Am';
+
+  List<String> timess = [
+    times,
+    times1,
+    times2,
+    times3,
+    times4,
+    times5,
+    times6,
+    times7,
+    times8,
+    times9
+  ];
 }

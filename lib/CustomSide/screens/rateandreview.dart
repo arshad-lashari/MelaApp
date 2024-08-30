@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mela/CustomSide/constant/colorspath.dart';
-import 'package:mela/CustomSide/constant/imagespath.dart';
+import 'package:mela/constant/colorspath.dart';
+import 'package:mela/constant/imagespath.dart';
 import 'package:mela/CustomSide/screens/customdesign.dart';
 
 class RateAndReviewClass extends StatefulWidget {

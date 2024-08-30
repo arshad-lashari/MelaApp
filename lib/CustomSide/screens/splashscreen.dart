@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mela/CustomSide/screens/onboarding.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:mela/CustomSide/constant/colorspath.dart';
-import 'package:mela/CustomSide/constant/imagespath.dart';
+import 'package:mela/constant/colorspath.dart';
+import 'package:mela/constant/imagespath.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
