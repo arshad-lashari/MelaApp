@@ -20,7 +20,7 @@ class _BusinessAppNavBarState extends State<BusinessAppNavBar> {
   final List<Widget> _pages = [
     const BusinessAppHomeScreen(),
     const BusinessMessagescreen(),
-    const CompletedJobs(),
+    const CompleteAndUpComingJobs(),
     const MyServicesScreen(),
     const BusinessProfileScreen(),
   ];

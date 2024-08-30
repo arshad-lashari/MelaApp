@@ -3,24 +3,26 @@ class AppImagesPath {
   static const String ownerimage = 'assets/images/owner.png';
   static const String textimage = 'assets/images/text.png';
   static const String linesimage = 'assets/images/Frame 6.png';
-  static const String dollar='assets/images/dollar.png';
-  static const String workcomplete='assets/images/workcomplete.png';
-  static const String paymentsuccesfull='assets/images/paymentsuccesful.png';
-  static const String groundimage='assets/images/ground.png';
-  static const String jugard='assets/images/jgard.jpg';
-  static const String splashscimage='assets/images/Splash Screen (1).png';
+  static const String dollar = 'assets/images/dollar.png';
+  static const String workcomplete = 'assets/images/workcomplete.png';
+  static const String paymentsuccesfull = 'assets/images/paymentsuccesful.png';
+  static const String groundimage = 'assets/images/ground.png';
+  static const String jugard = 'assets/images/jgard.jpg';
+  static const String splashscimage = 'assets/images/Splash Screen (1).png';
+  static const String deicon = 'assets/images/de.png';
+
 //message screen pics
-static const String view='assets/images/dpview.png';
-static const String womenprofile='assets/images/womenprofile.png';
-static const String profilepic='assets/images/profilePicturesss.png';
-static const String menprofile='assets/images/menprofile.png';
+  static const String view = 'assets/images/dpview.png';
+  static const String womenprofile = 'assets/images/womenprofile.png';
+  static const String profilepic = 'assets/images/profilePicturesss.png';
+  static const String menprofile = 'assets/images/menprofile.png';
 //list of message images
-List<String> messageimages=[
-  view,
-  womenprofile,
-  profilepic,
-  menprofile,
-];
+  List<String> messageimages = [
+    view,
+    womenprofile,
+    profilepic,
+    menprofile,
+  ];
   static const String logintextimage =
       'assets/images/Login with Phone Number.png';
   static const String manimage = 'assets/images/manvector.png';
@@ -31,7 +33,7 @@ List<String> messageimages=[
   static const String byclickingimage = 'assets/images/byclicking.png';
   static const String homeimage = 'assets/images/homeimage.png';
   static const String delvryman = 'assets/images/develryman.png';
-  static const String profile='assets/images/profile.png';
+  static const String profile = 'assets/images/profile.png';
 
   //Categories images home screen
   static const String cleaner = 'assets/images/001-mop.png';
@@ -52,7 +54,7 @@ List<String> messageimages=[
     mirror,
     plumber,
     repair,
-      cleaner,
+    cleaner,
     movers,
     computer,
     furniture,
@@ -60,7 +62,7 @@ List<String> messageimages=[
     mirror,
     plumber,
     repair,
-        cleaner,
+    cleaner,
     movers,
     computer,
     furniture,
@@ -68,7 +70,7 @@ List<String> messageimages=[
     mirror,
     plumber,
     repair,
-      cleaner,
+    cleaner,
     movers,
     computer,
     furniture,

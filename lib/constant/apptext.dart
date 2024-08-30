@@ -167,7 +167,6 @@ class AppText {
   ];
   List<String> lastseen = ['2.35 PM', '8.40', '3.12', '12.10'];
 
-
   static const String name = 'Terry Peterson';
   static const String name1 = 'Terry Peterson';
   static const String name2 = 'Terry Peterson';
@@ -191,7 +190,6 @@ class AppText {
     name8,
     name9,
   ];
-
 
   //Business text home page date text
   static const String date = '15 January 2002';
@@ -241,5 +239,30 @@ class AppText {
     times7,
     times8,
     times9
+  ];
+  //Text for completed orders on complete/upcoming orders screen
+
+  static const ordername = 'Irene foks';
+  static const ordername1 = 'Irene foks';
+  static const ordername2 = 'Irene foks';
+  static const ordername3 = 'Irene foks';
+  static const ordername4 = 'Irene foks';
+  static const ordername5 = 'Irene foks';
+  static const ordername6 = 'Irene foks';
+  static const ordername7 = 'Irene foks';
+  static const ordername8 = 'Irene foks';
+  static const ordername9 = 'Irene foks';
+
+  List<String> completeordernames = [
+    ordername,
+    ordername1,
+    ordername2,
+    ordername3,
+    ordername4,
+    ordername5,
+    ordername6,
+    ordername7,
+    ordername8,
+    ordername9,
   ];
 }

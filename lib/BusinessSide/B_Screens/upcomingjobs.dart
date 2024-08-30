@@ -1,17 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mela/BusinessSide/B_Screens/CustomDesign/ordercompletecustom.dart';
 import 'package:mela/BusinessSide/B_Screens/CustomDesign/orderdetialcustom.dart';
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
 
-class CompletedJobs extends StatefulWidget {
-  const CompletedJobs({super.key});
+class CompleteAndUpComingJobs extends StatefulWidget {
+  const CompleteAndUpComingJobs({super.key});
 
   @override
-  State<CompletedJobs> createState() => _CompletedJobsState();
+  State<CompleteAndUpComingJobs> createState() =>
+      _CompleteAndUpComingJobsState();
 }
 
-class _CompletedJobsState extends State<CompletedJobs>
+class _CompleteAndUpComingJobsState extends State<CompleteAndUpComingJobs>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final ValueNotifier<String> _titleNotifier =
@@ -31,6 +33,8 @@ class _CompletedJobsState extends State<CompletedJobs>
       });
   }
 
+  AppText appText = AppText();
+
   @override
   void dispose() {
     _tabController.dispose();
@@ -41,111 +45,48 @@ class _CompletedJobsState extends State<CompletedJobs>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        actions: const [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Icon(Icons.notifications),
+          ),
+        ],
+        title: ValueListenableBuilder<String>(
+          valueListenable: _titleNotifier,
+          builder: (context, title, child) {
+            return Text(
+              title,
+              style: const TextStyle(
+                fontFamily: 'Ubuntu',
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                color: AppColors.darkblue,
+              ),
+            );
+          },
+        ),
+      ),
       body: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.3, // Adjust as needed
-              top:
-                  MediaQuery.of(context).size.height * 0.05, // Adjust as needed
-              right: MediaQuery.of(context).size.height * 0.02,
-              bottom:
-                  MediaQuery.of(context).size.height * 0.04, // Adjust as needed
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ValueListenableBuilder<String>(
-                  valueListenable: _titleNotifier,
-                  builder: (context, title, child) {
-                    return Text(
-                      title,
-                      style: const TextStyle(
-                        fontFamily: 'Ubuntu',
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.darkblue,
-                      ),
-                    );
-                  },
-                ),
-                const Icon(Icons.notifications),
-              ],
-            ),
-          ),
           TabBar(
             controller: _tabController,
             tabs: const [
               Tab(text: 'Complete'),
               Tab(text: 'Upcoming'),
             ],
-            indicatorColor: AppColors.darkblue,
-            labelColor: AppColors.darkblue,
-            unselectedLabelColor: Colors.grey,
+            labelColor: Color(0xFF3B98D4), // Set selected tab color
+            unselectedLabelColor: Colors.grey, // Set unselected tab color
+            indicatorColor: Color(0xFF3B98D4),
           ),
           Expanded(
             child: TabBarView(
               controller: _tabController,
               children: [
-                ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 4),
-                      child: Container(
-                          height: 80,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              boxShadow: const [
-                                BoxShadow(
-                                    color: Colors.black12,
-                                    offset: Offset(0.1, 0.1),
-                                    spreadRadius: 1,
-                                    blurRadius: 8)
-                              ],
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5)),
-                          child: ListTile(
-                            title: const Text(
-                              'Irene foks',
-                              style: TextStyle(
-                                  fontFamily: 'Ubuntu',
-                                  fontSize: 16,
-                                  color: Color(0xFF9AD6FB),
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            subtitle: const Row(
-                              children: [
-                                Text(
-                                  'Completed',
-                                  style: TextStyle(
-                                      fontFamily: 'Ubuntu',
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                                Text(AppText.date),
-                              ],
-                            ),
-                            trailing: GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFF9AD6FB),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: const Icon(
-                                  CupertinoIcons.chat_bubble,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          )),
-                    );
-                  },
-                ),
+                const OrderCompletCustom(),
                 OrderDeailCustom(
                   trailing: GestureDetector(
                     onTap: () {},
