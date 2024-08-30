@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mela/CustomSide/constant/colorspath.dart';
 import 'package:mela/CustomSide/constant/imagespath.dart';
 import 'package:mela/CustomSide/screens/customdesign.dart';
@@ -11,6 +14,8 @@ class RateAndReviewClass extends StatefulWidget {
 }
 
 class _RateAndReviewClassState extends State<RateAndReviewClass> {
+  File? image;
+  final picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,43 +152,50 @@ class _RateAndReviewClassState extends State<RateAndReviewClass> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(16)),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
-                        Container(
-                          height: 120,
-                          width: 158,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(16)),
-                          child: const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.image_outlined,
-                                size: 24,
-                              ),
-                              Text(
-                                'Add Picture',
-                                style: TextStyle(
-                                    color: Colors.black38,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400),
-                              )
-                            ],
+                        GestureDetector(
+                          onTap: () async {
+                            final pickedFile = await picker.pickImage(
+                                source: ImageSource.camera);
+                          },
+                          child: Container(
+                            height: 120,
+                            width: 158,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16)),
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.image_outlined,
+                                  size: 24,
+                                ),
+                                Text(
+                                  'Add Picture',
+                                  style: TextStyle(
+                                      color: Colors.black38,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400),
+                                )
+                              ],
+                            ),
                           ),
                         )
+                  
                       ],
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Align(
                     alignment: Alignment.center,
                     child: CustomButtonDesign(
                         buttonText: 'Submit', onPressed: () {})),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
               ],
