@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mela/BusinessSide/B_Screens/CustomDesign/customtextfieldforaddservice.dart';
+import 'package:mela/CustomSide/screens/customdesign.dart';
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
@@ -110,99 +112,159 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 40,
-            ),
-            GestureDetector(
-              onTap: _showImageSourceOptions,
-              child: Container(
-                height: 158,
-                width: 158,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: _image == null
-                    ? const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            CupertinoIcons.photo,
-                            color: Colors.black54,
-                            size: 24,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 40,
+              ),
+              GestureDetector(
+                onTap: _showImageSourceOptions,
+                child: Container(
+                  height: 158,
+                  width: 158,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: _image == null
+                      ? const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              CupertinoIcons.photo,
+                              color: Colors.black54,
+                              size: 24,
+                            ),
+                            Text(
+                              'Add Picture',
+                              style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ],
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.file(
+                            _image!,
+                            fit: BoxFit.cover,
                           ),
-                          Text(
-                            'Add Picture',
-                            style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      )
-                    : ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.file(
-                          _image!,
-                          fit: BoxFit.cover,
                         ),
-                      ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Text(
-                'Service',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'Ubuntu',
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.darkblue),
-              ),
-            ),
-            // Dropdown for service selection
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: DropdownButtonFormField<String>(
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(color: Colors.white),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(color: Colors.white),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
                 ),
-                value: _selectedService,
-                hint: const Text('Select Service'),
-                items: _services.map((String service) {
-                  return DropdownMenuItem<String>(
-                    value: service,
-                    child: Text(service),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedService = newValue;
-                  });
-                },
               ),
-            ),
-          ],
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Text(
+                  'Service',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Ubuntu',
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.darkblue),
+                ),
+              ),
+              // Dropdown for service selection
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  value: _selectedService,
+                  hint: const Text('Select Service'),
+                  items: _services.map((String service) {
+                    return DropdownMenuItem<String>(
+                      value: service,
+                      child: Text(service),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedService = newValue;
+                    });
+                  },
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  'Specialities',
+                  style: TextStyle(
+                      fontFamily: 'Ubuntu',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.darkblue),
+                ),
+              ),
+
+              const CustomTextFieldForAddtags(
+                hintText: 'Add Specialties',
+              ),
+
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  'Price',
+                  style: TextStyle(
+                      fontFamily: 'Ubuntu',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.darkblue),
+                ),
+              ),
+
+              const CAddServiceTextfield(
+                hintText: 'Enter Price',
+              ),
+
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  'Description',
+                  style: TextStyle(
+                      fontFamily: 'Ubuntu',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.darkblue),
+                ),
+              ),
+              const SizedBox(
+                height: 7,
+              ),
+
+              Container(
+                height: 125,
+                color: Colors.white,
+                child: const CAddServiceTextfield(
+                  hintText: 'Description',
+                ),
+              ),
+              CustomButtonDesign(buttonText: 'Save', onPressed: () {}),
+              SizedBox(
+                height: 15,
+              ),
+            ],
+          ),
         ),
       ),
     );
