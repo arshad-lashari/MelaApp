@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mela/BusinessSide/B_Screens/jobdetailsscreen.dart';
 
-import 'package:mela/CustomSide/screens/customdesign.dart';
+import 'package:mela/CustomerSide/screens/customdesign.dart';
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';

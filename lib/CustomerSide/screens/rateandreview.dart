@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
-import 'package:mela/CustomSide/screens/customdesign.dart';
+import 'package:mela/CustomerSide/screens/customdesign.dart';
 
 class RateAndReviewClass extends StatefulWidget {
   const RateAndReviewClass({super.key});

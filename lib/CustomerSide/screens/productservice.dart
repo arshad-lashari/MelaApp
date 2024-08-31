@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
-import 'package:mela/CustomSide/screens/customdesign.dart';
-import 'package:mela/CustomSide/screens/customscreens/celandercustom.dart';
-import 'package:mela/CustomSide/screens/workcomplete.dart';
+import 'package:mela/CustomerSide/screens/customdesign.dart';
+import 'package:mela/CustomerSide/screens/customscreens/celandercustom.dart';
+import 'package:mela/CustomerSide/screens/workcomplete.dart';
 import 'package:mela/constant/productservicehomeviewcustom.dart';
 
 class ProductServiceDetails extends StatefulWidget {

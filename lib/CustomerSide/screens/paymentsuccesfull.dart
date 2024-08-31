@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
-import 'package:mela/CustomSide/screens/customdesign.dart';
+import 'package:mela/CustomerSide/screens/customdesign.dart';
 
 class PayMentSuccessfullScreen extends StatefulWidget {
   const PayMentSuccessfullScreen({super.key});

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:mela/CustomSide/screens/onboarding.dart';
+import 'package:mela/CustomerSide/screens/onboarding.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';

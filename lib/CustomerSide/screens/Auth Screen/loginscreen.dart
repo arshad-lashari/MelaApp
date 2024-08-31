@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
-import 'package:mela/CustomSide/screens/Auth%20Screen/signupscreen.dart';
-import 'package:mela/CustomSide/screens/bottomnav.dart';
-import 'package:mela/CustomSide/screens/customdesign.dart';
+import 'package:mela/CustomerSide/screens/Auth%20Screen/signupscreen.dart';
+import 'package:mela/CustomerSide/screens/bottomnav.dart';
+import 'package:mela/CustomerSide/screens/customdesign.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

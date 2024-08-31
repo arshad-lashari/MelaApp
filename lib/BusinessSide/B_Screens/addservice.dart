@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mela/BusinessSide/B_Screens/CustomDesign/customtextfieldforaddservice.dart';
-import 'package:mela/CustomSide/screens/customdesign.dart';
+import 'package:mela/CustomerSide/screens/customdesign.dart';
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
@@ -260,6 +260,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                 ),
               ),
               CustomButtonDesign(buttonText: 'Save', onPressed: () {}),
+              // ignore: prefer_const_constructors
               SizedBox(
                 height: 15,
               ),

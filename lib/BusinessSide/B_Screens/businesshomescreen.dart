@@ -4,7 +4,7 @@ import 'package:mela/BusinessSide/B_Screens/CustomDesign/orderdetialcustom.dart'
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
-import 'package:mela/CustomSide/screens/customdesign.dart';
+import 'package:mela/CustomerSide/screens/customdesign.dart';
 
 class BusinessAppHomeScreen extends StatefulWidget {
   final Widget? trailing;

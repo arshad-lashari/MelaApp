@@ -1,9 +1,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mela/CustomSide/screens/homescreen.dart';
-import 'package:mela/CustomSide/screens/messagescreen.dart';
-import 'package:mela/CustomSide/screens/userprofile.dart';
+import 'package:mela/CustomerSide/screens/homescreen.dart';
+import 'package:mela/CustomerSide/screens/messagescreen.dart';
+import 'package:mela/CustomerSide/screens/userprofile.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});

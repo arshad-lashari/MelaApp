@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
-import 'package:mela/CustomSide/screens/rateandreview.dart';
+import 'package:mela/CustomerSide/screens/rateandreview.dart';
 
 class WorkCompleScreen extends StatefulWidget {
   const WorkCompleScreen({super.key});

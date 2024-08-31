@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:mela/BusinessSide/B_Screens/addservice.dart';
 import 'package:mela/BusinessSide/B_Screens/bpromotescreen.dart';
 import 'package:mela/BusinessSide/B_Screens/businesshomescreen.dart';
+import 'package:mela/BusinessSide/B_Screens/businessprofilescreen.dart';
 import 'package:mela/BusinessSide/B_Screens/jobdetailsscreen.dart';
 import 'package:mela/BusinessSide/B_Screens/myservicesscreen.dart';
 import 'package:mela/BusinessSide/B_Screens/upcomingjobs.dart';
-import 'package:mela/CustomSide/screens/homescreen.dart';
-import 'package:mela/CustomSide/screens/productdetails.dart';
-import 'package:mela/CustomSide/screens/productservice.dart';
+import 'package:mela/CustomerSide/screens/homescreen.dart';
+import 'package:mela/CustomerSide/screens/productdetails.dart';
+import 'package:mela/CustomerSide/screens/productservice.dart';
 
 void main() => runApp(
       DevicePreview(
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
           fontFamily: "Ubuntu"),
-      home: const PromotionScreen(),
+      home: const BusinessProfileScreen(),
     );
   }
 }

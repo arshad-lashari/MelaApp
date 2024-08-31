@@ -117,16 +117,21 @@ class _CustomTextFieldForAddtagsState extends State<CustomTextFieldForAddtags> {
   }
 }
 
+
 class CAddServiceTextfield extends StatefulWidget {
   final String hintText;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
+  final Color fillColor; // Added fillColor parameter
+  final Color borderColor; // Added borderColor parameter
 
   const CAddServiceTextfield({
     Key? key,
     this.hintText = 'laahair',
     this.suffixIcon,
     this.prefixIcon,
+    this.fillColor = Colors.white, // Default value
+    this.borderColor = Colors.white, // Default value
   }) : super(key: key);
 
   @override
@@ -143,19 +148,19 @@ class _CAddServiceTextfieldState extends State<CAddServiceTextfield> {
         decoration: InputDecoration(
           hintText: widget.hintText,
           hintStyle: const TextStyle(color: Colors.black54, fontSize: 14),
-          fillColor: Colors.white,
+          fillColor: widget.fillColor, // Use fillColor parameter
           filled: true,
-          enabledBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: Colors.white),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(color: widget.borderColor), // Use borderColor parameter
           ),
-          focusedBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: Colors.white),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(color: widget.borderColor), // Use borderColor parameter
           ),
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: Colors.white),
+          border: OutlineInputBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(color: widget.borderColor), // Use borderColor parameter
           ),
           suffixIcon: widget.suffixIcon,
           prefixIcon: widget.prefixIcon,
