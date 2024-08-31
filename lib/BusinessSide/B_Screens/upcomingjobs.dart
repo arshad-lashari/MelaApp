@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mela/BusinessSide/B_Screens/CustomDesign/ordercompletecustom.dart';
 import 'package:mela/BusinessSide/B_Screens/CustomDesign/orderdetialcustom.dart';
+import 'package:mela/BusinessSide/B_Screens/addservice.dart';
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
 
@@ -89,7 +90,13 @@ class _CompleteAndUpComingJobsState extends State<CompleteAndUpComingJobs>
                 const OrderCompletCustom(),
                 OrderDeailCustom(
                   trailing: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddServiceScreen(),
+                          ));
+                    },
                     child: Container(
                       height: 40,
                       width: 40,

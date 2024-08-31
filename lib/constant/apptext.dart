@@ -265,4 +265,16 @@ class AppText {
     ordername8,
     ordername9,
   ];
+
+  //Text for completed project names
+  static const String completname = 'Cleaning';
+  static const String completname1 = 'Bulky Delevires';
+  static const String completname2 = 'Shop & Dealer';
+  static const String completname3 = 'Furniture Assembly';
+  List<String>completepronames=[
+    completname,
+    completname1,
+    completname2,
+    completname3
+  ];
 }

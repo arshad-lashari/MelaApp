@@ -22,13 +22,20 @@ class _OrderCompletCustomState extends State<OrderCompletCustom> {
           child: Container(
               height: 80,
               width: double.infinity,
-              decoration: BoxDecoration(boxShadow: const [
+              decoration: BoxDecoration(
+                
+                boxShadow: const [
                 BoxShadow(
                     color: Colors.black12,
                     offset: Offset(0.1, 0.1),
                     spreadRadius: 1,
                     blurRadius: 8)
+      
+      
               ], color: Colors.white, borderRadius: BorderRadius.circular(5)),
+       
+       
+       
               child: ListTile(
                 title: Text(
                   appText.completeordernames[index],

@@ -1,5 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mela/BusinessSide/B_Screens/CustomDesign/cusotmforpromotedservice.dart';
+import 'package:mela/BusinessSide/B_Screens/CustomDesign/custompromoted.dart';
+import 'package:mela/BusinessSide/B_Screens/addservice.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
 
@@ -58,157 +60,42 @@ class _MyServicesScreenState extends State<MyServicesScreen>
           indicatorColor: const Color(0xFF3B98D4), // Set indicator color
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
+      body: Stack(
         children: [
-          Column(
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                child: Container(
-                  height: 143,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: Colors.amberAccent,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text('Cleaning'),
-                            PopupMenuTheme(
-                              data: PopupMenuThemeData(
-                                color: Colors
-                                    .white, // Set popup menu background color
-                              ),
-                              child: PopupMenuButton<String>(
-                                onSelected: (String value) {
-                                  print('Selected: $value');
-                                },
-                                itemBuilder: (BuildContext context) {
-                                  return [
-                                    PopupMenuItem<String>(
-                                      child: Container(
-                                        height:
-                                            39, // Same height as the container
-                                        width: double.infinity, // Full width
-                                        decoration: BoxDecoration(
-                                          color: Colors.black12,
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: const Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              CupertinoIcons
-                                                  .chevron_down_circle,
-                                              color: Color(0xFF9C39FF),
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              'De Promote',
-                                              style: TextStyle(
-                                                color: Color(0xFF9C39FF),
-                                                fontSize:
-                                                    16, // Same font size as main text
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    PopupMenuItem<String>(
-                                      child: Container(
-                                        height: 39,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: Colors.greenAccent,
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: const Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              CupertinoIcons
-                                                  .chevron_down_circle,
-                                              color: Color(0xFF9C39FF),
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              'Edit',
-                                              style: TextStyle(
-                                                color: Color(0xFF9C39FF),
-                                                fontSize:
-                                                    16, // Same font size as main text
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    PopupMenuItem<String>(
-                                      child: Container(
-                                        height: 39,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: Colors.blueAccent,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: const Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              CupertinoIcons
-                                                  .chevron_down_circle,
-                                              color: Color(0xFF9C39FF),
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              'De Promote',
-                                              style: TextStyle(
-                                                color: Color(0xFF9C39FF),
-                                                fontSize:
-                                                    16, // Same font size as main text
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ];
-                                },
-                                icon: const Icon(Icons.more_vert_outlined),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: const [
+                CustomDePromotedServices(),
+                CustomPromotedServices(),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 40,
+            right: 30,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddServiceScreen(),
+                    ));
+              },
+              child: Container(
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                    color: AppColors.bluescolor,
+                    borderRadius: BorderRadius.circular(110)),
+                // ignore: prefer_const_constructors
+                child: Icon(
+                  Icons.add,
+                  color: Colors.white,
                 ),
               ),
-            ],
-          ),
-          const Center(child: Text('Content for Tab 2')),
+            ),
+          )
         ],
       ),
     );
