@@ -10,6 +10,7 @@ class AppImagesPath {
   static const String jugard = 'assets/images/jgard.jpg';
   static const String splashscimage = 'assets/images/Splash Screen (1).png';
   static const String deicon = 'assets/images/de.png';
+  static const String planepic = 'assets/images/planepic.png';
 
 //message screen pics
   static const String view = 'assets/images/dpview.png';

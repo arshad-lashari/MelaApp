@@ -271,10 +271,43 @@ class AppText {
   static const String completname1 = 'Bulky Delevires';
   static const String completname2 = 'Shop & Dealer';
   static const String completname3 = 'Furniture Assembly';
-  List<String>completepronames=[
+  List<String> completepronames = [
     completname,
     completname1,
     completname2,
     completname3
   ];
+
+  //Text about purchese plan in Business app Subscription class
+
+  static const String Bplane = '\$20';
+  static const String Bplane1 = '\$40';
+  static const String Bplane2 = '\$100';
+  List<String> proplan = [Bplane, Bplane1, Bplane2];
+List<String> plantime=[
+
+  'mon','yr','2yr'
+
+
+];
+
+
+    List<List<String>> planFeatures = [
+    [
+      'Lorem ipsum dolor sit amet',
+      'Lorem ipsum dolor sit amet',
+      'Lorem ipsum dolor sit amet'
+    ],
+    [
+      'Lorem ipsum dolor sit amet',
+      'Lorem ipsum dolor sit amet',
+      'Lorem ipsum dolor sit amet'
+    ],
+    [
+      'Lorem ipsum dolor sit amet',
+      'Lorem ipsum dolor sit amet',
+      'Lorem ipsum dolor sit amet'
+    ]
+  ];
+
 }

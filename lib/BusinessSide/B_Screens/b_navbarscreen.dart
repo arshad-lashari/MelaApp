@@ -10,6 +10,7 @@ class BusinessAppNavBar extends StatefulWidget {
   const BusinessAppNavBar({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _BusinessAppNavBarState createState() => _BusinessAppNavBarState();
 }
 
