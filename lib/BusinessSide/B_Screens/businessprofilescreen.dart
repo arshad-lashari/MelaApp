@@ -12,44 +12,42 @@ class BusinessProfileScreen extends StatefulWidget {
 }
 
 class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
-  AppColors appColors=AppColors();
-  AppImagesPath appImagesPath=AppImagesPath();
-  AppText appText=AppText();
-  bool isSwitched=false;
+  AppColors appColors = AppColors();
+  AppImagesPath appImagesPath = AppImagesPath();
+  AppText appText = AppText();
+  bool isSwitched = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightblue,
+      appBar: AppBar(
+        backgroundColor: AppColors.lightblue,
+        centerTitle: true,
+        title: const Text(
+          'Business Profile',
+          style: TextStyle(
+            color: AppColors.darkblue,
+            fontFamily: 'Ubuntu',
+            fontWeight: FontWeight.w500,
+            fontSize: 20,
+          ),
+        ),
+        actions: [
+          Switch(
+            value: isSwitched,
+            onChanged: (value) {
+              setState(() {
+                isSwitched = value;
+              });
+            },
+            activeColor: Colors.black12,
+            inactiveThumbColor: Colors.white,
+            trackOutlineColor: WidgetStateColor.transparent,
+          ),
+        ],
+      ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Customer Profile',
-                  style: TextStyle(
-                    color: AppColors.darkblue,
-                    fontFamily: 'Ubuntu',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20,
-                  ),
-                ),
-                Switch(
-                  value: isSwitched,
-                  onChanged: (value) {
-                    setState(() {
-                      isSwitched = value;
-                    });
-                  },
-                  activeColor: Colors.black12,
-                  inactiveThumbColor: Colors.white,
-                  trackOutlineColor: WidgetStateColor.transparent,
-                ),
-              ],
-            ),
-          ),
           // Use Expanded to make the container take up the remaining space
           Expanded(
             child: Container(
@@ -106,69 +104,97 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                           ),
                         ),
                       ),
-                      const Text(
-                        'Name',
-                        style: TextStyle(
-                            fontFamily: 'Ubuntu',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    const SizedBox(height: 5,),
-                      const SizedBox(
-                          width: double.infinity,
-                          height: 48,
-                          child: TextFieldDesign(
-                            hintText: 'Name',
-                          )),
-                                 const SizedBox(height: 10,),
-                      const Text(
-                        'Name',
-                        style: TextStyle(
-                            fontFamily: 'Ubuntu',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    const SizedBox(height: 5,),
-                      const SizedBox(
-                        width: double.infinity,
-                          height: 48,
-                          child: TextFieldDesign(
-                            hintText: 'Name',
-                          )),
-                        const SizedBox(height: 10,),
-                      const Text(
-                        'Name',
-                        style: TextStyle(
-                            fontFamily: 'Ubuntu',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500),
-                      ),
-                     const SizedBox(height: 5,),
-                      const SizedBox(
-                          width: double.infinity,
-                          height: 48,
-                          child: TextFieldDesign(
-                            hintText: 'Name',
-                          )),
-                    const SizedBox(height: 10,),
-                      const Text(
-                        'Name',
-                        style: TextStyle(
-                            fontFamily: 'Ubuntu',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      const SizedBox(height: 5,),
-                      const SizedBox(
-                         width: double.infinity,
-                          height: 48,
-                          child: TextFieldDesign(
-                            hintText: 'Name',
-                          )),
-                     const SizedBox(height: 20,),
                       Align(
                         alignment: Alignment.center,
-                        child: CustomButtonDesign(buttonText: 'Save', onPressed: () {})),
+                        child: SizedBox(
+                          height: 32,
+                          width: 75,
+                          child: CustomButtonDesign(
+                            buttonText: 'Pro',
+                            onPressed: () {},
+                          ),
+                        ),
+                      ),
+                      const Text(
+                        'Name',
+                        style: TextStyle(
+                            fontFamily: 'Ubuntu',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 7,
+                      ),
+                      const SizedBox(
+                          width: double.infinity,
+                          height: 48,
+                          child: TextFieldDesign(
+                            hintText: 'Name',
+                          )),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                        'Name',
+                        style: TextStyle(
+                            fontFamily: 'Ubuntu',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 7,
+                      ),
+                      const SizedBox(
+                          width: double.infinity,
+                          height: 48,
+                          child: TextFieldDesign(
+                            hintText: 'Name',
+                          )),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                        'Name',
+                        style: TextStyle(
+                            fontFamily: 'Ubuntu',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 7,
+                      ),
+                      const SizedBox(
+                          width: double.infinity,
+                          height: 48,
+                          child: TextFieldDesign(
+                            hintText: 'Name',
+                          )),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                        'Name',
+                        style: TextStyle(
+                            fontFamily: 'Ubuntu',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 7,
+                      ),
+                      const SizedBox(
+                          width: double.infinity,
+                          height: 48,
+                          child: TextFieldDesign(
+                            hintText: 'Name',
+                          )),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Align(
+                          alignment: Alignment.center,
+                          child: CustomButtonDesign(
+                              buttonText: 'Save', onPressed: () {})),
                       const SizedBox(
                         height: 25,
                       ),
@@ -181,6 +207,6 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
         ],
       ),
     );
- ;
+    ;
   }
 }
