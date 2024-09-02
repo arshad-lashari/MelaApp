@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mela/constant/colorspath.dart';
@@ -16,6 +15,71 @@ class RateAndReviewClass extends StatefulWidget {
 class _RateAndReviewClassState extends State<RateAndReviewClass> {
   File? image;
   final picker = ImagePicker();
+
+  // Function to pick an image
+  Future<void> pickImage(ImageSource source) async {
+    final pickedFile = await picker.pickImage(source: source);
+    if (pickedFile != null) {
+      setState(() {
+        image = File(pickedFile.path);
+      });
+    }
+  }
+
+  // Function to show options for picking an image
+  void _showImageSourceSelection() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 55,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop(); // Close the bottom sheet
+                    pickImage(ImageSource.camera);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    color: Colors.white,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Camera'),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop(); // Close the bottom sheet
+                    pickImage(ImageSource.gallery);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    color: Colors.white,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 8),
+                        const Text('Gallery'),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,155 +116,168 @@ class _RateAndReviewClassState extends State<RateAndReviewClass> {
         ),
         backgroundColor: Colors.white,
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 50),
-        child: Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(24),
-                topRight: Radius.circular(24),
-              ),
-              color: AppColors.lightblue),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 25, horizontal: 35),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 50),
+              child: Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(24),
+                      topRight: Radius.circular(24),
+                    ),
+                    color: AppColors.lightblue),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(
-                        Icons.star,
-                        size: 43,
-                        color: AppColors.yellow,
+                      const Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 25, horizontal: 35),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Icon(
+                              Icons.star,
+                              size: 43,
+                              color: AppColors.yellow,
+                            ),
+                            Icon(
+                              Icons.star,
+                              size: 43,
+                              color: AppColors.yellow,
+                            ),
+                            Icon(
+                              Icons.star,
+                              size: 43,
+                              color: AppColors.yellow,
+                            ),
+                            Icon(
+                              Icons.star,
+                              size: 43,
+                              color: AppColors.yellow,
+                            ),
+                            Icon(
+                              Icons.star,
+                              size: 43,
+                              color: Colors.black12,
+                            ),
+                          ],
+                        ),
                       ),
-                      Icon(
-                        Icons.star,
-                        size: 43,
-                        color: AppColors.yellow,
+                      const Text(
+                        'Your Review',
+                        style: TextStyle(
+                          color: AppColors.darkblue,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Ubuntu',
+                        ),
                       ),
-                      Icon(
-                        Icons.star,
-                        size: 43,
-                        color: AppColors.yellow,
+                      const SizedBox(
+                        height: 15,
                       ),
-                      Icon(
-                        Icons.star,
-                        size: 43,
-                        color: AppColors.yellow,
+                      Expanded(
+                        child: Container(
+                          height: 125,
+                          width: double.infinity,
+                          color: Colors.white,
+                          child: const TextField(
+                            cursorColor: Colors.black,
+                            style: TextStyle(color: Colors.black),
+                            minLines: 1,
+                            maxLines: 20,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(10),
+                              hintText: 'Write Review',
+                              hintStyle: TextStyle(
+                                color: Colors.black12,
+                              ),
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
                       ),
-                      Icon(
-                        Icons.star,
-                        size: 43,
-                        color: Colors.black12,
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 25, horizontal: 13),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 120,
+                                width: 158,
+                                decoration: BoxDecoration(
+                                  image: image != null
+                                      ? DecorationImage(
+                                          image: FileImage(image!),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : const DecorationImage(
+                                          image: AssetImage(
+                                              AppImagesPath.groundimage),
+                                          fit: BoxFit.cover,
+                                        ),
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              GestureDetector(
+                                onTap: _showImageSourceSelection,
+                                child: Container(
+                                  height: 120,
+                                  width: 158,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(16)),
+                                  child: const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.image_outlined,
+                                        size: 24,
+                                      ),
+                                      Text(
+                                        'Add Picture',
+                                        style: TextStyle(
+                                            color: Colors.black38,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      Align(
+                          alignment: Alignment.center,
+                          child: CustomButtonDesign(
+                              buttonText: 'Submit', onPressed: () {})),
+                      const SizedBox(
+                        height: 30,
                       ),
                     ],
                   ),
                 ),
-                const Text(
-                  'Your Review',
-                  style: TextStyle(
-                    color: AppColors.darkblue,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Ubuntu',
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Expanded(
-                  child: Container(
-                    height: 125,
-                    width: double.infinity,
-                    color: Colors.white,
-                    child: const TextField(
-                      cursorColor: Colors.black,
-                      style: TextStyle(color: Colors.black),
-                      minLines: 1,
-                      maxLines: 20,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(10),
-                        hintText: 'Write Review',
-                        hintStyle: TextStyle(
-                          color: Colors.black12,
-                        ),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 25, horizontal: 13),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 120,
-                          width: 158,
-                          decoration: BoxDecoration(
-                              image: const DecorationImage(
-                                  image: AssetImage(AppImagesPath.groundimage)),
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(16)),
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        GestureDetector(
-                          onTap: () async {
-                            final pickedFile = await picker.pickImage(
-                                source: ImageSource.camera);
-                          },
-                          child: Container(
-                            height: 120,
-                            width: 158,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(16)),
-                            child: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.image_outlined,
-                                  size: 24,
-                                ),
-                                Text(
-                                  'Add Picture',
-                                  style: TextStyle(
-                                      color: Colors.black38,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                  
-                      ],
-                    ),
-                  ),
-                ),
-                const Spacer(),
-                Align(
-                    alignment: Alignment.center,
-                    child: CustomButtonDesign(
-                        buttonText: 'Submit', onPressed: () {})),
-                const SizedBox(
-                  height: 30,
-                ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

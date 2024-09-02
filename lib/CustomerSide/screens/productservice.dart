@@ -137,7 +137,7 @@ class _ProductServiceDetailsState extends State<ProductServiceDetails> {
                         ],
                       ),
                       Spacer(),
-                      Text('234 PM'),
+                      Text('2:34 PM'),
                     ],
                   ),
                 ],

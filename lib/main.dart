@@ -1,18 +1,9 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mela/BusinessSide/B_Screens/addservice.dart';
 import 'package:mela/BusinessSide/B_Screens/b_navbarscreen.dart';
-import 'package:mela/BusinessSide/B_Screens/bpromotescreen.dart';
-import 'package:mela/BusinessSide/B_Screens/businesshomescreen.dart';
-import 'package:mela/BusinessSide/B_Screens/businessprofilescreen.dart';
-import 'package:mela/BusinessSide/B_Screens/jobdetailsscreen.dart';
-import 'package:mela/BusinessSide/B_Screens/myservicesscreen.dart';
-import 'package:mela/BusinessSide/B_Screens/subscriptionscreen.dart';
-import 'package:mela/BusinessSide/B_Screens/upcomingjobs.dart';
-import 'package:mela/CustomerSide/screens/homescreen.dart';
-import 'package:mela/CustomerSide/screens/productdetails.dart';
-import 'package:mela/CustomerSide/screens/productservice.dart';
+import 'package:mela/CustomerSide/screens/onboarding.dart';
+import 'package:mela/CustomerSide/screens/splashscreen.dart';
 
 void main() => runApp(
       DevicePreview(
@@ -33,7 +24,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
           fontFamily: "Ubuntu"),
-      home: const BusinessProfileScreen(),
+      home: const SplashScreen(),
     );
   }
 }

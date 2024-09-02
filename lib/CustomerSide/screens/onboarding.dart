@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
 import 'package:mela/CustomerSide/screens/Auth%20Screen/loginscreen.dart';
 import 'package:mela/CustomerSide/screens/customdesign.dart'; // Adjust import path if necessary
@@ -13,12 +14,12 @@ class OnBordingScreen extends StatefulWidget {
 
 class _OnBordingScreenState extends State<OnBordingScreen> {
   AppImagesPath appImagesPath = AppImagesPath();
+  int selectedValue = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    // Timer to navigate to another screen after 10 seconds
-   
+  void onChanged(int? value) {
+    setState(() {
+      selectedValue = value!;
+    });
   }
 
   @override
@@ -26,8 +27,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: 20.0), // Fixed padding
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             children: [
               const Spacer(),
@@ -37,8 +37,42 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                 width: 235.0,
               ),
               const SizedBox(height: 30.0),
-              Image.asset(
-                  AppImagesPath.textimage), // Replace with your asset path
+              Image.asset(AppImagesPath.textimage),
+              const SizedBox(height: 30.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Radio<int>(
+                    value: 0,
+                    groupValue: selectedValue,
+                    onChanged: onChanged,
+                  ),
+                  const Text(
+                    'Customer Side',
+                    style: TextStyle(
+                        fontFamily: 'Ubuntu',
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.darkblue),
+                  ),
+                  Radio<int>(
+                    activeColor: AppColors.bluescolor,
+                    focusColor: AppColors.bluescolor,
+                    autofocus: true,
+                    value: 1,
+                    groupValue: selectedValue,
+                    onChanged: onChanged,
+                  ),
+                  const Text(
+                    'Business Side',
+                    style: TextStyle(
+                        fontFamily: 'Ubuntu',
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.darkblue),
+                  ),
+                ],
+              ),
               const Spacer(),
               Align(
                 alignment: Alignment.center,
@@ -48,7 +82,9 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
+                        builder: (context) => LoginScreen(
+                          selectedValue: selectedValue,
+                        ),
                       ),
                     );
                   },

@@ -56,7 +56,9 @@ class _WorkCompleScreenState extends State<WorkCompleScreen> {
                         backgroundColor: Colors.red,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     child: const Text(
                       'Reject',
                       style: TextStyle(

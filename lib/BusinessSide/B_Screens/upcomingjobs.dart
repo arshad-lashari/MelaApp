@@ -50,6 +50,7 @@ class _CompleteAndUpComingJobsState extends State<CompleteAndUpComingJobs>
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
+        automaticallyImplyLeading: false, // Remove back icon
         actions: const [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),

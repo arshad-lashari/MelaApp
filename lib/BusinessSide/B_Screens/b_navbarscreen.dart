@@ -7,10 +7,9 @@ import 'package:mela/BusinessSide/B_Screens/myservicesscreen.dart';
 import 'package:mela/BusinessSide/B_Screens/upcomingjobs.dart';
 
 class BusinessAppNavBar extends StatefulWidget {
-  const BusinessAppNavBar({super.key});
+  const BusinessAppNavBar({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _BusinessAppNavBarState createState() => _BusinessAppNavBarState();
 }
 
@@ -104,5 +103,3 @@ class CartPage extends StatelessWidget {
     );
   }
 }
-
-// Profile Screen

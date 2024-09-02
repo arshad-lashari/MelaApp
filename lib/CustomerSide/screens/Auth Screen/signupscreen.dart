@@ -102,7 +102,7 @@ class CustomBottomSheet extends StatelessWidget {
                         decoration: InputDecoration(
                             fillColor: AppColors.lightblack,
                             filled: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: 3),
+                            contentPadding: const EdgeInsets.symmetric(vertical: 3),
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(10)),
@@ -178,7 +178,7 @@ class CustomBottomSheet extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => BottomNavBar(),
+                                builder: (context) => const BottomNavBar(),
                               ));
                         },
                       ),

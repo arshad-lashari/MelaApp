@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:mela/CustomerSide/screens/onboarding.dart';
 import 'package:shimmer/shimmer.dart';
@@ -24,6 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (mounted) {
         Navigator.pushReplacement(
           context,
+          // ignore: prefer_const_constructors
           MaterialPageRoute(builder: (context) => OnBordingScreen()),
         );
       }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mela/BusinessSide/B_Screens/b_navbarscreen.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
 import 'package:mela/CustomerSide/screens/Auth%20Screen/signupscreen.dart';
@@ -6,7 +7,9 @@ import 'package:mela/CustomerSide/screens/bottomnav.dart';
 import 'package:mela/CustomerSide/screens/customdesign.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  final int selectedValue; // Receive the selected value from OnBordingScreen
+
+  const LoginScreen({super.key, required this.selectedValue});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -69,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const Align(
-                    alignment: Alignment(0.1, 0.6),
+                    alignment: Alignment(0.02, 0.6),
                     child: Text(
                       "Mela",
                       style: TextStyle(
@@ -88,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 children: [
                   const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 25),
                     child: Image(
                       image: AssetImage(
                         AppImagesPath.logintextimage,
@@ -96,12 +99,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 12,
                   ),
-                  // ignore: prefer_const_constructors
-                  SizedBox(
+                  const SizedBox(
                     width: double.infinity,
-                    child: const TextFieldDesign(
+                    child: TextFieldDesign(
                       prefixIcon: Padding(
                           padding: EdgeInsets.all(10.0),
                           child: CircleAvatar(
@@ -117,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 12,
                   ),
                   const SizedBox(
                     width: double.infinity,
@@ -136,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 25,
                   ),
                   Align(
                       alignment: Alignment.center,
@@ -145,11 +147,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: CustomButtonDesign(
                             buttonText: 'Login',
                             onPressed: () {
-                              Navigator.push(
+                              // Check the selected value and navigate accordingly
+                              if (widget.selectedValue == 0) {
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => const BottomNavBar(),
-                                  ));
+                                  ),
+                                );
+                              } else if (widget.selectedValue == 1) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const BusinessAppNavBar(),
+                                  ),
+                                );
+                              }
                             }),
                       )),
                   Padding(
