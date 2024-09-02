@@ -31,7 +31,7 @@ class _RateAndReviewClassState extends State<RateAndReviewClass> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Container(
+        return SizedBox(
           height: 55,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -47,8 +47,8 @@ class _RateAndReviewClassState extends State<RateAndReviewClass> {
                     color: Colors.white,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text('Camera'),
+                      children: const [
+                        Text('Camera'),
                       ],
                     ),
                   ),
@@ -65,9 +65,9 @@ class _RateAndReviewClassState extends State<RateAndReviewClass> {
                     color: Colors.white,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(height: 8),
-                        const Text('Gallery'),
+                      children: const [
+                        SizedBox(height: 8),
+                        Text('Gallery'),
                       ],
                     ),
                   ),
@@ -122,14 +122,13 @@ class _RateAndReviewClassState extends State<RateAndReviewClass> {
             Padding(
               padding: const EdgeInsets.only(top: 50),
               child: Container(
-                height: double.infinity,
-                width: double.infinity,
                 decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(24),
-                      topRight: Radius.circular(24),
-                    ),
-                    color: AppColors.lightblue),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24),
+                  ),
+                  color: AppColors.lightblue,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Column(
@@ -179,27 +178,23 @@ class _RateAndReviewClassState extends State<RateAndReviewClass> {
                           fontFamily: 'Ubuntu',
                         ),
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 125,
-                          width: double.infinity,
-                          color: Colors.white,
-                          child: const TextField(
-                            cursorColor: Colors.black,
-                            style: TextStyle(color: Colors.black),
-                            minLines: 1,
-                            maxLines: 20,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(10),
-                              hintText: 'Write Review',
-                              hintStyle: TextStyle(
-                                color: Colors.black12,
-                              ),
-                              border: InputBorder.none,
+                      const SizedBox(height: 15),
+                      Container(
+                        height: 125,
+                        width: double.infinity,
+                        color: Colors.white,
+                        child: const TextField(
+                          cursorColor: Colors.black,
+                          style: TextStyle(color: Colors.black),
+                          minLines: 1,
+                          maxLines: 20,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(10),
+                            hintText: 'Write Review',
+                            hintStyle: TextStyle(
+                              color: Colors.black12,
                             ),
+                            border: InputBorder.none,
                           ),
                         ),
                       ),
@@ -264,14 +259,17 @@ class _RateAndReviewClassState extends State<RateAndReviewClass> {
                           ),
                         ),
                       ),
-                      const Spacer(),
+                      const SizedBox(height: 30),
                       Align(
-                          alignment: Alignment.center,
-                          child: CustomButtonDesign(
-                              buttonText: 'Submit', onPressed: () {})),
-                      const SizedBox(
-                        height: 30,
+                        alignment: Alignment.center,
+                        child: CustomButtonDesign(
+                          buttonText: 'Submit',
+                          onPressed: () {
+                            
+                          },
+                        ),
                       ),
+                      const SizedBox(height: 30),
                     ],
                   ),
                 ),

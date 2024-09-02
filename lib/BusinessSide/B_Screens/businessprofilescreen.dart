@@ -1,4 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mela/BusinessSide/B_Screens/subscriptionscreen.dart';
 import 'package:mela/CustomerSide/screens/customdesign.dart';
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
@@ -16,6 +19,51 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
   AppImagesPath appImagesPath = AppImagesPath();
   AppText appText = AppText();
   bool isSwitched = false;
+
+  File? _selectedImage; // Variable to store the selected image
+  final ImagePicker _picker = ImagePicker(); // ImagePicker instance
+
+  void _showSnackBar() {
+    final snackBar = SnackBar(
+      backgroundColor: Colors.white,
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          TextButton(
+            onPressed: () async {
+              final pickedFile = await _picker.pickImage(
+                  source: ImageSource.gallery); // Pick from gallery
+              if (pickedFile != null) {
+                setState(() {
+                  _selectedImage = File(pickedFile.path);
+                });
+              }
+              ScaffoldMessenger.of(context)
+                  .hideCurrentSnackBar(); // Hide snackbar
+            },
+            child: const Text("Gallery", style: TextStyle(color: Colors.black)),
+          ),
+          TextButton(
+            onPressed: () async {
+              final pickedFile = await _picker.pickImage(
+                  source: ImageSource.camera); // Pick from camera
+              if (pickedFile != null) {
+                setState(() {
+                  _selectedImage = File(pickedFile.path);
+                });
+              }
+              ScaffoldMessenger.of(context)
+                  .hideCurrentSnackBar(); // Hide snackbar
+            },
+            child: const Text("Camera", style: TextStyle(color: Colors.black)),
+          ),
+        ],
+      ),
+      duration: const Duration(seconds: 3),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +90,7 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
             },
             activeColor: Colors.black12,
             inactiveThumbColor: Colors.white,
-            trackOutlineColor: WidgetStateColor.transparent,
+            trackOutlineColor: MaterialStateProperty.all(Colors.transparent),
           ),
         ],
       ),
@@ -68,17 +116,30 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                         alignment: Alignment.center,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 18),
-                          child: Container(
-                            height: 97,
-                            width: 97,
-                            decoration: BoxDecoration(
-                                color: AppColors.lightblue,
-                                borderRadius: BorderRadius.circular(76)),
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  bottom: 2,
-                                  right: 3,
+                          child: Stack(
+                            children: [
+                              Container(
+                                height: 97,
+                                width: 97,
+                                decoration: BoxDecoration(
+                                  color: AppColors.lightblue,
+                                  borderRadius: BorderRadius.circular(76),
+                                ),
+                                child: _selectedImage != null
+                                    ? ClipRRect(
+                                        borderRadius: BorderRadius.circular(76),
+                                        child: Image.file(
+                                          _selectedImage!,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )
+                                    : const SizedBox.shrink(),
+                              ),
+                              Positioned(
+                                bottom: 2,
+                                right: 3,
+                                child: GestureDetector(
+                                  onTap: _showSnackBar,
                                   child: Container(
                                     height: 26,
                                     width: 26,
@@ -98,9 +159,9 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                                       size: 11,
                                     )),
                                   ),
-                                )
-                              ],
-                            ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -111,7 +172,14 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                           width: 75,
                           child: CustomButtonDesign(
                             buttonText: 'Pro',
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const SubscriptionScreen(),
+                                  ));
+                            },
                           ),
                         ),
                       ),
@@ -130,12 +198,13 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                           height: 48,
                           child: TextFieldDesign(
                             hintText: 'Name',
+                            obscureText: false,
                           )),
                       const SizedBox(
                         height: 10,
                       ),
                       const Text(
-                        'Name',
+                        'Email',
                         style: TextStyle(
                             fontFamily: 'Ubuntu',
                             fontSize: 16,
@@ -148,13 +217,14 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                           width: double.infinity,
                           height: 48,
                           child: TextFieldDesign(
-                            hintText: 'Name',
+                            hintText: 'Email',
+                            obscureText: false,
                           )),
                       const SizedBox(
                         height: 10,
                       ),
                       const Text(
-                        'Name',
+                        'Phone',
                         style: TextStyle(
                             fontFamily: 'Ubuntu',
                             fontSize: 16,
@@ -167,13 +237,14 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                           width: double.infinity,
                           height: 48,
                           child: TextFieldDesign(
-                            hintText: 'Name',
+                            hintText: 'Phone',
+                            obscureText: false,
                           )),
                       const SizedBox(
                         height: 10,
                       ),
                       const Text(
-                        'Name',
+                        'Address',
                         style: TextStyle(
                             fontFamily: 'Ubuntu',
                             fontSize: 16,
@@ -186,7 +257,8 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                           width: double.infinity,
                           height: 48,
                           child: TextFieldDesign(
-                            hintText: 'Name',
+                            hintText: 'Address',
+                            obscureText: false,
                           )),
                       const SizedBox(
                         height: 20,
@@ -207,6 +279,5 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
         ],
       ),
     );
-    ;
   }
 }

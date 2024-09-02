@@ -70,168 +70,173 @@ class _PromotionScreenState extends State<PromotionScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Text(
-                'Select how many days you want to promote your service.',
-                style: TextStyle(
-                    fontFamily: 'Ubuntu',
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black54),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 15),
-              child: Text(
-                'Select Days',
-                style: TextStyle(
-                    color: AppColors.darkblue,
-                    fontFamily: 'Ubuntu',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-            SizedBox(
-              height: 48,
-              width: double.infinity,
-              child: TextField(
-                keyboardType: TextInputType.number,
-                controller: TextEditingController(text: '$_days'),
-                decoration: InputDecoration(
-                  fillColor: const Color(0xFFFAFAFA), // Set fill color
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none, // Remove border
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none, // Remove border
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none, // Remove border
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  suffixIcon: Column(
-                    children: [
-                      GestureDetector(
-                          onTap: () {
-                            _increase();
-                          },
-                          child: const Icon(Icons.keyboard_arrow_up_rounded)),
-                      GestureDetector(
-                          onTap: () {
-                            _decrease();
-                          },
-                          child: const Icon(Icons.keyboard_arrow_down_rounded))
-                    ],
-                  ),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    _days = int.tryParse(value) ?? 0;
-                    _updateTotalCost();
-                  });
-                },
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 15),
-              child: Text(
-                'Price Per Day',
-                style: TextStyle(
-                    color: AppColors.darkblue,
-                    fontFamily: 'Ubuntu',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-            SizedBox(
-              height: 48,
-              width: double.infinity,
-              child: TextField(
-                keyboardType: TextInputType.numberWithOptions(
-                    decimal: true), // Allow decimal input
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(
-                      r'^\d*\.?\d*')), // Allow only numbers and decimal points
-                ],
-                decoration: InputDecoration(
-                  prefixText: '\$', // Add dollar sign as prefix
-                  fillColor: const Color(0xFFFAFAFA), // Set fill color
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none, // Remove border
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none, // Remove border
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none, // Remove border
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    _pricePerDay =
-                        double.tryParse(value.replaceAll('\$', '')) ?? 0.0;
-                    _updateTotalCost();
-                  });
-                },
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 15),
-              child: Text(
-                'Total Cost',
-                style: TextStyle(
-                    color: AppColors.darkblue,
-                    fontFamily: 'Ubuntu',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-            SizedBox(
-              height: 48,
-              width: double.infinity,
-              child: TextField(
-                readOnly: true,
-                controller: TextEditingController(
-                    text: '\$${_totalCost.toStringAsFixed(2)}'),
-                decoration: InputDecoration(
-                  fillColor: const Color(0xFFFAFAFA), // Set fill color
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none, // Remove border
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none, // Remove border
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none, // Remove border
-                    borderRadius: BorderRadius.circular(4),
-                  ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Text(
+                  'Select how many days you want to promote your service.',
+                  style: TextStyle(
+                      fontFamily: 'Ubuntu',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black54),
                 ),
               ),
-            ),
-            const Spacer(),
-            Align(
-                alignment: Alignment.center,
-                child: CustomButtonDesign(
-                    buttonText: 'Promote', onPressed: () {})),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 15),
+                child: Text(
+                  'Select Days',
+                  style: TextStyle(
+                      color: AppColors.darkblue,
+                      fontFamily: 'Ubuntu',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+              SizedBox(
+                height: 48,
+                width: double.infinity,
+                child: TextField(
+                  keyboardType: TextInputType.number,
+                  controller: TextEditingController(text: '$_days'),
+                  decoration: InputDecoration(
+                    fillColor: const Color(0xFFFAFAFA), // Set fill color
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none, // Remove border
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none, // Remove border
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none, // Remove border
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    suffixIcon: Column(
+                      children: [
+                        GestureDetector(
+                            onTap: () {
+                              _increase();
+                            },
+                            child: const Icon(Icons.keyboard_arrow_up_rounded)),
+                        GestureDetector(
+                            onTap: () {
+                              _decrease();
+                            },
+                            child:
+                                const Icon(Icons.keyboard_arrow_down_rounded))
+                      ],
+                    ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      _days = int.tryParse(value) ?? 0;
+                      _updateTotalCost();
+                    });
+                  },
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 15),
+                child: Text(
+                  'Price Per Day',
+                  style: TextStyle(
+                      color: AppColors.darkblue,
+                      fontFamily: 'Ubuntu',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+              SizedBox(
+                height: 48,
+                width: double.infinity,
+                child: TextField(
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: true), // Allow decimal input
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(
+                        r'^\d*\.?\d*')), // Allow only numbers and decimal points
+                  ],
+                  decoration: InputDecoration(
+                    prefixText: '\$', // Add dollar sign as prefix
+                    fillColor: const Color(0xFFFAFAFA), // Set fill color
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none, // Remove border
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none, // Remove border
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none, // Remove border
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      _pricePerDay =
+                          double.tryParse(value.replaceAll('\$', '')) ?? 0.0;
+                      _updateTotalCost();
+                    });
+                  },
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 15),
+                child: Text(
+                  'Total Cost',
+                  style: TextStyle(
+                      color: AppColors.darkblue,
+                      fontFamily: 'Ubuntu',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+              SizedBox(
+                height: 48,
+                width: double.infinity,
+                child: TextField(
+                  readOnly: true,
+                  controller: TextEditingController(
+                      text: '\$${_totalCost.toStringAsFixed(2)}'),
+                  decoration: InputDecoration(
+                    fillColor: const Color(0xFFFAFAFA), // Set fill color
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none, // Remove border
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none, // Remove border
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none, // Remove border
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 70,
+              ),
+              Align(
+                  alignment: Alignment.center,
+                  child: CustomButtonDesign(
+                      buttonText: 'Promote', onPressed: () {})),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
         ),
       ),
     );

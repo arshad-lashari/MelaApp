@@ -62,17 +62,15 @@ class _MyServicesScreenState extends State<MyServicesScreen>
       ),
       body: Stack(
         children: [
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: const [
-                CustomDePromotedServices(),
-                CustomPromotedServices(),
-              ],
-            ),
+          TabBarView(
+            controller: _tabController,
+            children: const [
+              CustomDePromotedServices(),
+              CustomPromotedServices(),
+            ],
           ),
           Positioned(
-            bottom: 40,
+            bottom: 30,
             right: 30,
             child: GestureDetector(
               onTap: () {

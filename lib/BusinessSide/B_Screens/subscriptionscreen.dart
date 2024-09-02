@@ -77,7 +77,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Container(
                         width: double.infinity,
-                        height: 316,
+                        height: 356,
                         decoration: BoxDecoration(
                             border: Border.all(
                                 color: AppColors.bluescolor, width: 2),

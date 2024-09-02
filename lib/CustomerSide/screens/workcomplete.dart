@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mela/CustomerSide/screens/paymentsuccesfull.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
 import 'package:mela/CustomerSide/screens/rateandreview.dart';
@@ -77,7 +78,7 @@ class _WorkCompleScreenState extends State<WorkCompleScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => RateAndReviewClass(),
+                            builder: (context) => PayMentSuccessfullScreen(),
                           ));
                     },
                     child: const Text(

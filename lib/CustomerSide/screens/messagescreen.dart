@@ -6,7 +6,7 @@ import 'package:mela/CustomerSide/screens/customdesign.dart';
 
 class Messagescreen extends StatefulWidget {
   const Messagescreen({super.key});
- 
+
   @override
   State<Messagescreen> createState() => _MessagescreenState();
 }
@@ -49,6 +49,7 @@ class _MessagescreenState extends State<Messagescreen> {
                   prefixIcon: Icon(
                     Icons.search,
                   ),
+                  obscureText: false,
                 ),
               ),
             ),
@@ -66,16 +67,17 @@ class _MessagescreenState extends State<Messagescreen> {
                               height: 38,
                               width: 38,
                               decoration: BoxDecoration(
+                                  color: Colors.white,
                                   borderRadius: BorderRadius.circular(15),
-                                  image:  DecorationImage(
+                                  image: DecorationImage(
                                       fit: BoxFit.fill,
-                                      image:
-                                          AssetImage(appImagesPath.messageimages[index]))),
+                                      image: AssetImage(
+                                          appImagesPath.messageimages[index]))),
                             ),
                             const SizedBox(
                               width: 10,
                             ),
-                             Padding(
+                            Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,

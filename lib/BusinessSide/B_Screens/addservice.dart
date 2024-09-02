@@ -259,6 +259,9 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                   hintText: 'Description',
                 ),
               ),
+              SizedBox(
+                height: 25,
+              ),
               CustomButtonDesign(buttonText: 'Save', onPressed: () {}),
               // ignore: prefer_const_constructors
               SizedBox(

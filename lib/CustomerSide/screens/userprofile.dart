@@ -176,7 +176,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         width: double.infinity,
                         height: 48,
                         child: TextFieldDesign(
-                          hintText: 'Name',
+                          hintText: 'Name', obscureText: false,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -193,7 +193,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         width: double.infinity,
                         height: 48,
                         child: TextFieldDesign(
-                          hintText: 'Email',
+                          hintText: 'Email', obscureText: false,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -210,7 +210,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         width: double.infinity,
                         height: 48,
                         child: TextFieldDesign(
-                          hintText: 'Contanct',
+                          hintText: 'Contanct', obscureText: false,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -227,7 +227,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         width: double.infinity,
                         height: 48,
                         child: TextFieldDesign(
-                          hintText: 'Adress',
+                          hintText: 'Adress', obscureText: false,
                         ),
                       ),
                       const SizedBox(height: 20),

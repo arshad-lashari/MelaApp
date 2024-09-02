@@ -65,7 +65,7 @@ class TextFieldDesign extends StatefulWidget {
   const TextFieldDesign({
     super.key,
     required this.hintText,
-    this.prefixIcon,
+    this.prefixIcon, required bool obscureText,
   });
 
   @override

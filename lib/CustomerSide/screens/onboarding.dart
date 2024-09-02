@@ -57,8 +57,6 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                   ),
                   Radio<int>(
                     activeColor: AppColors.bluescolor,
-                    focusColor: AppColors.bluescolor,
-                    autofocus: true,
                     value: 1,
                     groupValue: selectedValue,
                     onChanged: onChanged,

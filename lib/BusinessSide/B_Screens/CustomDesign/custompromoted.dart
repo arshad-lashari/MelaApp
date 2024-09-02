@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mela/BusinessSide/B_Screens/bpromotescreen.dart';
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
 
@@ -95,24 +96,35 @@ class _CustomPromotedServicesState extends State<CustomPromotedServices>
                                         color: Colors.black12,
                                         borderRadius: BorderRadius.circular(5),
                                       ),
-                                      child: const Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            CupertinoIcons.chevron_down_circle,
-                                            color: Color(0xFF9C39FF),
-                                          ),
-                                          SizedBox(width: 5),
-                                          Text(
-                                            'Promote',
-                                            style: TextStyle(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PromotionScreen(),
+                                              ));
+                                        },
+                                        child: const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              CupertinoIcons
+                                                  .chevron_down_circle,
                                               color: Color(0xFF9C39FF),
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
                                             ),
-                                          ),
-                                        ],
+                                            SizedBox(width: 5),
+                                            Text(
+                                              'Promote',
+                                              style: TextStyle(
+                                                color: Color(0xFF9C39FF),
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),

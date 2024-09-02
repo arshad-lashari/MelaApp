@@ -5,6 +5,7 @@ import 'package:mela/BusinessSide/B_Screens/businessmessagescreen.dart';
 import 'package:mela/BusinessSide/B_Screens/businessprofilescreen.dart';
 import 'package:mela/BusinessSide/B_Screens/myservicesscreen.dart';
 import 'package:mela/BusinessSide/B_Screens/upcomingjobs.dart';
+import 'package:mela/CustomerSide/screens/messagescreen.dart';
 
 class BusinessAppNavBar extends StatefulWidget {
   const BusinessAppNavBar({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class _BusinessAppNavBarState extends State<BusinessAppNavBar> {
   // List of widget pages
   final List<Widget> _pages = [
     const BusinessAppHomeScreen(),
-    const BusinessMessagescreen(),
+    const Messagescreen(),
     const CompleteAndUpComingJobs(),
     const MyServicesScreen(),
     const BusinessProfileScreen(),
