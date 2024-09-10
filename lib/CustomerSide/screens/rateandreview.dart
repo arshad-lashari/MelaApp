@@ -15,6 +15,7 @@ class RateAndReviewClass extends StatefulWidget {
 class _RateAndReviewClassState extends State<RateAndReviewClass> {
   File? image;
   final picker = ImagePicker();
+  int selectedRating = 0; // Variable to track the selected rating
 
   // Function to pick an image
   Future<void> pickImage(ImageSource source) async {
@@ -80,8 +81,17 @@ class _RateAndReviewClassState extends State<RateAndReviewClass> {
     );
   }
 
+  // Function to handle star tap
+  void _handleStarTap(int index) {
+    setState(() {
+      selectedRating = index + 1; // Update the selected rating
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -116,12 +126,13 @@ class _RateAndReviewClassState extends State<RateAndReviewClass> {
         ),
         backgroundColor: Colors.white,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 50),
-              child: Container(
+      body: SizedBox(
+        height: screenHeight,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: screenHeight,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(24),
@@ -135,38 +146,25 @@ class _RateAndReviewClassState extends State<RateAndReviewClass> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 25, horizontal: 35),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 25, horizontal: 35),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Icon(
-                              Icons.star,
-                              size: 43,
-                              color: AppColors.yellow,
-                            ),
-                            Icon(
-                              Icons.star,
-                              size: 43,
-                              color: AppColors.yellow,
-                            ),
-                            Icon(
-                              Icons.star,
-                              size: 43,
-                              color: AppColors.yellow,
-                            ),
-                            Icon(
-                              Icons.star,
-                              size: 43,
-                              color: AppColors.yellow,
-                            ),
-                            Icon(
-                              Icons.star,
-                              size: 43,
-                              color: Colors.black12,
-                            ),
-                          ],
+                          children: List.generate(5, (index) {
+                            return GestureDetector(
+                              onTap: () => _handleStarTap(index),
+                              child: Icon(
+                                Icons.star,
+                                size: 43,
+                                color: index < selectedRating
+                                    ? AppColors
+                                        .yellow // Use the existing yellow color
+                                    : Colors
+                                        .black12, // Gray for unselected stars
+                              ),
+                            );
+                          }),
                         ),
                       ),
                       const Text(
@@ -265,7 +263,7 @@ class _RateAndReviewClassState extends State<RateAndReviewClass> {
                         child: CustomButtonDesign(
                           buttonText: 'Submit',
                           onPressed: () {
-                            
+                            // Submit action
                           },
                         ),
                       ),
@@ -274,8 +272,8 @@ class _RateAndReviewClassState extends State<RateAndReviewClass> {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

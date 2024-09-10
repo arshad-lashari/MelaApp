@@ -14,11 +14,11 @@ class OnBordingScreen extends StatefulWidget {
 
 class _OnBordingScreenState extends State<OnBordingScreen> {
   AppImagesPath appImagesPath = AppImagesPath();
-  int selectedValue = 0;
+  int? selectedValue;
 
   void onChanged(int? value) {
     setState(() {
-      selectedValue = value!;
+      selectedValue = value;
     });
   }
 
@@ -50,10 +50,11 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                   const Text(
                     'Customer Side',
                     style: TextStyle(
-                        fontFamily: 'Ubuntu',
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.darkblue),
+                      fontFamily: 'Ubuntu',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.darkblue,
+                    ),
                   ),
                   Radio<int>(
                     activeColor: AppColors.bluescolor,
@@ -64,10 +65,11 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                   const Text(
                     'Business Side',
                     style: TextStyle(
-                        fontFamily: 'Ubuntu',
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.darkblue),
+                      fontFamily: 'Ubuntu',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.darkblue,
+                    ),
                   ),
                 ],
               ),
@@ -76,16 +78,18 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                 alignment: Alignment.center,
                 child: CustomButtonDesign(
                   buttonText: 'Get Started',
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LoginScreen(
-                          selectedValue: selectedValue,
-                        ),
-                      ),
-                    );
-                  },
+                  onPressed: selectedValue != null
+                      ? () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginScreen(
+                                selectedValue: selectedValue!,
+                              ),
+                            ),
+                          );
+                        }
+                      : () {},
                 ),
               ),
               const SizedBox(height: 25),
