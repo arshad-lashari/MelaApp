@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:mela/BusinessSide/B_Screens/b_navbarscreen.dart';
+import 'package:mela/Services/utilties/appurls.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
 import 'package:mela/CustomerSide/screens/bottomnav.dart';
 import 'package:mela/CustomerSide/screens/customdesign.dart';
+import 'package:http/http.dart'as http;
 
 class LoginScreen extends StatefulWidget {
   final int selectedValue; // Receive the selected value from OnBordingScreen
@@ -16,6 +18,28 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController signamecontroller = TextEditingController();
+  TextEditingController signemailcontroller = TextEditingController();
+  TextEditingController phonecontroller = TextEditingController();
+  TextEditingController adresscontroller = TextEditingController();
+  TextEditingController citycontroller = TextEditingController();
+  TextEditingController zipcodecontroller = TextEditingController();
+  TextEditingController passwordcontroller=TextEditingController();
+  void Register(String signame,signemail,phone,adress,city,zipcode,password)async{
+    final response=http.post(Uri.parse(CustomSideApi.signupurl),
+    body: {
+      'name':signame,
+      'email':signemail,
+      'password':password,
+      'phone':phone,
+      'address':adress,
+      'city':city,
+      'zipCode':zipcode,
+
+    }
+    );
+
+  }
   AppColors appColors = AppColors();
   AppImagesPath appImagesPath = AppImagesPath();
   bool chekvalue = false;
@@ -61,34 +85,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: 10),
                         SizedBox(
                           height: 55,
-                          child: TextFieldDesign(
-                            hintText: 'David Kowlaski',
-                            prefixIcon: Padding(
-                              padding: const EdgeInsets.all(9.0),
-                              child: CircleAvatar(
-                                backgroundColor: AppColors.bluescolor,
-                                child: Image.asset(
-                                  height: 25,
-                                  width: 25,
-                                  AppImagesPath.manimage,
-                                ),
-                              ),
-                            ),
-                            obscureText: false,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        const SizedBox(
-                          height: 55,
-                          child: TextFieldDesign(
-                            hintText: 'DavidKowi@gmail.com',
-                            prefixIcon: Padding(
-                              padding: EdgeInsets.all(9.0),
-                              child: CircleAvatar(
-                                backgroundColor: AppColors.bluescolor,
-                                child: Icon(
-                                  Icons.email,
-                                  color: Colors.white,
+                          child: TextField(
+                            controller: signamecontroller,
+                            decoration: InputDecoration(
+                              hintText: 'David Kowlaski',
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(9.0),
+                                child: CircleAvatar(
+                                  backgroundColor: AppColors.bluescolor,
+                                  child: Image.asset(
+                                    AppImagesPath.manimage,
+                                    height: 25,
+                                    width: 25,
+                                  ),
                                 ),
                               ),
                             ),
@@ -97,9 +106,55 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const SizedBox(height: 10),
                         SizedBox(
+                          height: 55,
+                          child: TextField(
+                            controller: signemailcontroller,
+                            decoration: InputDecoration(
+                              hintText: 'DavidKowi@gmail.com',
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.all(9.0),
+                                child: CircleAvatar(
+                                  backgroundColor: AppColors.bluescolor,
+                                  child: Icon(
+                                    Icons.email,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            obscureText: false,
+                          ),
+                        ),
+                   const SizedBox(height: 10),
+                        SizedBox(
+                          height: 55,
+                          child: TextField(
+                            controller: passwordcontroller,
+                            decoration: InputDecoration(
+                              hintText: 'Password',
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.all(9.0),
+                                child: CircleAvatar(
+                                  backgroundColor: AppColors.bluescolor,
+                                  child: Icon(
+                                    Icons.email,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            obscureText: false,
+                          ),
+                        ),
+                  
+                  
+                  
+                        const SizedBox(height: 10),
+                        SizedBox(
                           height: 75,
                           width: 319,
                           child: IntlPhoneField(
+                            controller: phonecontroller,
                             cursorColor: Colors.black54,
                             decoration: InputDecoration(
                                 fillColor: AppColors.lightblack,
@@ -121,17 +176,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        const SizedBox(
+                        SizedBox(
                           height: 50,
-                          child: TextFieldDesign(
-                            hintText: 'Address',
-                            prefixIcon: Padding(
-                              padding: EdgeInsets.all(9.0),
-                              child: CircleAvatar(
-                                backgroundColor: AppColors.bluescolor,
-                                child: Icon(
-                                  Icons.location_on,
-                                  color: Colors.white,
+                          child: TextField(
+                            controller: adresscontroller,
+                            decoration: InputDecoration(
+                              hintText: 'Address',
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.all(9.0),
+                                child: CircleAvatar(
+                                  backgroundColor: AppColors.bluescolor,
+                                  child: Icon(
+                                    Icons.location_on,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
@@ -139,17 +197,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        const SizedBox(
+                        SizedBox(
                           height: 55,
-                          child: TextFieldDesign(
-                            hintText: 'City',
-                            prefixIcon: Padding(
-                              padding: EdgeInsets.all(9.0),
-                              child: CircleAvatar(
-                                backgroundColor: AppColors.bluescolor,
-                                child: Icon(
-                                  Icons.location_on,
-                                  color: Colors.white,
+                          child: TextField(
+                            controller: citycontroller,
+                            decoration: InputDecoration(
+                              hintText: 'City',
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.all(9.0),
+                                child: CircleAvatar(
+                                  backgroundColor: AppColors.bluescolor,
+                                  child: Icon(
+                                    Icons.location_on,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
@@ -157,17 +218,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        const SizedBox(
+                        SizedBox(
                           height: 50,
-                          child: TextFieldDesign(
-                            hintText: 'Zip_Code',
-                            prefixIcon: Padding(
-                              padding: EdgeInsets.all(9.0),
-                              child: CircleAvatar(
-                                backgroundColor: AppColors.bluescolor,
-                                child: Icon(
-                                  Icons.location_on,
-                                  color: Colors.white,
+                          child: TextField(
+                            controller: zipcodecontroller,
+                            decoration: InputDecoration(
+                              hintText: 'Zip_Code',
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.all(9.0),
+                                child: CircleAvatar(
+                                  backgroundColor: AppColors.bluescolor,
+                                  child: Icon(
+                                    Icons.location_on,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
@@ -180,6 +244,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: CustomButtonDesign(
                             buttonText: 'Create Profile',
                             onPressed: () {
+                              Register
+                            (
+                                signamecontroller.text.trim(),
+                                signemailcontroller.text.trim(),
+                                phonecontroller.text.trim(),
+                                adresscontroller.text.trim(),
+                                citycontroller.text.trim(),
+                                zipcodecontroller.text.trim(),
+                                passwordcontroller.text.trim(),
+                            );
                               if (widget.selectedValue == 0) {
                                 // Navigate to Customer Side
                                 Navigator.push(
