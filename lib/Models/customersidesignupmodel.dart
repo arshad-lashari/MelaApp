@@ -1,40 +1,83 @@
-  class SignupApis {
-  String? name;
-  String? email;
-  String? password;
-  String? phone;
-  String? address;
-  String? city;
-  String? zipCode;
+// Display category apis
+class Categoryapis {
+  String? message;
+  List<Services>? services;
 
-  SignupApis(
-      {this.name,
-      this.email,
-      this.password,
-      this.phone,
-      this.address,
-      this.city,
-      this.zipCode});
+  Categoryapis({this.message, this.services});
 
-  SignupApis.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    email = json['email'];
-    password = json['password'];
-    phone = json['phone'];
-    address = json['address'];
-    city = json['city'];
-    zipCode = json['zipCode'];
+  Categoryapis.fromJson(Map<String, dynamic> json) {
+    message = json['message'];
+    if (json['services'] != null) {
+      services = <Services>[];
+      json['services'].forEach((v) {
+        services!.add(new Services.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['password'] = this.password;
-    data['phone'] = this.phone;
-    data['address'] = this.address;
-    data['city'] = this.city;
-    data['zipCode'] = this.zipCode;
+    data['message'] = this.message;
+    if (this.services != null) {
+      data['services'] = this.services!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Services {
+  String? sId;
+  String? business;
+  String? category;
+  String? pic;
+  String? speciality;
+  int? price;
+  String? description;
+  bool? promoted;
+  String? createdAt;
+  String? updatedAt;
+  int? iV;
+
+  Services(
+      {this.sId,
+      this.business,
+      this.category,
+      this.pic,
+      this.speciality,
+      this.price,
+      this.description,
+      this.promoted,
+      this.createdAt,
+      this.updatedAt,
+      this.iV});
+
+  Services.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    business = json['business'];
+    category = json['category'];
+    pic = json['pic'];
+    speciality = json['speciality'];
+    price = json['price'];
+    description = json['description'];
+    promoted = json['promoted'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    iV = json['__v'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['business'] = this.business;
+    data['category'] = this.category;
+    data['pic'] = this.pic;
+    data['speciality'] = this.speciality;
+    data['price'] = this.price;
+    data['description'] = this.description;
+    data['promoted'] = this.promoted;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['__v'] = this.iV;
     return data;
   }
 }

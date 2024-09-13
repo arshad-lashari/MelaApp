@@ -217,12 +217,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  // ignore: prefer_const_constructors
-                                  builder: (context) => ProductDetailsScreen(),
-                                ));
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       // ignore: prefer_const_constructors
+                            //       builder: (context) => ProductDetailsScreen(),
+                            //     ));
                           },
                           child: const CategoriesCustom()),
                     ],
