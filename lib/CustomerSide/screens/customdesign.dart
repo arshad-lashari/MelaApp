@@ -61,11 +61,12 @@ class _CustomButtonDesignState extends State<CustomButtonDesign>
 class TextFieldDesign extends StatefulWidget {
   final String hintText;
   final Widget? prefixIcon;
+  final TextEditingController controller;
 
   const TextFieldDesign({
     super.key,
     required this.hintText,
-    this.prefixIcon, required bool obscureText,
+    this.prefixIcon, required bool obscureText,required this.controller
   });
 
   @override
@@ -79,8 +80,12 @@ class _TextFieldDesignState extends State<TextFieldDesign> {
       width: 319,
       height: 63,
       child: TextField(
+      
         cursorColor: Colors.black38,
+        controller: widget.controller,
         decoration: InputDecoration(
+          
+          
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 13, vertical: 3),
           filled: true,

@@ -15,6 +15,12 @@ class BusinessProfileScreen extends StatefulWidget {
 }
 
 class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
+   TextEditingController namecontroller=TextEditingController();
+    TextEditingController emailcontroller=TextEditingController();
+
+  TextEditingController contactcontroller=TextEditingController();
+
+  TextEditingController adresscontroller=TextEditingController();
   AppColors appColors = AppColors();
   AppImagesPath appImagesPath = AppImagesPath();
   AppText appText = AppText();
@@ -193,10 +199,11 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                       const SizedBox(
                         height: 7,
                       ),
-                      const SizedBox(
+                       SizedBox(
                           width: double.infinity,
                           height: 48,
                           child: TextFieldDesign(
+                            controller: namecontroller,
                             hintText: 'Name',
                             obscureText: false,
                           )),
@@ -213,10 +220,11 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                       const SizedBox(
                         height: 7,
                       ),
-                      const SizedBox(
+                       SizedBox(
                           width: double.infinity,
                           height: 48,
                           child: TextFieldDesign(
+                            controller: emailcontroller,
                             hintText: 'Email',
                             obscureText: false,
                           )),
@@ -233,10 +241,11 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                       const SizedBox(
                         height: 7,
                       ),
-                      const SizedBox(
+                       SizedBox(
                           width: double.infinity,
                           height: 48,
                           child: TextFieldDesign(
+                            controller: contactcontroller,
                             hintText: 'Phone',
                             obscureText: false,
                           )),
@@ -253,10 +262,11 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                       const SizedBox(
                         height: 7,
                       ),
-                      const SizedBox(
+                       SizedBox(
                           width: double.infinity,
                           height: 48,
                           child: TextFieldDesign(
+                            controller: adresscontroller,
                             hintText: 'Address',
                             obscureText: false,
                           )),

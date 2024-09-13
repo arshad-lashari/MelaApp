@@ -1,4 +1,5 @@
 import 'dart:io'; // For the File class
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mela/constant/colorspath.dart';
@@ -12,6 +13,14 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
+  TextEditingController namecontroller=TextEditingController();
+    TextEditingController emailcontroller=TextEditingController();
+
+  TextEditingController contactcontroller=TextEditingController();
+
+  TextEditingController adresscontroller=TextEditingController();
+
+  
   bool isSwitched = false;
   XFile? _imageFile;
 
@@ -172,10 +181,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                       ),
                       const SizedBox(height: 5),
-                      const SizedBox(
+                       SizedBox(
                         width: double.infinity,
                         height: 48,
                         child: TextFieldDesign(
+                          controller: namecontroller,
                           hintText: 'Name', obscureText: false,
                         ),
                       ),
@@ -189,10 +199,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                       ),
                       const SizedBox(height: 5),
-                      const SizedBox(
+                       SizedBox(
                         width: double.infinity,
                         height: 48,
                         child: TextFieldDesign(
+                          controller: emailcontroller,
                           hintText: 'Email', obscureText: false,
                         ),
                       ),
@@ -206,10 +217,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                       ),
                       const SizedBox(height: 5),
-                      const SizedBox(
+                       SizedBox(
                         width: double.infinity,
                         height: 48,
                         child: TextFieldDesign(
+                          controller: contactcontroller,
                           hintText: 'Contanct', obscureText: false,
                         ),
                       ),
@@ -223,10 +235,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                       ),
                       const SizedBox(height: 5),
-                      const SizedBox(
+                       SizedBox(
                         width: double.infinity,
                         height: 48,
                         child: TextFieldDesign(
+                          controller: adresscontroller,
                           hintText: 'Adress', obscureText: false,
                         ),
                       ),

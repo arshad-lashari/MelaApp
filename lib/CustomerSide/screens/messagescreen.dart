@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
@@ -12,6 +13,7 @@ class Messagescreen extends StatefulWidget {
 }
 
 class _MessagescreenState extends State<Messagescreen> {
+  TextEditingController searchcontroller=TextEditingController();
   AppImagesPath appImagesPath = AppImagesPath();
   AppColors appColors = AppColors();
   AppText appText = AppText();
@@ -39,12 +41,13 @@ class _MessagescreenState extends State<Messagescreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
+             Padding(
               padding: EdgeInsets.symmetric(vertical: 20),
               child: SizedBox(
                 height: 48,
                 width: double.infinity,
                 child: TextFieldDesign(
+                  controller: searchcontroller,
                   hintText: 'Search Message',
                   prefixIcon: Icon(
                     Icons.search,
