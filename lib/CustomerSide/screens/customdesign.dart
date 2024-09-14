@@ -1,9 +1,14 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:mela/Models/customersidesignupmodel.dart';
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
 import 'package:mela/CustomerSide/screens/productdetails.dart';
 import 'package:mela/CustomerSide/screens/productservice.dart';
+import 'package:http/http.dart'as http;
 
 class CustomButtonDesign extends StatefulWidget {
   final String buttonText;
@@ -129,6 +134,19 @@ class CategoriesCustom extends StatefulWidget {
 
 class _CategoriesCustomState extends State<CategoriesCustom>
     with SingleTickerProviderStateMixin {
+  Future<Categoryapis> getCategory() async {
+    final response = await http.get(
+      Uri.parse(
+          'https://mela-backend.vercel.app/customer/getServiceByCategory'),
+    );
+
+    if (response.statusCode == 200) {
+      return Categoryapis.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load category');
+    }
+  }
+
   late AnimationController _controller;
 
   @override
@@ -192,7 +210,6 @@ class _CategoriesCustomState extends State<CategoriesCustom>
     );
   }
 }
-
 class CustomProductDetails extends StatefulWidget {
   const CustomProductDetails({super.key});
 
