@@ -1,14 +1,5 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:mela/Models/customersidesignupmodel.dart';
-import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
-import 'package:mela/constant/imagespath.dart';
-import 'package:mela/CustomerSide/screens/productdetails.dart';
-import 'package:mela/CustomerSide/screens/productservice.dart';
-import 'package:http/http.dart'as http;
 
 class CustomButtonDesign extends StatefulWidget {
   final String buttonText;
@@ -68,11 +59,12 @@ class TextFieldDesign extends StatefulWidget {
   final Widget? prefixIcon;
   final TextEditingController controller;
 
-  const TextFieldDesign({
-    super.key,
-    required this.hintText,
-    this.prefixIcon, required bool obscureText,required this.controller
-  });
+  const TextFieldDesign(
+      {super.key,
+      required this.hintText,
+      this.prefixIcon,
+      required bool obscureText,
+      required this.controller});
 
   @override
   State<TextFieldDesign> createState() => _TextFieldDesignState();
@@ -85,12 +77,9 @@ class _TextFieldDesignState extends State<TextFieldDesign> {
       width: 319,
       height: 63,
       child: TextField(
-      
         cursorColor: Colors.black38,
         controller: widget.controller,
         decoration: InputDecoration(
-          
-          
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 13, vertical: 3),
           filled: true,
@@ -120,230 +109,6 @@ class _TextFieldDesignState extends State<TextFieldDesign> {
               const TextStyle(fontSize: 16, color: AppColors.textfieldcolor),
           prefixIcon: widget.prefixIcon,
         ),
-      ),
-    );
-  }
-}
-
-class CategoriesCustom extends StatefulWidget {
-  const CategoriesCustom({super.key});
-
-  @override
-  State<CategoriesCustom> createState() => _CategoriesCustomState();
-}
-
-class _CategoriesCustomState extends State<CategoriesCustom>
-    with SingleTickerProviderStateMixin {
-  Future<Categoryapis> getCategory() async {
-    final response = await http.get(
-      Uri.parse(
-          'https://mela-backend.vercel.app/customer/getServiceByCategory'),
-    );
-
-    if (response.statusCode == 200) {
-      return Categoryapis.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to load category');
-    }
-  }
-
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(vsync: this);
-  }
-
-  AppImagesPath appImagesPath = AppImagesPath();
-  AppText appText = AppText();
-  AppColors appColors = AppColors();
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height:
-          MediaQuery.of(context).size.height - 270, // Adjust height as needed
-      child: GridView.builder(
-        physics: const AlwaysScrollableScrollPhysics(),
-        scrollDirection: Axis.vertical,
-        itemCount: appImagesPath.categoryimages.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4,
-          childAspectRatio: 1,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 30,
-        ),
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ProductDetailsScreen(),
-                  ));
-            },
-            child: Column(
-              children: [
-                Image.asset(
-                    appImagesPath.categoryimages[index]), // Fixed this line
-                const SizedBox(
-                  height: 18,
-                ),
-                Text(
-                  appText.categoriestext[index],
-                  style: const TextStyle(
-                      fontFamily: 'Ubuntu',
-                      fontSize: 10,
-                      fontWeight: FontWeight.w400),
-                ), // Assuming categories text is also a list
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-class CustomProductDetails extends StatefulWidget {
-  const CustomProductDetails({super.key});
-
-  @override
-  State<CustomProductDetails> createState() => _CustomProductDetailsState();
-}
-
-class _CustomProductDetailsState extends State<CustomProductDetails> {
-  AppImagesPath appImagesPath = AppImagesPath();
-  AppText appText = AppText();
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisExtent: 220, // Increased height for better layout
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-        ),
-        itemCount: appImagesPath
-            .categoriesdetailsimages.length, // Adjust based on your data
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ProductServiceDetails(),
-                  ));
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 118,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
-                      ),
-                      image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: AssetImage(
-                              appImagesPath.categoriesdetailsimages[index])),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 6,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Text(
-                            appText.productdetailtext[index],
-                            style: const TextStyle(
-                              fontFamily: 'Ubuntu',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.darkblue,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 3,
-                        ),
-                        const Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Text(
-                            'Cleaner',
-                            style: TextStyle(
-                              fontFamily: 'Ubuntu',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.darkblue,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        const Row(
-                          children: [
-                            Icon(
-                              Icons.star,
-                              size: 20,
-                              color: Color(0xFFFFA873),
-                            ),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            Text(
-                              '5.0',
-                              style: TextStyle(
-                                fontFamily: 'Ubuntu',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.darkblue,
-                              ),
-                            ),
-                            Spacer(),
-                            Text(
-                              '\$200',
-                              style: TextStyle(
-                                fontFamily: 'Ubuntu',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.darkblue,
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          );
-        },
       ),
     );
   }
@@ -441,3 +206,5 @@ class _CustomTimeFormatDesignState extends State<CustomTimeFormatDesign> {
 
 //CustomDesingAndClass For
 
+///khanam simple saa best h wse >>>??? to ap dekh lyn mjhy to sch me pyaara lgga
+///lekin es py kch b or nh lg skna wrna pyaara nh lgna boly bbb ap h yaha

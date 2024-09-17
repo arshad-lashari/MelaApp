@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:mela/Models/customersidesignupmodel.dart';
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
-import 'package:mela/CustomerSide/screens/customdesign.dart';
+import 'package:http/http.dart' as http;
 import 'package:mela/CustomerSide/screens/productdetails.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,6 +15,48 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future<List<Categoryapis>>? categoryFuture; // List of Categoryapis
+  List<String> allcategory = [
+    "IT",
+    "Cleaners",
+    "Movers",
+    "Repairing",
+    "Plumbers, Mechanic, Glass Work",
+    "Furniture"
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    categoryFuture = fetchAllCategoriesData(); // Initialize categoryFuture
+  }
+
+  Future<Categoryapis> fetchCategoryData(String category) async {
+    final response = await http.get(Uri.parse(
+        'https://mela-backend.vercel.app/customer/getServiceByCategory?category=$category'));
+
+    if (response.statusCode == 200) {
+      return Categoryapis.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load category data');
+    }
+  }
+
+  Future<List<Categoryapis>> fetchAllCategoriesData() async {
+    List<Categoryapis> allCategoryData = [];
+
+    for (String category in allcategory) {
+      try {
+        Categoryapis data = await fetchCategoryData(category);
+        allCategoryData.add(data);
+      } catch (e) {
+        print("Failed to load data for category $category: $e");
+      }
+    }
+
+    return allCategoryData;
+  }
+
   AppColors appColors = AppColors();
   AppImagesPath appImagesPath = AppImagesPath();
   AppText appText = AppText();
@@ -217,96 +260,154 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  // ignore: prefer_const_constructors
-                                  builder: (context) => ProductDetailsScreen(),
-                                ));
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       // ignore: prefer_const_constructors
+                            //       builder: (context) => ProductDetailsScreen(
+                            //         categoryimagepath: '',
+                            //         categoryimagetext: '',
+                            //       ),
+                            //     ));
                           },
-                          child: const CategoriesCustom()),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Container(
-                  margin: const EdgeInsets.only(
-                      top: 213), // This positions the container from the top
-                  height: 48,
-
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 10.0,
-                        offset: Offset(0, 5),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      const SizedBox(
-                        width: 170,
-                        child: TextField(
-                          minLines: 1,
-                          maxLines: 100,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: Colors.black,
-                              size: 30,
-                            ),
-                            hintText: 'Search',
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 25,
-                        width: 2,
-                        color: Colors.black54,
-                      ),
-                      const Icon(
-                        Icons.location_on,
-                        color: Colors.red,
-                        size: 23,
-                      ),
-                      const SizedBox(width: 8),
-                      const Text(
-                        '18 Fish Street Hill',
-                        style: TextStyle(fontSize: 10, fontFamily: 'Ubuntu'),
-                      )
+                          child: SizedBox(
+                              height: MediaQuery.of(context).size.height -
+                                  270, // Adjust height as needed
+                              child: FutureBuilder<List<Categoryapis>>(
+                                future: categoryFuture,
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  } else if (!snapshot.hasData) {
+                                    return const Center(
+                                      child: Text('Failed to load data'),
+                                    );
+                                  } else if (snapshot.hasData) {
+                                    return GridView.builder(
+                                      physics:
+                                          const AlwaysScrollableScrollPhysics(),
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: snapshot.data!.length,
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 4,
+                                        childAspectRatio: 1,
+                                        crossAxisSpacing: 10,
+                                        mainAxisSpacing: 30,
+                                      ),
+                                      itemBuilder: (context, index) {
+                                        var categoryData =
+                                            snapshot.data![index];
+                                        return GridView.builder(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemCount:
+                                              categoryData.services?.length ??
+                                                  0,
+                                          gridDelegate:
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 1,
+                                            childAspectRatio: 1,
+                                          ),
+                                          itemBuilder: (context, serviceIndex) {
+                                            var service = categoryData
+                                                .services![serviceIndex];
+                                            return GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                        ProductDetailsScreen(
+                                                          categoryimagepath: service.pic??'', 
+                                                        categoryimagetext: service.category??'', 
+                                                        categoryprice:service.price?.toString()?? '', 
+                                                        services: categoryData.services ?? [],   
+                                                          
+                                                        )
+                                                    ));
+                                              },
+                                              child: Column(
+                                                children: [
+                                                  Image.network(
+                                                    service.pic ?? '',
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 6,
+                                                  ),
+                                                  Text(
+                                                    service.category ?? '',
+                                                    style: const TextStyle(
+                                                        fontFamily: 'Ubuntu',
+                                                        fontSize: 10,
+                                                        color: Colors.black),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    return const Center(
+                                      child: Text('No data available'),
+                                    );
+                                  }
+                                },
+                              ))),
                     ],
                   ),
                 ),
+              ],
+            ),
+            Positioned(
+              top: 0,
+              child: Container(
+                color: Colors.transparent,
+                height: 240,
+                width: MediaQuery.of(context).size.width,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: 40,
+                      left: 20,
+                      child: SizedBox(
+                        height: 55,
+                        width: 200,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Find the best services for you',
+                            style: TextStyle(
+                              fontFamily: 'Ubuntu',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 22,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 40,
+                      right: 20,
+                      child: SizedBox(
+                        height: 50,
+                        width: 150,
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          // child: Image.asset(AppImagesPath.searchicon),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-              child: Image.asset(
-                height: 40,
-                width: 40,
-                AppImagesPath.profile,
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 100, horizontal: 20),
-              child: Text(
-                'What business are \n you searching for ?',
-                style: TextStyle(
-                    fontFamily: 'Ubuntu',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white),
-              ),
-            )
           ],
         ),
       ),

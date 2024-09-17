@@ -51,10 +51,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
       print('Response Status Code: ${response.statusCode}');
       print('Response Body: ${response.body}');
+      var data=jsonDecode(response.body);
 
       if (response.statusCode == 201) {
         // Updated status code for successful creation
         print('Register Successfully');
+           if (data['userId'] != null) {
+        print('User ID: ${data['userId']}');
+      } else {
+        print('User ID not found in the response.');
+      }
 
         // Verify selectedValue
         print('Selected Value: ${widget.selectedValue}');
@@ -102,6 +108,11 @@ void login(String logemail, String logpassword) async {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       print(data);
+      if (data['userId'] != null) {
+        print('User ID: ${data['userId']}');
+      } else {
+        print('User ID not found in the response.');
+      }
 
       if (widget.selectedValue == 0) {
         // Navigate to Customer side
@@ -198,7 +209,7 @@ void login(String logemail, String logpassword) async {
                           child: TextFieldDesign(
                             controller: signemailcontroller,
                             hintText: 'DavidKowi@gmail.com',
-                            prefixIcon: Padding(
+                            prefixIcon: const Padding(
                               padding: EdgeInsets.all(9.0),
                               child: CircleAvatar(
                                 backgroundColor: AppColors.bluescolor,
@@ -217,7 +228,7 @@ void login(String logemail, String logpassword) async {
                           child: TextFieldDesign(
                             controller: passwordcontroller,
                             hintText: 'Password',
-                            prefixIcon: Padding(
+                            prefixIcon: const Padding(
                               padding: EdgeInsets.all(9.0),
                               child: CircleAvatar(
                                 backgroundColor: AppColors.bluescolor,
@@ -262,7 +273,7 @@ void login(String logemail, String logpassword) async {
                           child: TextFieldDesign(
                             controller: adresscontroller,
                             hintText: 'Address',
-                            prefixIcon: Padding(
+                            prefixIcon: const Padding(
                               padding: EdgeInsets.all(9.0),
                               child: CircleAvatar(
                                 backgroundColor: AppColors.bluescolor,
@@ -281,7 +292,7 @@ void login(String logemail, String logpassword) async {
                           child: TextFieldDesign(
                             controller: citycontroller,
                             hintText: 'City',
-                            prefixIcon: Padding(
+                            prefixIcon: const Padding(
                               padding: EdgeInsets.all(9.0),
                               child: CircleAvatar(
                                 backgroundColor: AppColors.bluescolor,
@@ -300,7 +311,7 @@ void login(String logemail, String logpassword) async {
                           child: TextFieldDesign(
                             controller: zipcodecontroller,
                             hintText: 'Zip_Code',
-                            prefixIcon: Padding(
+                            prefixIcon: const Padding(
                               padding: EdgeInsets.all(9.0),
                               child: CircleAvatar(
                                 backgroundColor: AppColors.bluescolor,
@@ -424,7 +435,7 @@ void login(String logemail, String logpassword) async {
                       controller: logemailcontroller,
                       // controller: loginemailcontroller,
 
-                      prefixIcon: Padding(
+                      prefixIcon: const Padding(
                           padding: EdgeInsets.all(10.0),
                           child: CircleAvatar(
                             radius: 30,
@@ -447,7 +458,7 @@ void login(String logemail, String logpassword) async {
                     width: double.infinity,
                     child: TextFieldDesign(
                       controller: logpasswordcontroller,
-                      prefixIcon: Padding(
+                      prefixIcon: const Padding(
                           padding: EdgeInsets.all(10.0),
                           child: CircleAvatar(
                             radius: 30,

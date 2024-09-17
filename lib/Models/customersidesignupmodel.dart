@@ -6,7 +6,7 @@ class Categoryapis {
   Categoryapis({this.message, this.services});
 
   Categoryapis.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
+    message = json['message'];  
     if (json['services'] != null) {
       services = <Services>[];
       json['services'].forEach((v) {
@@ -81,3 +81,6 @@ class Services {
     return data;
   }
 }
+
+
+
