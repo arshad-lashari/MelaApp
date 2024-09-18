@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:mela/Models/categoriesdata.dart';
 import 'package:mela/Models/customersidesignupmodel.dart';
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
@@ -15,46 +17,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future<List<Categoryapis>>? categoryFuture; // List of Categoryapis
-  List<String> allcategory = [
-    "IT",
-    "Cleaners",
-    "Movers",
-    "Repairing",
-    "Plumbers, Mechanic, Glass Work",
-    "Furniture"
-  ];
+ 
 
   @override
   void initState() {
     super.initState();
-    categoryFuture = fetchAllCategoriesData(); // Initialize categoryFuture
+    getCategories();
+    categoryFuture = getCategories(); // Initialize the future
   }
 
-  Future<Categoryapis> fetchCategoryData(String category) async {
-    final response = await http.get(Uri.parse(
-        'https://mela-backend.vercel.app/customer/getServiceByCategory?category=$category'));
+  Future<categoriess>? categoryFuture;
+  Future<categoriess> getCategories() async {
+    try {
+      final response = await http.get(
+        Uri.parse('https://mela-backend.vercel.app/customer/getCategories'),
+      );
 
-    if (response.statusCode == 200) {
-      return Categoryapis.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load category data');
-    }
-  }
-
-  Future<List<Categoryapis>> fetchAllCategoriesData() async {
-    List<Categoryapis> allCategoryData = [];
-
-    for (String category in allcategory) {
-      try {
-        Categoryapis data = await fetchCategoryData(category);
-        allCategoryData.add(data);
-      } catch (e) {
-        print("Failed to load data for category $category: $e");
+      if (response.statusCode == 200) {
+        // If the server returns a successful response, parse the JSON data
+        final jsonData = json.decode(response.body);
+        print(jsonData);
+        return categoriess.fromJson(
+            jsonData); // Assuming fromJson is a method in the 'categoriess' class
+      } else {
+        // Handle any other status code, like 404, 500, etc.
+        throw Exception('Failed to load categories');
       }
+    } catch (e) {
+      print('Error fetching categories: $e');
+      throw e; // Re-throw the error for further handling if necessary
     }
-
-    return allCategoryData;
   }
 
   AppColors appColors = AppColors();
@@ -273,7 +265,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: SizedBox(
                               height: MediaQuery.of(context).size.height -
                                   270, // Adjust height as needed
-                              child: FutureBuilder<List<Categoryapis>>(
+                              child: FutureBuilder<categoriess>(
                                 future: categoryFuture,
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
@@ -281,84 +273,73 @@ class _HomeScreenState extends State<HomeScreen> {
                                     return const Center(
                                       child: CircularProgressIndicator(),
                                     );
-                                  } else if (!snapshot.hasData) {
+                                  } else if (!snapshot.hasData ||
+                                      snapshot.data!.categories!.isEmpty) {
+                                    return const Center(
+                                      child: Text('No categories available'),
+                                    );
+                                  } else if (snapshot.hasError) {
                                     return const Center(
                                       child: Text('Failed to load data'),
                                     );
-                                  } else if (snapshot.hasData) {
+                                  } else {
                                     return GridView.builder(
                                       physics:
                                           const AlwaysScrollableScrollPhysics(),
                                       scrollDirection: Axis.vertical,
-                                      itemCount: snapshot.data!.length,
+                                      itemCount:
+                                          snapshot.data!.categories!.length,
                                       gridDelegate:
                                           const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 4,
+                                        crossAxisCount:
+                                            4, // Adjust based on your desired layout
                                         childAspectRatio: 1,
                                         crossAxisSpacing: 10,
                                         mainAxisSpacing: 30,
                                       ),
                                       itemBuilder: (context, index) {
-                                        var categoryData =
-                                            snapshot.data![index];
-                                        return GridView.builder(
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount:
-                                              categoryData.services?.length ??
-                                                  0,
-                                          gridDelegate:
-                                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 1,
-                                            childAspectRatio: 1,
-                                          ),
-                                          itemBuilder: (context, serviceIndex) {
-                                            var service = categoryData
-                                                .services![serviceIndex];
-                                            return GestureDetector(
-                                              onTap: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                        ProductDetailsScreen(
-                                                          categoryimagepath: service.pic??'', 
-                                                        categoryimagetext: service.category??'', 
-                                                        categoryprice:service.price?.toString()?? '', 
-                                                        services: categoryData.services ?? [],   
-                                                          
-                                                        )
-                                                    ));
-                                              },
-                                              child: Column(
-                                                children: [
-                                                  Image.network(
-                                                    service.pic ?? '',
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 6,
-                                                  ),
-                                                  Text(
-                                                    service.category ?? '',
-                                                    style: const TextStyle(
-                                                        fontFamily: 'Ubuntu',
-                                                        fontSize: 10,
-                                                        color: Colors.black),
-                                                  ),
-                                                ],
+                                        var category =
+                                            snapshot.data!.categories![index];
+                                        return GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ProductDetailsScreen(
+                                                 categoryName: category.name ?? 'Unknown Category',
+                                                ),
                                               ),
                                             );
                                           },
+                                          child: Column(
+                                            children: [
+                                              Image.network(
+                                                category.picture ?? '',
+                                                height: 60,
+                                                width:
+                                                    60, // Adjust width for image display
+                                                fit: BoxFit
+                                                    .cover, // Adjust for proper image fit
+                                              ),
+                                              const SizedBox(height: 6),
+                                              Text(
+                                                category.name ?? '',
+                                                style: const TextStyle(
+                                                  fontFamily: 'Ubuntu',
+                                                  fontSize: 10,
+                                                  color: Colors.black,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ],
+                                          ),
                                         );
                                       },
                                     );
-                                  } else {
-                                    return const Center(
-                                      child: Text('No data available'),
-                                    );
                                   }
                                 },
-                              ))),
+                              )))
                     ],
                   ),
                 ),

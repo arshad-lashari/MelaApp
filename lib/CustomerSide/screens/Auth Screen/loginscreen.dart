@@ -1,14 +1,18 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:mela/BusinessSide/B_Screens/b_navbarscreen.dart';
+import 'package:mela/BusinessSide/B_Screens/businesshomescreen.dart';
+import 'package:mela/Models/userdetailsapi.dart';
 import 'package:mela/Services/utilties/appurls.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
 import 'package:mela/CustomerSide/screens/bottomnav.dart';
 import 'package:mela/CustomerSide/screens/customdesign.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   final int selectedValue; // Receive the selected value from OnBordingScreen
@@ -29,6 +33,121 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordcontroller = TextEditingController();
   TextEditingController logemailcontroller = TextEditingController();
   TextEditingController logpasswordcontroller = TextEditingController();
+
+  void bregister(String signame, String signemail, String phone, String address,
+      String city, String zipcode, String password) async {
+    Map<String, dynamic> body = {
+      'name': signame,
+      'email': signemail,
+      'password': password,
+      'phone': phone,
+      'address': address,
+      'city': city,
+      'zipCode': zipcode,
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://mela-backend.vercel.app/business/signup'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(body),
+      );
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+      var data = jsonDecode(response.body);
+      if (response.statusCode == 201) {
+        // Handle successful response
+        // Updated status code for successful creation
+        print('Register Successfully');
+        if (data['userId'] != null) {
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          pref.setString("userID", data['userId']);
+          print('User ID: ${pref.getString('userID')}');
+        } else {
+          print('User ID not found in the response.');
+        }
+        print('Selected Value: ${widget.selectedValue}');
+
+        if (widget.selectedValue == 0) {
+          // Navigate to Customer Side
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const BottomNavBar(),
+            ),
+          );
+        } else if (widget.selectedValue == 1) {
+          // Navigate to Business Side
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const BusinessAppNavBar(),
+            ),
+          );
+        } else {
+          print('Invalid selectedValue: ${widget.selectedValue}');
+        }
+        print('Business registered successfully.');
+      } else {
+        print('Invalid selectedValue: ${widget.selectedValue}');
+
+        print(
+            'Failed to register business. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Handle network or other errors
+      print('Error occurred: $e');
+    }
+  }
+
+  void Blogin(String logemail, String logpassword) async {
+    Map<String, dynamic> body = {
+      "email": logemail,
+      "password": logpassword,
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://mela-backend.vercel.app/business/signup'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(body),
+      );
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        print(data);
+        if (data['userId'] != null) {
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          pref.setString("userID", data['userId']);
+          print('User ID: ${pref.getString('userID')}');
+        } else {
+          print('User ID not found in the response.');
+        }
+
+        if (widget.selectedValue == 0) {
+          // Navigate to Customer side
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const BottomNavBar(),
+            ),
+          );
+        } else if (widget.selectedValue == 1) {
+          // Navigate to Business side
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const BusinessAppNavBar(),
+            ),
+          );
+        }
+      } else {
+        // Handle other status codes or errors
+        print('Error: ${response.statusCode}, ${response.body}');
+      }
+    } catch (e) {
+      // Handle exception
+      print('Exception: $e');
+    }
+  }
 
   void Register(String signame, String signemail, String phone, String adress,
       String city, String zipcode, String password) async {
@@ -51,18 +170,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
       print('Response Status Code: ${response.statusCode}');
       print('Response Body: ${response.body}');
-      var data=jsonDecode(response.body);
+      var data = jsonDecode(response.body);
 
       if (response.statusCode == 201) {
         // Updated status code for successful creation
         print('Register Successfully');
-           if (data['userId'] != null) {
-        print('User ID: ${data['userId']}');
-      } else {
-        print('User ID not found in the response.');
-      }
+        if (data['userId'] != null) {
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          pref.setString("userID", data['userId']);
+          print('User ID: ${pref.getString('userID')}');
+        } else {
+          print('User ID not found in the response.');
+        }
 
-        // Verify selectedValue
         print('Selected Value: ${widget.selectedValue}');
 
         if (widget.selectedValue == 0) {
@@ -92,54 +212,56 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
 //function for login
-void login(String logemail, String logpassword) async {
-  Map<String, dynamic> body = {
-    "email": logemail,
-    "password": logpassword,
-  };
+  void login(String logemail, String logpassword) async {
+    Map<String, dynamic> body = {
+      "email": logemail,
+      "password": logpassword,
+    };
 
-  try {
-    final response = await http.post(
-      Uri.parse('https://mela-backend.vercel.app/customer/login'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(body),
-    );
+    try {
+      final response = await http.post(
+        Uri.parse('https://mela-backend.vercel.app/customer/login'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(body),
+      );
 
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      print(data);
-      if (data['userId'] != null) {
-        print('User ID: ${data['userId']}');
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        print(data);
+        if (data['userId'] != null) {
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          pref.setString("userID", data['userId']);
+          print('User ID: ${pref.getString('userID')}');
+        } else {
+          print('User ID not found in the response.');
+        }
+
+        if (widget.selectedValue == 0) {
+          // Navigate to Customer side
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const BottomNavBar(),
+            ),
+          );
+        } else if (widget.selectedValue == 1) {
+          // Navigate to Business side
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const BusinessAppNavBar(),
+            ),
+          );
+        }
       } else {
-        print('User ID not found in the response.');
+        // Handle other status codes or errors
+        print('Error: ${response.statusCode}, ${response.body}');
       }
-
-      if (widget.selectedValue == 0) {
-        // Navigate to Customer side
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const BottomNavBar(),
-          ),
-        );
-      } else if (widget.selectedValue == 1) {
-        // Navigate to Business side
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const BusinessAppNavBar(),
-          ),
-        );
-      }
-    } else {
-      // Handle other status codes or errors
-      print('Error: ${response.statusCode}, ${response.body}');
+    } catch (e) {
+      // Handle exception
+      print('Exception: $e');
     }
-  } catch (e) {
-    // Handle exception
-    print('Exception: $e');
   }
-}
 
   AppColors appColors = AppColors();
   AppImagesPath appImagesPath = AppImagesPath();
@@ -329,16 +451,33 @@ void login(String logemail, String logpassword) async {
                           height: 55,
                           child: CustomButtonDesign(
                             buttonText: 'Create Profile',
-                            onPressed: () {
-                              Register(
-                                signamecontroller.text.toString(),
-                                signemailcontroller.text.toString(),
-                                phonecontroller.text.toString(),
-                                adresscontroller.text.toString(),
-                                citycontroller.text.toString(),
-                                zipcodecontroller.text.toString(),
-                                passwordcontroller.text.toString(),
-                              );
+                            onPressed: () async {
+                              if (widget.selectedValue == 0) {
+                                // Register as a customer
+                                Register(
+                                  signamecontroller.text,
+                                  signemailcontroller.text,
+                                  phonecontroller.text,
+                                  adresscontroller.text,
+                                  citycontroller.text,
+                                  zipcodecontroller.text,
+                                  passwordcontroller.text,
+                                );
+                              } else if (widget.selectedValue == 1) {
+                                // Register as a business
+                                bregister(
+                                  signamecontroller.text,
+                                  signemailcontroller.text,
+                                  phonecontroller.text,
+                                  adresscontroller.text,
+                                  citycontroller.text,
+                                  zipcodecontroller.text,
+                                  passwordcontroller.text,
+                                );
+                              } else {
+                                print(
+                                    'Invalid selectedValue: ${widget.selectedValue}');
+                              }
                             },
                           ),
                         ),
@@ -482,12 +621,20 @@ void login(String logemail, String logpassword) async {
                       child: CustomButtonDesign(
                           buttonText: 'Login',
                           onPressed: () {
-                            login(logemailcontroller.text.toString(),
-                                logpasswordcontroller.text.toString());
-
-                         
-                         
-                         
+                            {
+                              if (widget.selectedValue == 0) {
+                                // Register as a customer
+                                login(logemailcontroller.text.toString(),
+                                    logpasswordcontroller.text.toString());
+                              } else if (widget.selectedValue == 1) {
+                                // Register as a business
+                                Blogin(logemailcontroller.text.toString(),
+                                    logpasswordcontroller.text.toString());
+                              } else {
+                                print(
+                                    'Invalid selectedValue: ${widget.selectedValue}');
+                              }
+                            }
                           }),
                     ),
                   ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mela/Models/userdetailsapi.dart';
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
@@ -17,6 +18,7 @@ class ProductServiceDetails extends StatefulWidget {
   final String productprice;
   final String producimage;
   final String productcategory;
+  final String userId='66e9a6fc4580c317d195263b';
 
   const ProductServiceDetails({
     super.key,
@@ -25,7 +27,7 @@ class ProductServiceDetails extends StatefulWidget {
     required this.productname,
     required this.productprice,
     required this.producimage,
-    required this.productcategory,
+    required this.productcategory, 
   });
 
   @override
@@ -33,33 +35,91 @@ class ProductServiceDetails extends StatefulWidget {
 }
 
 class _ProductServiceDetailsState extends State<ProductServiceDetails> {
-  Future<void> BookService(Map<String, dynamic> data) async {
-    try {
-      final response = await http.post(
-        Uri.parse('https://mela-backend.vercel.app/customer/book-service'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(data),
-      );
 
-      if (response.statusCode == 200) {
-        // If the server returns a 200 OK response, parse the response.
-        print('Service booked successfully');
-        // Handle the response data if needed.
-        var responseData = jsonDecode(response.body);
-        // Process responseData here
-      } else {
-        // If the server did not return a 200 OK response, throw an exception.
-        throw Exception(
-            'Failed to book service. Status code: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error occurred: $e');
-      // Handle the error accordingly
-    }
+  //get userdetails also
+
+
+
+Future<Map<String, dynamic>?> fetchUserInfo(String userId) async {
+  if (userId.isEmpty) {
+    print('Error: userId is empty');
+    return null;
   }
 
+  final String url = 'https://mela-backend.vercel.app/customer/getUser?userId=$userId';
+  print('Request URL: $url'); // Log the URL for debugging
+
+  try {
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      return data;
+    } else {
+      print('Failed to load user info: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      return null;
+    }
+  } catch (e) {
+    print('Exception occurred: $e');
+    return null;
+  }
+}
+
+  Future<void> BookService(String userId, String serviceId, DateTime bookingDate) async {
+  try {
+    final response = await http.post(
+      Uri.parse('https://mela-backend.vercel.app/customer/book-service'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        'user': userId,
+        'service': serviceId,
+        'bookingDate': bookingDate.toIso8601String(), // Convert DateTime to ISO string
+        'status': 'Pending', // Assuming the default status is 'Pending'
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the response.
+      print('Service booked successfully');
+      var responseData = jsonDecode(response.body);
+      // Process responseData here if needed
+    } else {
+      throw Exception('Failed to book service. Status code: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error occurred: $e');
+    // Handle the error accordingly
+  }
+}
+
+
+
+  Future<void> _handleBooking() async {
+    if (selectedDate == null) {
+      // Notify the user to select a date
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please select a date.')),
+      );
+      return;
+    }
+
+    try {
+      await BookService(widget.userId, widget.productId, selectedDate!);
+     
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => WorkCompleScreen()),
+      );
+    } catch (e) {
+      // Show an error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to book service.')),
+      );
+    }
+  }
   // Future<Categoryapis> getservicedetails(String serviceId) async {
   //   try {
   //     final response = await http.get(Uri.parse(
@@ -77,10 +137,13 @@ class _ProductServiceDetailsState extends State<ProductServiceDetails> {
   //   }
   // }
 
+  DateTime? selectedDate; // To hold the selected date
   void initState() {
     super.initState();
     // getservicedetails(widget.productId);
-
+     print("Product ID: ${widget.productId}");
+    print("User ID: ${widget.userId}");
+fetchUserInfo(widget.userId);
     print("Product ID: ${widget.productId}");
   }
 
@@ -166,13 +229,13 @@ class _ProductServiceDetailsState extends State<ProductServiceDetails> {
                                   // Generate a list of star icons
                                   ...List.generate(
                                       5,
-                                      (index) => Icon(
+                                      (index) => const Icon(
                                             Icons.star,
                                             size: 18,
                                             color: Color(0xFFFFA873),
                                           )),
-                                  SizedBox(width: 5),
-                                  Text(
+                                  const SizedBox(width: 5),
+                                  const Text(
                                     '5.0',
                                     style: TextStyle(
                                       fontSize: 16,
@@ -291,17 +354,17 @@ class _ProductServiceDetailsState extends State<ProductServiceDetails> {
                       ),
                     ),
                   ),
-                  const Row(
+                  Row(
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         radius: 25,
                         backgroundImage: AssetImage(AppImagesPath.profile),
                       ),
-                      SizedBox(width: 7),
+                      const SizedBox(width: 7),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Andy Waruwu',
                             style: TextStyle(
                               color: AppColors.darkblue,
@@ -312,33 +375,16 @@ class _ProductServiceDetailsState extends State<ProductServiceDetails> {
                           ),
                           Row(
                             children: [
-                              Icon(
-                                Icons.star,
-                                size: 14,
-                                color: Color(0xFFFFA873),
+                              ...List.generate(
+                                5, // Number of stars
+                                (index) => const Icon(
+                                  Icons.star,
+                                  size: 14,
+                                  color: Color(0xFFFFA873),
+                                ),
                               ),
-                              Icon(
-                                Icons.star,
-                                size: 14,
-                                color: Color(0xFFFFA873),
-                              ),
-                              Icon(
-                                Icons.star,
-                                size: 14,
-                                color: Color(0xFFFFA873),
-                              ),
-                              Icon(
-                                Icons.star,
-                                size: 14,
-                                color: Color(0xFFFFA873),
-                              ),
-                              Icon(
-                                Icons.star,
-                                size: 14,
-                                color: Color(0xFFFFA873),
-                              ),
-                              SizedBox(width: 5),
-                              Text(
+                              const SizedBox(width: 5),
+                              const Text(
                                 '5.0',
                                 style: TextStyle(
                                   fontSize: 16,
@@ -347,11 +393,11 @@ class _ProductServiceDetailsState extends State<ProductServiceDetails> {
                                 ),
                               ),
                             ],
-                          ),
+                          )
                         ],
                       ),
-                      Spacer(),
-                      Text('2:34 PM'),
+                      const Spacer(),
+                      const Text('2:34 PM'),
                     ],
                   ),
                 ],
@@ -390,13 +436,7 @@ class _ProductServiceDetailsState extends State<ProductServiceDetails> {
               alignment: Alignment.center,
               child: CustomButtonDesign(
                 buttonText: 'Schedule Now',
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const WorkCompleScreen(),
-                      ));
-                },
+                onPressed: _handleBooking,
               ),
             ),
             const SizedBox(
@@ -408,3 +448,5 @@ class _ProductServiceDetailsState extends State<ProductServiceDetails> {
     );
   }
 }
+
+//everything about celender

@@ -1,25 +1,21 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mela/CustomerSide/screens/productservice.dart';
-import 'package:mela/Models/customersidesignupmodel.dart';
+import 'package:mela/Models/categoriesdata.dart';
+
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
+import 'package:http/http.dart' as http;
 
 class ProductDetailsScreen extends StatefulWidget {
-  final String categoryimagepath;
-  final String categoryimagetext;
-  final String categoryprice;
-  final List<Services> services; // Added to pass the services list
-
+  final String categoryName;
   const ProductDetailsScreen({
     super.key,
-    required this.categoryimagepath,
-    required this.categoryimagetext,
-    required this.categoryprice,
-    required this.services,
+    required this.categoryName,
   });
 
   @override
@@ -27,6 +23,35 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  
+  Future<void> _fetchCategories() async {
+    try {
+      final response = await http.get(Uri.parse(
+          'https://mela-backend.vercel.app/customer/getServiceByCategory?category=${widget.categoryName}'));
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print(data);
+        final categoriessData = categoriess.fromJson(data); // Renamed variable
+        setState(() {
+         
+        });
+      } else {
+        throw Exception('Failed to load categories');
+      }
+    } catch (e) {
+      print('Error: $e');
+      setState(() {
+       
+      });
+    }
+  }
+
+  void initState() {
+    super.initState();
+    _fetchCategories();
+  }
+
   AppColors appColors = AppColors();
   AppImagesPath appImagesPath = AppImagesPath();
   AppText appText = AppText();
@@ -64,7 +89,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      widget.categoryimagetext,
+                      // widget.categoryimagetext,
+                      '',
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
@@ -118,30 +144,29 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                 ),
-                itemCount: widget
-                    .services.length, // Corrected to use the services length
+                // itemCount: widget
+                //     .services.length, // Corrected to use the services length
 
                 itemBuilder: (context, index) {
-                  final service =
-                      widget.services[index]; // Get the service object
+                  // final service =
+                  //     widget.services[index]; // Get the service object
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ProductServiceDetails(
-                            productId: service.sId ?? '',
-                            productname: service.category ?? '',
-                            productdiscription: service.description ?? '',
-                            producimage: service.pic ?? '',
-                            productcategory: service.category ?? '',
-                            productprice: service.price?.toString() ?? '',
-                          ),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => ProductServiceDetails(
+                      //       // productId: service.sId ?? '',
+                      //       // productname: service.category ?? '',
+                      //       // productdiscription: service.description ?? '',
+                      //       // producimage: service.pic ?? '',
+                      //       // productcategory: service.category ?? '',
+                      //       // productprice: service.price?.toString() ?? '',
+                      //     ),
+                      //   ),
+                      // );
                     },
                     child: Container(
-                    
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
@@ -159,7 +184,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               ),
                               image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: NetworkImage(widget.categoryimagepath),
+                                image: NetworkImage(''),
                                 onError: (error, stackTrace) {
                                   print('Failed to load image: $error');
                                 },
@@ -192,7 +217,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 Align(
                                   alignment: Alignment.bottomLeft,
                                   child: Text(
-                                    widget.categoryimagetext,
+                                    '',
                                     style: TextStyle(
                                       fontFamily: 'Ubuntu',
                                       fontSize: 12,
@@ -221,7 +246,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     ),
                                     Spacer(),
                                     Text(
-                                      '\$${widget.categoryprice}',
+                                      // '\$${widget.categoryprice}',
+                                      '',
                                       style: TextStyle(
                                         fontFamily: 'Ubuntu',
                                         fontSize: 14,
