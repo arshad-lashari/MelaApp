@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mela/Models/categoriesdata.dart';
+import 'package:mela/Models/categorieservice.dart';
 
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
@@ -23,8 +24,8 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  
-  Future<void> _fetchCategories() async {
+
+  Future<categoriessmore> _fetchCategories() async {
     try {
       final response = await http.get(Uri.parse(
           'https://mela-backend.vercel.app/customer/getServiceByCategory?category=${widget.categoryName}'));
@@ -33,18 +34,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         final data = jsonDecode(response.body);
         print(data);
         final categoriessData = categoriess.fromJson(data); // Renamed variable
-        setState(() {
-         
-        });
+        setState(() {});
       } else {
+       
         throw Exception('Failed to load categories');
       }
+      
     } catch (e) {
       print('Error: $e');
-      setState(() {
-       
-      });
+      setState(() {});
     }
+    return _fetchCategories();
   }
 
   void initState() {
@@ -89,9 +89,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      // widget.categoryimagetext,
-                      '',
-                      style: const TextStyle(
+                      widget.categoryName,
+                      style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
                         fontFamily: 'Ubuntu',
@@ -136,6 +135,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
             ),
             const SizedBox(height: 10),
+
+
+
+
+
+
+
+
+
+
+
+
             Expanded(
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -184,15 +195,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               ),
                               image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: NetworkImage(''),
+                                image: const NetworkImage(''),
                                 onError: (error, stackTrace) {
                                   print('Failed to load image: $error');
                                 },
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
                               horizontal: 8,
                               vertical: 6,
                             ),
@@ -200,7 +211,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const SizedBox(height: 5),
+                                SizedBox(height: 5),
                                 Align(
                                   alignment: Alignment.bottomLeft,
                                   // child: Text(
@@ -213,7 +224,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   //   ),
                                   // ),
                                 ),
-                                const SizedBox(height: 3),
+                                SizedBox(height: 3),
                                 Align(
                                   alignment: Alignment.bottomLeft,
                                   child: Text(
@@ -226,7 +237,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 4),
+                                SizedBox(height: 4),
                                 Row(
                                   children: [
                                     Icon(
