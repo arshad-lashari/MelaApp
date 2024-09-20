@@ -22,6 +22,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController contactcontroller = TextEditingController();
   TextEditingController adresscontroller = TextEditingController();
+  TextEditingController citycontroller = TextEditingController();
 
   XFile? _imageFile;
   final ImagePicker _picker = ImagePicker();
@@ -38,6 +39,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       final userDetails = await getuserdetailpro();
       setState(() {
         if (userDetails.user != null) {
+          citycontroller.text = userDetails.user!.city ?? '';
           namecontroller.text = userDetails.user!.name ?? '';
           emailcontroller.text = userDetails.user!.email ?? '';
           contactcontroller.text = userDetails.user!.phone ?? '';
@@ -47,6 +49,50 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     } catch (e) {
       // Handle error
       print('Error loading user details: $e');
+    }
+  }
+
+  Future<void> editProfile(BuildContext context) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var userId = sharedPreferences.getString('userID');
+
+    Map<String, dynamic> requestBody = {
+      'userId': userId,
+      'name': namecontroller.text,
+      'address': adresscontroller.text,
+      'city': citycontroller.text,
+      'zipCode': '12345',
+    };
+
+    try {
+      final response = await http.put(
+        Uri.parse('https://mela-backend.vercel.app/customer/edit-profile'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(requestBody),
+      );
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Profile updated successfully!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to update profile: ${response.statusCode}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An error occurred: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
@@ -86,13 +132,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 setState(() {
                   if (pickedFile != null) {
                     _imageFile = pickedFile;
-                    // Optionally upload image here
-                    //_uploadImage(File(_imageFile!.path));
                   }
                 });
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
               },
-              child: Text('Camera'),
+              child: const Text('Camera'),
             ),
             TextButton(
               onPressed: () async {
@@ -101,13 +145,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 setState(() {
                   if (pickedFile != null) {
                     _imageFile = pickedFile;
-                    // Optionally upload image here
-                    //_uploadImage(File(_imageFile!.path));
                   }
                 });
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
               },
-              child: Text('Gallery'),
+              child: const Text('Gallery'),
             ),
           ],
         ),
@@ -297,7 +339,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           obscureText: false,
                         ),
                       ),
-                      const SizedBox(height: 10),
                       const Text(
                         'Location',
                         style: TextStyle(
@@ -316,13 +357,32 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           obscureText: false,
                         ),
                       ),
+                      const SizedBox(height: 10),
+                      const Text(
+                        'Adress',
+                        style: TextStyle(
+                          fontFamily: 'Ubuntu',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 48,
+                        child: TextFieldDesign(
+                          controller: citycontroller,
+                          hintText: 'Address',
+                          obscureText: false,
+                        ),
+                      ),
                       const SizedBox(height: 20),
                       Align(
                         alignment: Alignment.center,
                         child: CustomButtonDesign(
                           buttonText: 'Save',
                           onPressed: () {
-                            // Implement save functionality here
+                            editProfile(context);
                           },
                         ),
                       ),

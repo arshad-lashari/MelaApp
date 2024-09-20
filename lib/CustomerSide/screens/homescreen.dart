@@ -17,8 +17,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
- 
-
   @override
   void initState() {
     super.initState();
@@ -283,59 +281,64 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Text('Failed to load data'),
                                     );
                                   } else {
-                                    return GridView.builder(
-                                      physics:
-                                          const AlwaysScrollableScrollPhysics(),
-                                      scrollDirection: Axis.vertical,
-                                      itemCount:
-                                          snapshot.data!.categories!.length,
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount:
-                                            4, // Adjust based on your desired layout
-                                        childAspectRatio: 1,
-                                        crossAxisSpacing: 10,
-                                        mainAxisSpacing: 30,
+                                    return Expanded(
+                                      child: GridView.builder(
+                                        physics:
+                                            const AlwaysScrollableScrollPhysics(),
+                                        scrollDirection: Axis.vertical,
+                                        itemCount:
+                                            snapshot.data!.categories!.length,
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount:
+                                              4, // Adjust based on your desired layout
+                                          childAspectRatio: 1,
+                                          crossAxisSpacing: 10,
+                                          mainAxisSpacing: 30,
+                                        ),
+                                        itemBuilder: (context, index) {
+                                          var category =
+                                              snapshot.data!.categories![index];
+                                          return GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ProductDetailsScreen(
+                                                    categoryName:
+                                                        category.name ??
+                                                            'Unknown Category',
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Flexible(
+                                              child: Column(
+                                                children: [
+                                                  Image.network(
+                                                    category.picture ?? '',
+                                                    height: 60,
+                                                    width:
+                                                        60, // Adjust width for image display
+                                                    fit: BoxFit
+                                                        .cover, // Adjust for proper image fit
+                                                  ),
+                                                  Text(
+                                                    category.name ?? '',
+                                                    style: const TextStyle(
+                                                      fontFamily: 'Ubuntu',
+                                                      fontSize: 10,
+                                                      color: Colors.black,
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
-                                      itemBuilder: (context, index) {
-                                        var category =
-                                            snapshot.data!.categories![index];
-                                        return GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ProductDetailsScreen(
-                                                 categoryName: category.name ?? 'Unknown Category',
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          child: Column(
-                                            children: [
-                                              Image.network(
-                                                category.picture ?? '',
-                                                height: 60,
-                                                width:
-                                                    60, // Adjust width for image display
-                                                fit: BoxFit
-                                                    .cover, // Adjust for proper image fit
-                                              ),
-                                              const SizedBox(height: 6),
-                                              Text(
-                                                category.name ?? '',
-                                                style: const TextStyle(
-                                                  fontFamily: 'Ubuntu',
-                                                  fontSize: 10,
-                                                  color: Colors.black,
-                                                ),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      },
                                     );
                                   }
                                 },

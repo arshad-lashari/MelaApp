@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -8,6 +9,7 @@ import 'package:mela/CustomerSide/screens/customdesign.dart';
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
+import 'package:http/http.dart' as http;
 
 class AddServiceScreen extends StatefulWidget {
   const AddServiceScreen({super.key});
@@ -21,11 +23,74 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
   AppText appText = AppText();
   AppImagesPath appImagesPath = AppImagesPath();
 
-  // Define a list of services and a selected service
+  // Controllers for text fields
+  TextEditingController serviceController = TextEditingController();
+  TextEditingController specialtiesController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController locationcontroller = TextEditingController();
+  TextEditingController categorynamecontroller = TextEditingController();
+
+  Future<void> addService(
+      BuildContext context,
+      String businessId,
+      String categoryName,
+      String serviceName,
+      String speciality,
+      String price,
+      String description,
+      String pic,
+      String location) async {
+    try {
+      // Define the API endpoint
+      final response = await http.post(
+        Uri.parse('https://mela-backend.vercel.app/business/addservice'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+          'businessId': businessId,
+          'categoryName': categoryName,
+          'serviceName': serviceName,
+          'speciality': speciality,
+          'price': price,
+          'description': description,
+          'pic': pic, // This can be a URL or base64 encoded image
+          'location': location,
+        }),
+      );
+
+      // Check for success response
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Service added successfully!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else {
+        // Show error if response is not successful
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to add service: ${response.body}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      // Handle any exceptions or errors during the API call
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An error occurred: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
   final List<String> _services = ['Cleaner', 'Home Cleaner', 'Car Cleaner'];
   String? _selectedService;
 
-  // To store the picked image
   File? _image;
 
   Future<void> _pickImage(ImageSource source) async {
@@ -101,14 +166,15 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
         ),
         centerTitle: true,
         leading: IconButton(
-            style: IconButton.styleFrom(
-                backgroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5))),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.arrow_back)),
+          style: IconButton.styleFrom(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5))),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -117,9 +183,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 40,
-              ),
+              const SizedBox(height: 40),
               GestureDetector(
                 onTap: _showImageSourceOptions,
                 child: Container(
@@ -168,7 +232,6 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                       color: AppColors.darkblue),
                 ),
               ),
-              // Dropdown for service selection
               SizedBox(
                 width: double.infinity,
                 height: 48,
@@ -201,6 +264,57 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                   onChanged: (String? newValue) {
                     setState(() {
                       _selectedService = newValue;
+                      serviceController.text =
+                          newValue ?? ''; // Update controller
+                    });
+                  },
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Text(
+                  'Categoryname',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Ubuntu',
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.darkblue),
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  value: _selectedService,
+                  hint: const Text('Select Service'),
+                  items: _services.map((String service) {
+                    return DropdownMenuItem<String>(
+                      value: service,
+                      child: Text(service),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedService = newValue;
+                      categorynamecontroller.text =
+                          newValue ?? ''; // Update controller
                     });
                   },
                 ),
@@ -208,7 +322,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: Text(
-                  'Specialities',
+                  'Specialties',
                   style: TextStyle(
                       fontFamily: 'Ubuntu',
                       fontSize: 16,
@@ -216,11 +330,10 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                       color: AppColors.darkblue),
                 ),
               ),
-
-              const CustomTextFieldForAddtags(
+              CustomTextFieldForAddtags(
+                controller: specialtiesController, // Pass the controller
                 hintText: 'Add Specialties',
               ),
-
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: Text(
@@ -232,11 +345,25 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                       color: AppColors.darkblue),
                 ),
               ),
-
-              const CAddServiceTextfield(
+              CAddServiceTextfield(
+                controller: priceController, // Pass the controller
                 hintText: 'Enter Price',
               ),
-
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  'location',
+                  style: TextStyle(
+                      fontFamily: 'Ubuntu',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.darkblue),
+                ),
+              ),
+              CAddServiceTextfield(
+                controller: locationcontroller, // Pass the controller
+                hintText: 'Enter location',
+              ),
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: Text(
@@ -248,25 +375,34 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                       color: AppColors.darkblue),
                 ),
               ),
-              const SizedBox(
-                height: 7,
-              ),
-
+              const SizedBox(height: 7),
               Container(
                 height: 125,
                 color: Colors.white,
-                child: const CAddServiceTextfield(
+                child: CAddServiceTextfield(
+                  controller: descriptionController, // Pass the controller
                   hintText: 'Description',
                 ),
               ),
-              SizedBox(
-                height: 25,
-              ),
-              CustomButtonDesign(buttonText: 'Save', onPressed: () {}),
-              // ignore: prefer_const_constructors
-              SizedBox(
-                height: 15,
-              ),
+              SizedBox(height: 25),
+              CustomButtonDesign(
+                  buttonText: 'Save',
+                  onPressed: () {
+                    addService(
+                        context,
+                        '66ed535f50c3b04c3ef885de', // businessId
+                        categorynamecontroller.text, // categoryName
+                        serviceController.text, // serviceName
+                        specialtiesController.text, // speciality
+                        priceController.text, // price
+                        descriptionController.text, // description
+                        _image != null
+                            ? base64Encode(_image!.readAsBytesSync())
+                            : '', // pic (if image is picked)
+                        locationcontroller.text // location
+                        );
+                  }),
+              const SizedBox(height: 15),
             ],
           ),
         ),

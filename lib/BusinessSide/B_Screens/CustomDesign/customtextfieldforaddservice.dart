@@ -5,12 +5,13 @@ class CustomTextFieldForAddtags extends StatefulWidget {
   final String hintText;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
+  final controller;
 
   const CustomTextFieldForAddtags({
     super.key,
     required this.hintText,
     this.suffixIcon,
-    this.prefixIcon,
+    this.prefixIcon, this.controller,
   });
 
   @override
@@ -124,6 +125,7 @@ class CAddServiceTextfield extends StatefulWidget {
   final Widget? prefixIcon;
   final Color fillColor; // Added fillColor parameter
   final Color borderColor; // Added borderColor parameter
+  final controller;
 
   const CAddServiceTextfield({
     Key? key,
@@ -131,7 +133,7 @@ class CAddServiceTextfield extends StatefulWidget {
     this.suffixIcon,
     this.prefixIcon,
     this.fillColor = Colors.white, // Default value
-    this.borderColor = Colors.white, // Default value
+    this.borderColor = Colors.white, this.controller, // Default value
   }) : super(key: key);
 
   @override
@@ -145,6 +147,7 @@ class _CAddServiceTextfieldState extends State<CAddServiceTextfield> {
       height: 48,
       width: double.infinity,
       child: TextField(
+        controller: widget.controller,
         decoration: InputDecoration(
           hintText: widget.hintText,
           hintStyle: const TextStyle(color: Colors.black54, fontSize: 14),

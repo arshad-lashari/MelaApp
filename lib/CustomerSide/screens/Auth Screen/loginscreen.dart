@@ -4,8 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:mela/BusinessSide/B_Screens/b_navbarscreen.dart';
-import 'package:mela/BusinessSide/B_Screens/businesshomescreen.dart';
-import 'package:mela/Models/userdetailsapi.dart';
+
 import 'package:mela/Services/utilties/appurls.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
@@ -149,67 +148,73 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  void Register(String signame, String signemail, String phone, String adress,
-      String city, String zipcode, String password) async {
-    Map<String, dynamic> body = {
-      'name': signame,
-      'email': signemail,
-      'password': password,
-      'phone': phone,
-      'address': adress,
-      'city': city,
-      'zipCode': zipcode,
-    };
+void Register(String signame, String signemail, String phone, String address,
+    String city, String zipcode, String password) async {
+  Map<String, dynamic> body = {
+    'name': signame,
+    'email': signemail,
+    'password': password,
+    'phone': phone,
+    'address': address,
+    'city': city,
+    'zipCode': zipcode,
+  };
 
-    try {
-      final response = await http.post(
-        Uri.parse(CustomSideApi.signupurl),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(body),
-      );
+  try {
+    final response = await http.post(
+      Uri.parse(CustomSideApi.signupurl),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(body),
+    );
 
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}');
-      var data = jsonDecode(response.body);
+    print('Response Status Code: ${response.statusCode}');
+    print('Response Body: ${response.body}');
+    var data = jsonDecode(response.body);
 
-      if (response.statusCode == 201) {
-        // Updated status code for successful creation
-        print('Register Successfully');
-        if (data['userId'] != null) {
-          SharedPreferences pref = await SharedPreferences.getInstance();
+    if (response.statusCode == 201) {
+      // Updated status code for successful creation
+      print('Register Successfully');
+      SharedPreferences pref = await SharedPreferences.getInstance();
+
+      if (data['userId'] != null) {
+        // Check if the user ID is already stored
+        if (pref.getString("userID") == null) {
           pref.setString("userID", data['userId']);
-          print('User ID: ${pref.getString('userID')}');
+          print('User ID stored: ${pref.getString('userID')}');
         } else {
-          print('User ID not found in the response.');
-        }
-
-        print('Selected Value: ${widget.selectedValue}');
-
-        if (widget.selectedValue == 0) {
-          // Navigate to Customer Side
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => const BottomNavBar(),
-            ),
-          );
-        } else if (widget.selectedValue == 1) {
-          // Navigate to Business Side
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => const BusinessAppNavBar(),
-            ),
-          );
-        } else {
-          print('Invalid selectedValue: ${widget.selectedValue}');
+          print('User ID already exists: ${pref.getString("userID")}');
         }
       } else {
-        print('Error: ${response.statusCode}');
-        print('Error Body: ${response.body}');
+        print('User ID not found in the response.');
       }
-    } catch (e) {
-      print('Exception: $e');
+
+      print('Selected Value: ${widget.selectedValue}');
+
+      if (widget.selectedValue == 0) {
+        // Navigate to Customer Side
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const BottomNavBar(),
+          ),
+        );
+      } else if (widget.selectedValue == 1) {
+        // Navigate to Business Side
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const BusinessAppNavBar(),
+          ),
+        );
+      } else {
+        print('Invalid selectedValue: ${widget.selectedValue}');
+      }
+    } else {
+      print('Error: ${response.statusCode}');
+      print('Error Body: ${response.body}');
     }
+  } catch (e) {
+    print('Exception: $e');
   }
+}
 
 //function for login
   void login(String logemail, String logpassword) async {
@@ -232,6 +237,9 @@ class _LoginScreenState extends State<LoginScreen> {
           SharedPreferences pref = await SharedPreferences.getInstance();
           pref.setString("userID", data['userId']);
           print('User ID: ${pref.getString('userID')}');
+       
+       
+       
         } else {
           print('User ID not found in the response.');
         }

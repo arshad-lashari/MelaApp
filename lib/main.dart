@@ -1,9 +1,11 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mela/BusinessSide/B_Screens/addservice.dart';
 import 'package:mela/CustomerSide/screens/homescreen.dart';
+import 'package:mela/CustomerSide/screens/productdetails.dart';
+import 'package:mela/CustomerSide/screens/productservice.dart';
 import 'package:mela/CustomerSide/screens/splashscreen.dart';
-
 import 'package:mela/testing.dart';
 
 void main() => runApp(
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
           fontFamily: "Ubuntu"),
-      home: const HomeScreen(),
+      home: const AddServiceScreen(),
     );
   }
 }

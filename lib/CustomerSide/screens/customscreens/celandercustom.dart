@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:mela/constant/colorspath.dart';
 
 class MonthCalendar extends StatefulWidget {
-  const MonthCalendar({super.key});
+  final void Function(DateTime date) onDateSelected;
+
+  const MonthCalendar({super.key, required this.onDateSelected});
 
   @override
   State<MonthCalendar> createState() => _MonthCalendarState();
 }
+
 class _MonthCalendarState extends State<MonthCalendar> {
+  DateTime? selectedDate;
   DateTime _currentMonth = DateTime.now();
   List<String> days = [];
   List<String> dates = [];
@@ -36,51 +40,55 @@ class _MonthCalendarState extends State<MonthCalendar> {
     return Scaffold(
       backgroundColor: AppColors.lightblue,
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10,),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 5),
-                    child: Text(
-                          'Set your time',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Ubuntu',
-                            color: AppColors.darkblue,
-                          ),
-                        ),
-                  ),
-               Row(
-                children: [
-                   IconButton(
-                  icon: const Icon(Icons.arrow_left),
-                  onPressed: () => _changeMonth(-1),
-                ),
-                Text(
-                  _getMonthName(_currentMonth.month),
-                  style: const TextStyle(
-                    fontSize: 14, // Adjusted font sizec
-                    color: AppColors.darkblue,
-
-                    fontWeight: FontWeight.w400,
+                const Padding(
+                  padding: EdgeInsets.only(left: 5),
+                  child: Text(
+                    'Set your time',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Ubuntu',
+                      color: AppColors.darkblue,
+                    ),
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.arrow_right),
-                  onPressed: () => _changeMonth(1),
-                ),
-            
-                ],
-               )
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_left),
+                      onPressed: () => _changeMonth(-1),
+                    ),
+                    Text(
+                      _getMonthName(_currentMonth.month),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.darkblue,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.arrow_right),
+                      onPressed: () => _changeMonth(1),
+                    ),
+                  ],
+                )
               ],
             ),
             CustomDateTimeDesign(
               days: days,
               dates: dates,
+              onDateSelected: (date) {
+                setState(() {
+                  selectedDate = date;
+                });
+                widget.onDateSelected(date); // Call the onDateSelected callback
+              },
             ),
           ],
         ),
@@ -144,14 +152,17 @@ class _MonthCalendarState extends State<MonthCalendar> {
     }
   }
 }
+
 class CustomDateTimeDesign extends StatefulWidget {
   final List<String> days;
   final List<String> dates;
+  final void Function(DateTime date) onDateSelected;
 
   const CustomDateTimeDesign({
     super.key,
     required this.days,
     required this.dates,
+    required this.onDateSelected,
   });
 
   @override
@@ -164,7 +175,7 @@ class _CustomDateTimeDesignState extends State<CustomDateTimeDesign> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 54, // Adjust the height as needed
+      height: 54,
       child: ListView.builder(
         physics: const AlwaysScrollableScrollPhysics(),
         scrollDirection: Axis.horizontal,
@@ -178,6 +189,14 @@ class _CustomDateTimeDesignState extends State<CustomDateTimeDesign> {
                 setState(() {
                   selectedIndex = isSelected ? -1 : index;
                 });
+                if (!isSelected) {
+                  final selectedDate = DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month,
+                    index + 1,
+                  );
+                  widget.onDateSelected(selectedDate);
+                }
               },
               child: Container(
                 height: 54,

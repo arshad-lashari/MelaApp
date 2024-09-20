@@ -30,7 +30,7 @@ class Services {
   String? category;
   String? pic;
   String? serviceName;
-  String? speciality;
+  List<String>? speciality;
   int? price;
   String? description;
   bool? promoted;
@@ -62,7 +62,7 @@ class Services {
     category = json['category'];
     pic = json['pic'];
     serviceName = json['serviceName'];
-    speciality = json['speciality'];
+    speciality = json['speciality'].cast<String>();
     price = json['price'];
     description = json['description'];
     promoted = json['promoted'];
