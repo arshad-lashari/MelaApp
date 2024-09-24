@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mela/BusinessSide/B_Screens/CustomDesign/customtextfieldforaddservice.dart';
 import 'package:mela/CustomerSide/screens/customdesign.dart';
+import 'package:mela/Models/categoriesdata.dart';
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
 import 'package:mela/constant/imagespath.dart';
@@ -22,6 +23,20 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
   AppColors appColors = AppColors();
   AppText appText = AppText();
   AppImagesPath appImagesPath = AppImagesPath();
+  Future<categoriess> getcategory() async {
+    final response = await http.get(
+      Uri.parse('https://mela-backend.vercel.app/business/getCategories'),
+    );
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      print(data);
+      return categoriess.fromJson(json.decode(response.body));
+    } else {
+      // If the server returns an error response, throw an exception
+      throw Exception('Failed to load categories');
+    }
+  }
 
   // Controllers for text fields
   TextEditingController serviceController = TextEditingController();

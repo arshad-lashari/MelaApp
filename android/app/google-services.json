@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "311821202628",
+    "project_id": "mela-4c209",
+    "storage_bucket": "mela-4c209.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311821202628:android:0638c04d1289a28a080591",
+        "android_client_info": {
+          "package_name": "com.example.mela"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4hQOQF7Do1acYL1CO-PMzpPQW4pT8_k4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

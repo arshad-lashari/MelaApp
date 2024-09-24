@@ -36,7 +36,7 @@ class Service {
   int? price;
   String? description;
   bool? promoted;
-  dynamic currentPromotion; // Changed from Null to dynamic
+  dynamic currentPromotion;
   String? location;
   String? createdAt;
   String? updatedAt;

@@ -281,64 +281,56 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Text('Failed to load data'),
                                     );
                                   } else {
-                                    return Expanded(
-                                      child: GridView.builder(
-                                        physics:
-                                            const AlwaysScrollableScrollPhysics(),
-                                        scrollDirection: Axis.vertical,
-                                        itemCount:
-                                            snapshot.data!.categories!.length,
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount:
-                                              4, // Adjust based on your desired layout
-                                          childAspectRatio: 1,
-                                          crossAxisSpacing: 10,
-                                          mainAxisSpacing: 30,
-                                        ),
-                                        itemBuilder: (context, index) {
-                                          var category =
-                                              snapshot.data!.categories![index];
-                                          return GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ProductDetailsScreen(
-                                                    categoryName:
-                                                        category.name ??
-                                                            'Unknown Category',
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            child: Flexible(
-                                              child: Column(
-                                                children: [
-                                                  Image.network(
-                                                    category.picture ?? '',
-                                                    height: 60,
-                                                    width:
-                                                        60, // Adjust width for image display
-                                                    fit: BoxFit
-                                                        .cover, // Adjust for proper image fit
-                                                  ),
-                                                  Text(
-                                                    category.name ?? '',
-                                                    style: const TextStyle(
-                                                      fontFamily: 'Ubuntu',
-                                                      fontSize: 10,
-                                                      color: Colors.black,
-                                                    ),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        },
+                                    return GridView.builder(
+                                      physics:
+                                          const AlwaysScrollableScrollPhysics(),
+                                      scrollDirection: Axis.vertical,
+                                      itemCount:
+                                          snapshot.data!.categories!.length,
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount:
+                                            4, // Adjust based on your desired layout
+                                        childAspectRatio: 1,
+                                        crossAxisSpacing: 10,
+                                        mainAxisSpacing: 30,
                                       ),
+                                      itemBuilder: (context, index) {
+                                        var category =
+                                            snapshot.data!.categories![index];
+                                        return GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ProductDetailsScreen(
+                                                  categoryName: category.name ??
+                                                      'Unknown Category',
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Image.network(
+                                                category.picture ?? '',
+                                                height: 40,
+                                                fit: BoxFit.fill,
+                                              ),
+                                              Text(
+                                                category.name ?? '',
+                                                style: const TextStyle(
+                                                  fontFamily: 'Ubuntu',
+                                                  fontSize: 10,
+                                                  color: Colors.black,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
                                     );
                                   }
                                 },
@@ -348,47 +340,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            Positioned(
-              top: 0,
-              child: Container(
-                color: Colors.transparent,
-                height: 240,
-                width: MediaQuery.of(context).size.width,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: 40,
-                      left: 20,
-                      child: SizedBox(
-                        height: 55,
-                        width: 200,
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Find the best services for you',
-                            style: TextStyle(
-                              fontFamily: 'Ubuntu',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 22,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
+            const Positioned(
+              top: 40,
+              left: 20,
+              child: SizedBox(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Find the best \n services for you',
+                    style: TextStyle(
+                      fontFamily: 'Ubuntu',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 22,
+                      color: Colors.white,
                     ),
-                    Positioned(
-                      top: 40,
-                      right: 20,
-                      child: SizedBox(
-                        height: 50,
-                        width: 150,
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          // child: Image.asset(AppImagesPath.searchicon),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),

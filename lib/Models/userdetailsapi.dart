@@ -28,7 +28,7 @@ class User {
   String? address;
   String? city;
   String? zipCode;
-  Null? pic;
+  String? pic;
   String? createdAt;
   String? updatedAt;
   int? iV;

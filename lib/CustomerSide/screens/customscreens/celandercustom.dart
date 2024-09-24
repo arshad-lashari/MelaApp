@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mela/constant/colorspath.dart';
+import 'package:intl/intl.dart'; // Import the intl package for date formatting
 
 class MonthCalendar extends StatefulWidget {
   final void Function(DateTime date) onDateSelected;
@@ -15,6 +16,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
   DateTime _currentMonth = DateTime.now();
   List<String> days = [];
   List<String> dates = [];
+  int? selectedIndex;
 
   @override
   void initState() {
@@ -24,13 +26,17 @@ class _MonthCalendarState extends State<MonthCalendar> {
 
   void _generateDaysAndDates() {
     int daysInMonth = _daysInMonth(_currentMonth.year, _currentMonth.month);
-    days = List.generate(daysInMonth, (index) => _getDayOfWeek(DateTime(_currentMonth.year, _currentMonth.month, index + 1)));
+    days = List.generate(
+        daysInMonth,
+        (index) => _getDayOfWeek(
+            DateTime(_currentMonth.year, _currentMonth.month, index + 1)));
     dates = List.generate(daysInMonth, (index) => (index + 1).toString());
   }
 
   void _changeMonth(int offset) {
     setState(() {
-      _currentMonth = DateTime(_currentMonth.year, _currentMonth.month + offset);
+      _currentMonth =
+          DateTime(_currentMonth.year, _currentMonth.month + offset);
       _generateDaysAndDates();
     });
   }
@@ -80,15 +86,76 @@ class _MonthCalendarState extends State<MonthCalendar> {
                 )
               ],
             ),
-            CustomDateTimeDesign(
-              days: days,
-              dates: dates,
-              onDateSelected: (date) {
-                setState(() {
-                  selectedDate = date;
-                });
-                widget.onDateSelected(date); // Call the onDateSelected callback
-              },
+            SizedBox(
+              height: 54,
+              child: ListView.builder(
+                physics: const AlwaysScrollableScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemCount: days.length,
+                itemBuilder: (context, index) {
+                  final isSelected = selectedIndex == index;
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedIndex = isSelected ? -1 : index;
+                        });
+                        if (!isSelected) {
+                          final selectedDate = DateTime(
+                            _currentMonth.year,
+                            _currentMonth.month,
+                            index + 1,
+                          );
+                          widget.onDateSelected(selectedDate);
+                        }
+                      },
+                      child: Container(
+                        height: 54,
+                        width: 41,
+                        decoration: BoxDecoration(
+                          color: isSelected
+                              ? const Color(0xFFb9AD6FB)
+                              : Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                days[index],
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: isSelected
+                                      ? Colors.white
+                                      : AppColors.darkblue,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                dates[index],
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: isSelected
+                                      ? Colors.white
+                                      : AppColors.darkblue,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -130,13 +197,13 @@ class _MonthCalendarState extends State<MonthCalendar> {
       case 3:
         return 'Mar';
       case 4:
-        return 'April';
+        return 'Apr';
       case 5:
         return 'May';
       case 6:
-        return 'June';
+        return 'Jun';
       case 7:
-        return 'July';
+        return 'Jul';
       case 8:
         return 'Aug';
       case 9:
@@ -153,91 +220,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
   }
 }
 
-class CustomDateTimeDesign extends StatefulWidget {
-  final List<String> days;
-  final List<String> dates;
-  final void Function(DateTime date) onDateSelected;
-
-  const CustomDateTimeDesign({
-    super.key,
-    required this.days,
-    required this.dates,
-    required this.onDateSelected,
-  });
-
-  @override
-  State<CustomDateTimeDesign> createState() => _CustomDateTimeDesignState();
-}
-
-class _CustomDateTimeDesignState extends State<CustomDateTimeDesign> {
-  int selectedIndex = -1;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 54,
-      child: ListView.builder(
-        physics: const AlwaysScrollableScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        itemCount: widget.days.length,
-        itemBuilder: (context, index) {
-          final isSelected = selectedIndex == index;
-          return Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedIndex = isSelected ? -1 : index;
-                });
-                if (!isSelected) {
-                  final selectedDate = DateTime(
-                    DateTime.now().year,
-                    DateTime.now().month,
-                    index + 1,
-                  );
-                  widget.onDateSelected(selectedDate);
-                }
-              },
-              child: Container(
-                height: 54,
-                width: 41,
-                decoration: BoxDecoration(
-                  color: isSelected ? Color(0xFFb9AD6FB) : Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        widget.days[index],
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: isSelected ? Colors.white : AppColors.darkblue,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 6),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        widget.dates[index],
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: isSelected ? Colors.white : AppColors.darkblue,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
+// Usage of DateFormat to remove time details
+String formatDateWithoutTime(DateTime date) {
+  return DateFormat('yyyy-MM-dd').format(date);
 }

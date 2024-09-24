@@ -27,18 +27,19 @@ class categoriessmore {
 class Services {
   String? sId;
   String? business;
-  String? category;
+  Category? category;
   String? pic;
   String? serviceName;
   List<String>? speciality;
   int? price;
   String? description;
   bool? promoted;
-  Null? currentPromotion;
+  String? currentPromotion;
   String? location;
   String? createdAt;
   String? updatedAt;
   int? iV;
+  String? averageRating;
 
   Services(
       {this.sId,
@@ -54,12 +55,15 @@ class Services {
       this.location,
       this.createdAt,
       this.updatedAt,
-      this.iV});
+      this.iV,
+      this.averageRating});
 
   Services.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     business = json['business'];
-    category = json['category'];
+    category = json['category'] != null
+        ? new Category.fromJson(json['category'])
+        : null;
     pic = json['pic'];
     serviceName = json['serviceName'];
     speciality = json['speciality'].cast<String>();
@@ -71,13 +75,16 @@ class Services {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     iV = json['__v'];
+    averageRating = json['averageRating'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['_id'] = this.sId;
     data['business'] = this.business;
-    data['category'] = this.category;
+    if (this.category != null) {
+      data['category'] = this.category!.toJson();
+    }
     data['pic'] = this.pic;
     data['serviceName'] = this.serviceName;
     data['speciality'] = this.speciality;
@@ -89,6 +96,26 @@ class Services {
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     data['__v'] = this.iV;
+    data['averageRating'] = this.averageRating;
+    return data;
+  }
+}
+
+class Category {
+  String? sId;
+  String? name;
+
+  Category({this.sId, this.name});
+
+  Category.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['name'] = this.name;
     return data;
   }
 }

@@ -184,6 +184,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                         topRight: Radius.circular(10),
                                       ),
                                       image: DecorationImage(
+                                        
                                         fit: BoxFit.cover,
                                         image: NetworkImage(servicePic),
                                         onError: (error, stackTrace) {
@@ -193,6 +194,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     ),
                                   ),
                                 ),
+                      
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 8,

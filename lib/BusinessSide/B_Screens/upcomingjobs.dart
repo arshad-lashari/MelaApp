@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mela/BusinessSide/B_Screens/CustomDesign/ordercompletecustom.dart';
 import 'package:mela/BusinessSide/B_Screens/CustomDesign/orderdetialcustom.dart';
+import 'package:mela/Models/getbookedservicesbyuserid.dart';
 import 'package:mela/constant/apptext.dart';
 import 'package:mela/constant/colorspath.dart';
+import 'package:http/http.dart'as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CompleteAndUpComingJobs extends StatefulWidget {
   const CompleteAndUpComingJobs({super.key});
@@ -14,6 +19,11 @@ class CompleteAndUpComingJobs extends StatefulWidget {
 }
 
 class _CompleteAndUpComingJobsState extends State<CompleteAndUpComingJobs>
+
+
+
+
+
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final ValueNotifier<String> _titleNotifier =
@@ -32,6 +42,10 @@ class _CompleteAndUpComingJobsState extends State<CompleteAndUpComingJobs>
         }
       });
   }
+
+
+
+
 
   AppText appText = AppText();
 

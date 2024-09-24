@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io'; // For the File class
-import 'dart:math';
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mela/Models/userdetailsapi.dart';
@@ -23,10 +23,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   TextEditingController contactcontroller = TextEditingController();
   TextEditingController adresscontroller = TextEditingController();
   TextEditingController citycontroller = TextEditingController();
+  TextEditingController zipCodecontroller = TextEditingController();
 
-  XFile? _imageFile;
-  final ImagePicker _picker = ImagePicker();
   bool isSwitched = false;
+  File? image;
+  String? downloadUrl;
 
   @override
   void initState() {
@@ -39,15 +40,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       final userDetails = await getuserdetailpro();
       setState(() {
         if (userDetails.user != null) {
-          citycontroller.text = userDetails.user!.city ?? '';
           namecontroller.text = userDetails.user!.name ?? '';
           emailcontroller.text = userDetails.user!.email ?? '';
           contactcontroller.text = userDetails.user!.phone ?? '';
           adresscontroller.text = userDetails.user!.address ?? '';
+          zipCodecontroller.text = userDetails.user!.zipCode ?? '';
+          citycontroller.text = userDetails.user!.city ?? '';
+          downloadUrl = userDetails.user!.pic; // Load the image URL
         }
       });
     } catch (e) {
-      // Handle error
       print('Error loading user details: $e');
     }
   }
@@ -57,11 +59,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     var userId = sharedPreferences.getString('userID');
 
     Map<String, dynamic> requestBody = {
-      'userId': userId,
       'name': namecontroller.text,
+      'location': citycontroller.text,
+      'userId': userId,
       'address': adresscontroller.text,
       'city': citycontroller.text,
-      'zipCode': '12345',
+      'zipCode': zipCodecontroller.text,
+      'pic': downloadUrl, // Include the download URL
     };
 
     try {
@@ -106,75 +110,41 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       final response = await http.get(Uri.parse(apiUrl));
 
       if (response.statusCode == 200) {
-        // If the server returns an OK response, parse the JSON
         final jsonResponse = json.decode(response.body);
         return UserDetailsapi.fromJson(jsonResponse);
       } else {
-        // If the server does not return an OK response, throw an exception
         throw Exception('Failed to load user details');
       }
     } catch (e) {
-      // Handle any errors that occur during the request
       throw Exception('An error occurred: $e');
     }
   }
 
-  void _showImagePickerOptions() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            TextButton(
-              onPressed: () async {
-                final pickedFile =
-                    await _picker.pickImage(source: ImageSource.camera);
-                setState(() {
-                  if (pickedFile != null) {
-                    _imageFile = pickedFile;
-                  }
-                });
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              },
-              child: const Text('Camera'),
-            ),
-            TextButton(
-              onPressed: () async {
-                final pickedFile =
-                    await _picker.pickImage(source: ImageSource.gallery);
-                setState(() {
-                  if (pickedFile != null) {
-                    _imageFile = pickedFile;
-                  }
-                });
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              },
-              child: const Text('Gallery'),
-            ),
-          ],
-        ),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: Colors.white,
-        duration: const Duration(seconds: 10),
-      ),
-    );
-  }
+  Future<void> _pickImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
-  Future<void> _uploadImage(File imageFile) async {
-    final request = http.MultipartRequest(
-      'POST',
-      Uri.parse('your_image_upload_endpoint'),
-    );
-    request.files
-        .add(await http.MultipartFile.fromPath('file', imageFile.path));
-    final response = await request.send();
+    if (pickedFile != null) {
+      File file = File(pickedFile.path);
 
-    if (response.statusCode == 200) {
-      // Handle success
-      print('Image uploaded successfully');
-    } else {
-      // Handle failure
-      print('Failed to upload image');
+      setState(() {
+        image = file;
+      });
+
+      try {
+        // Upload the image to Firebase Storage
+        String fileName =
+            'profile_images/${DateTime.now().millisecondsSinceEpoch}.jpg';
+        FirebaseStorage storage = FirebaseStorage.instance;
+        TaskSnapshot snapshot =
+            await storage.ref().child(fileName).putFile(file);
+
+        // Get the download URL of the uploaded file
+        downloadUrl = await snapshot.ref.getDownloadURL();
+        print('Image uploaded! Download URL: $downloadUrl');
+      } catch (e) {
+        print('Error uploading image: $e');
+      }
     }
   }
 
@@ -207,7 +177,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   },
                   activeColor: Colors.black12,
                   inactiveThumbColor: Colors.white,
-                  trackOutlineColor: WidgetStateColor.transparent,
+                  // trackOutlineColor: Colors.transparent,
                 ),
               ],
             ),
@@ -218,8 +188,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(24),
-                    topRight: Radius.circular(24)),
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24),
+                ),
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -233,160 +204,175 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 18),
                           child: GestureDetector(
-                            onTap: _showImagePickerOptions,
-                            child: Container(
-                              height: 97,
-                              width: 97,
-                              decoration: BoxDecoration(
-                                color: AppColors.lightblue,
-                                borderRadius: BorderRadius.circular(76),
-                                image: _imageFile != null
-                                    ? DecorationImage(
-                                        image:
-                                            FileImage(File(_imageFile!.path)),
-                                        fit: BoxFit.cover,
-                                      )
-                                    : null,
-                              ),
-                              child: _imageFile == null
-                                  ? Stack(
-                                      children: [
-                                        Positioned(
-                                          bottom: 2,
-                                          right: 3,
-                                          child: Container(
-                                            height: 26,
-                                            width: 26,
-                                            decoration: BoxDecoration(
-                                              color: AppColors.bluescolor,
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(30)),
-                                              border: Border.all(
-                                                color: Colors.white,
-                                                width: 3,
-                                              ),
-                                            ),
-                                            child: const Center(
-                                              child: Icon(
-                                                Icons.camera_alt_rounded,
-                                                color: Colors.white,
-                                                size: 11,
-                                              ),
-                                            ),
-                                          ),
+                            onTap: _pickImage,
+                            child: Stack(
+                              children: [
+                                Container(
+                                  height: 97,
+                                  width: 97,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.lightblue,
+                                    borderRadius: BorderRadius.circular(76),
+                                  ),
+                                  child: image != null || downloadUrl != null
+                                      ? ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(76),
+                                          child: image != null
+                                              ? Image.file(
+                                                  image!,
+                                                  height: 97,
+                                                  width: 97,
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : Image.network(
+                                                  downloadUrl!,
+                                                  height: 97,
+                                                  width: 97,
+                                                  fit: BoxFit.cover,
+                                                ),
                                         )
-                                      ],
-                                    )
-                                  : null,
+                                      : const Center(
+                                          child: Icon(
+                                            Icons.person,
+                                            color: Colors.white,
+                                            size: 40,
+                                          ),
+                                        ),
+                                ),
+                                Positioned(
+                                  bottom: 2,
+                                  right: 3,
+                                  child: Container(
+                                    height: 26,
+                                    width: 26,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.bluescolor,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(30)),
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 3,
+                                      ),
+                                    ),
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.camera_alt_rounded,
+                                        color: Colors.white,
+                                        size: 11,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ),
-                      const Text(
-                        'Name',
-                        style: TextStyle(
-                          fontFamily: 'Ubuntu',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      const Text('Name',
+                          style: TextStyle(
+                              fontFamily: 'Ubuntu',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500)),
                       const SizedBox(height: 5),
                       SizedBox(
                         width: double.infinity,
                         height: 48,
                         child: TextFieldDesign(
-                          controller: namecontroller,
-                          hintText: 'Name',
-                          obscureText: false,
-                        ),
+                            controller: namecontroller,
+                            hintText: 'Name',
+                            obscureText: false),
                       ),
                       const SizedBox(height: 10),
-                      const Text(
-                        'Email',
-                        style: TextStyle(
-                          fontFamily: 'Ubuntu',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      const Text('Email',
+                          style: TextStyle(
+                              fontFamily: 'Ubuntu',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500)),
                       const SizedBox(height: 5),
                       SizedBox(
                         width: double.infinity,
                         height: 48,
                         child: TextFieldDesign(
-                          controller: emailcontroller,
-                          hintText: 'Email',
-                          obscureText: false,
-                        ),
+                            controller: emailcontroller,
+                            hintText: 'Email',
+                            obscureText: false),
                       ),
                       const SizedBox(height: 10),
-                      const Text(
-                        'Contact No',
-                        style: TextStyle(
-                          fontFamily: 'Ubuntu',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      const Text('Contact No',
+                          style: TextStyle(
+                              fontFamily: 'Ubuntu',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500)),
                       const SizedBox(height: 5),
                       SizedBox(
                         width: double.infinity,
                         height: 48,
                         child: TextFieldDesign(
-                          controller: contactcontroller,
-                          hintText: 'Contact',
-                          obscureText: false,
-                        ),
-                      ),
-                      const Text(
-                        'Location',
-                        style: TextStyle(
-                          fontFamily: 'Ubuntu',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 48,
-                        child: TextFieldDesign(
-                          controller: adresscontroller,
-                          hintText: 'Address',
-                          obscureText: false,
-                        ),
+                            controller: contactcontroller,
+                            hintText: 'Contact',
+                            obscureText: false),
                       ),
                       const SizedBox(height: 10),
-                      const Text(
-                        'Adress',
-                        style: TextStyle(
-                          fontFamily: 'Ubuntu',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      const Text('Address',
+                          style: TextStyle(
+                              fontFamily: 'Ubuntu',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500)),
                       const SizedBox(height: 5),
                       SizedBox(
                         width: double.infinity,
                         height: 48,
                         child: TextFieldDesign(
-                          controller: citycontroller,
-                          hintText: 'Address',
-                          obscureText: false,
-                        ),
+                            controller: adresscontroller,
+                            hintText: 'Address',
+                            obscureText: false),
+                      ),
+                      const SizedBox(height: 10),
+                      const Text('City',
+                          style: TextStyle(
+                              fontFamily: 'Ubuntu',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500)),
+                      const SizedBox(height: 5),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 48,
+                        child: TextFieldDesign(
+                            controller: citycontroller,
+                            hintText: 'City',
+                            obscureText: false),
+                      ),
+                      const SizedBox(height: 10),
+                      const Text('Zip Code',
+                          style: TextStyle(
+                              fontFamily: 'Ubuntu',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500)),
+                      const SizedBox(height: 5),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 48,
+                        child: TextFieldDesign(
+                            controller: zipCodecontroller,
+                            hintText: 'Zip Code',
+                            obscureText: false),
                       ),
                       const SizedBox(height: 20),
-                      Align(
-                        alignment: Alignment.center,
-                        child: CustomButtonDesign(
-                          buttonText: 'Save',
+                      Center(
+                        child: ElevatedButton(
                           onPressed: () {
                             editProfile(context);
                           },
+                          child: const Text('Update Profile'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.bluescolor,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 50, vertical: 12),
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 25),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),

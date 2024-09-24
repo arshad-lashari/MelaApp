@@ -55,8 +55,15 @@ class _ProductServiceDetailsState extends State<ProductServiceDetails> {
     }
   }
 
-  Future<void> bookservice(String serviceId, String userId, String date) async {
+  Future<void> bookservice(
+      String serviceId, String userId, String date, String businessId) async {
     try {
+      print('Attempting to book service with the following details:');
+      print('Service ID: $serviceId');
+      print('User ID: $userId');
+      print('Booking Date: $date');
+      print('Business ID: $businessId');
+
       final response = await http.post(
         Uri.parse('https://mela-backend.vercel.app/customer/book-service'),
         headers: {
@@ -65,18 +72,17 @@ class _ProductServiceDetailsState extends State<ProductServiceDetails> {
         body: json.encode({
           'serviceId': serviceId,
           'userId': userId,
-          'date': date,
+          'bookingDate': date,
+          'businessId': businessId,
         }),
       );
 
       if (response.statusCode == 201) {
-        // Success
         var responseBody = json.decode(response.body);
         print('Booking successful: $responseBody');
       } else {
-        // Failure
         print('Failed to book service. Status code: ${response.statusCode}');
-        print('Response: ${response.body}');
+        print('Response body: ${response.body}');
       }
     } catch (error) {
       print('Error occurred while booking service: $error');
@@ -134,6 +140,18 @@ class _ProductServiceDetailsState extends State<ProductServiceDetails> {
             } else if (snapshot.hasData) {
               final service = snapshot.data?.service;
               List<dynamic>? reviews = snapshot.data!.reviews;
+              double averageRating = 0.0;
+
+              // Calculate average rating if reviews are not null
+              if (reviews != null && reviews.isNotEmpty) {
+                double totalRating = 0.0;
+                for (var review in reviews) {
+                  // Assuming review has a 'rating' field
+                  totalRating += review['rating'] ??
+                      0.0; // Adjust based on your review structure
+                }
+                averageRating = totalRating / reviews.length;
+              }
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,7 +172,7 @@ class _ProductServiceDetailsState extends State<ProductServiceDetails> {
                             width: double.infinity,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                // fit: BoxFit.cover,
+                                fit: BoxFit.cover,
                                 image: NetworkImage(service?.pic ?? ''),
                               ),
                             ),
@@ -199,27 +217,36 @@ class _ProductServiceDetailsState extends State<ProductServiceDetails> {
                                     children: [
                                       Text(
                                         service?.serviceName ?? '',
+                                        maxLines: 2, // Limit to 2 lines
+                                        overflow: TextOverflow
+                                            .ellipsis, // Show '...' if text overflows
+                                        softWrap:
+                                            true, // Wrap text if it exceeds available space
                                         style: const TextStyle(
-                                          color: AppColors.darkblue,
-                                          fontFamily: 'Ubuntu',
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500,
+                                          fontSize:
+                                              16.0, // Adjust font size as needed
                                         ),
                                       ),
                                       Row(
                                         children: [
-                                          // Generate a list of star icons
+                                          // Display the calculated average rating
                                           ...List.generate(
                                               5,
-                                              (index) => const Icon(
+                                              (index) => Icon(
                                                     Icons.star,
                                                     size: 18,
-                                                    color: Color(0xFFFFA873),
+                                                    color: index <
+                                                            averageRating
+                                                                .round()
+                                                        ? const Color(
+                                                            0xFFFFA873)
+                                                        : Colors
+                                                            .grey, // Change color based on rating
                                                   )),
                                           const SizedBox(width: 5),
-                                          const Text(
-                                            '5.0',
-                                            style: TextStyle(
+                                          Text(
+                                            averageRating.toStringAsFixed(1),
+                                            style: const TextStyle(
                                               fontSize: 16,
                                               fontFamily: 'Ubuntu',
                                               fontWeight: FontWeight.w500,
@@ -306,17 +333,21 @@ class _ProductServiceDetailsState extends State<ProductServiceDetails> {
                             ),
                           ),
                           SizedBox(
-                            height: 122,
-                            width: double.infinity,
-                            child: MonthCalendar(
-                              onDateSelected: (date) {
+                              height: 122,
+                              width: double.infinity,
+                              child: MonthCalendar(
+                                  onDateSelected: (DateTime selectedDate) {
+                                // Handle the selected date here
                                 print(
-                                    'Date selected in MonthCalendar: $date'); // Debugging
-                                onDateSelected(
-                                    date); // Trigger the state change when the user selects a date
-                              },
-                            ),
-                          ),
+                                    'Date selected: ${selectedDate.toLocal()}');
+                                // You can also show a dialog or navigate to another screen based on the selected date
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        'Selected Date: ${selectedDate.toLocal()}'),
+                                  ),
+                                );
+                              })),
                           const Padding(
                             padding: EdgeInsets.only(bottom: 5, left: 10),
                             child: Text(
@@ -430,41 +461,32 @@ class _ProductServiceDetailsState extends State<ProductServiceDetails> {
                       child: CustomButtonDesign(
                         buttonText: 'Schedule Now',
                         onPressed: () async {
-                          // Check if the productId is available
-                          if (widget.productid == null ||
-                              widget.productid.isEmpty) {
-                            print(
-                                'Product ID is missing.'); // Handle missing product ID error
-                            return; // Exit the function
+                          if (widget.productid.isEmpty ||
+                              selectedDate == null) {
+                            print('Product ID or date is missing.');
+                            return;
                           }
 
-                          // Check if the selected date is available
-                          if (selectedDate == null) {
-                            print(
-                                'No date selected.'); // Handle case where no date is selected
-                            return; // Exit the function
-                          }
-
-                          // Fetch the user ID
                           SharedPreferences prefs =
                               await SharedPreferences.getInstance();
                           String? userId = prefs.getString('userID');
+                          String? businessId = service
+                              ?.business; // Get the business ID from the service object
 
-                          // Check if the user ID is available
-                          if (userId == null || userId.isEmpty) {
-                            print(
-                                'User ID is missing.'); // Handle missing user ID error
-                            return; // Exit the function
+                          if (userId == null ||
+                              userId.isEmpty ||
+                              businessId == null ||
+                              businessId.isEmpty) {
+                            print('User ID or Business ID is missing.');
+                            return;
                           }
 
-                          // Proceed with booking if all data is valid
                           try {
                             await bookservice(widget.productid, userId,
-                                selectedDate.toString());
-                            print('Booking successful');
-                          } catch (error) {
-                            print(
-                                'Error occurred during booking: $error'); // Handle booking errors
+                                selectedDate!.toIso8601String(), businessId);
+                            print('Service booked successfully!');
+                          } catch (e) {
+                            print('Failed to book the service: $e');
                           }
                         },
                       ),
